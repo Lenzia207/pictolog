@@ -2,24 +2,18 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/src/features/home_overview/home_overview_screen.dart';
+import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import '../features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 import '../features/crud_pictolog/presentation/pictolog_details_screen.dart';
+import '../features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../features/bottom_navigation/presentation/bottom_navigation.dart';
 import 'not_found_screen.dart';
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorDashboardKey = GlobalKey<NavigatorState>(
-  debugLabel: 'dashboardShell',
+final _shellNavigatorHomeOverviewKey = GlobalKey<NavigatorState>(
+  debugLabel: 'homeOverviewShell',
 );
-// final _shellNavigatorGroupsKey = GlobalKey<NavigatorState>(
-//   debugLabel: 'groupsShell',
-// );
-// final _shellNavigatorNewEntryKey = GlobalKey<NavigatorState>(
-//   debugLabel: 'newEntryShell',
-// );
-// final _shellNavigatorAccountKey = GlobalKey<NavigatorState>(
-//   debugLabel: 'accountShell',
 // );
 // final _shellNavigatorSettingsKey = GlobalKey<NavigatorState>(
 //   debugLabel: 'settingsShell',
@@ -42,7 +36,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         },
         branches: [
           StatefulShellBranch(
-            navigatorKey: _shellNavigatorDashboardKey,
+            navigatorKey: _shellNavigatorHomeOverviewKey,
             routes: [
               GoRoute(
                 path: HomeOverviewScreen.path,
@@ -53,6 +47,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: NewEntryPictologScreen.path,
                     name: NewEntryPictologScreen.name,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const NewEntryPictologScreen(),
                   ),
                   GoRoute(
@@ -62,38 +57,36 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                     builder: (context, state) {
                       final id =
                           state.pathParameters[PictologDetailsScreen.paramId];
-                      // Try to parse as int, fallback to string if parsing fails (for UUID strings)
+                      // Try to parse as int, fallback to string if parsing fails
                       final key = int.tryParse(id ?? '') ?? id;
                       return PictologDetailsScreen(pictologKey: key);
                     },
+                    routes: [
+                      GoRoute(
+                        path: PictologPdfPreviewScreen.path,
+                        name: PictologPdfPreviewScreen.name,
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) {
+                          final pictolog = state.extra as Pictolog;
+                          return PictologPdfPreviewScreen(pictolog: pictolog);
+                        },
+                      ),
+                    ],
                   ),
-                  // Sub-pages of the dashboard
-                  // GoRoute(
-                  //   path: SubScreen.path,
-                  //   name: SubScreen.name,
-                  //   builder: (context, state) => const SubScreen(),
-                  // )
                 ],
               ),
             ],
           ),
           // StatefulShellBranch(
-          //   navigatorKey: _shellNavigatorGroupsKey,
+          //   navigatorKey: _shellNavigatorSettingsKey,
           //   routes: [
           //     GoRoute(
-          //       path: MyGroupsScreen.path,
-          //       name: MyGroupsScreen.name,
+          //       path: SettingsScreen.path,
+          //       name: SettingsScreen.name,
           //       pageBuilder: (context, state) =>
-          //           NoTransitionPage(child: MyGroupsScreen()),
+          //           NoTransitionPage(child: const SettingsScreen()),
           //       routes: [
-          //         // Sub-pages of the groups
-          //         // QR Scanner
-          //         GoRoute(
-          //           path: QRScannerScreen.path,
-          //           name: QRScannerScreen.name,
-          //           pageBuilder: (context, state) =>
-          //               const NoTransitionPage(child: QRScannerScreen()),
-          //         ),
+
           //       ],
           //     ),
           //   ],
