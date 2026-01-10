@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/src/features/home_overview/home_overview_screen.dart';
+import '../features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 import '../features/bottom_navigation/presentation/bottom_navigation.dart';
 import 'not_found_screen.dart';
 
@@ -47,7 +48,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 name: HomeOverviewScreen.name,
                 pageBuilder: (context, state) =>
                     NoTransitionPage(child: const HomeOverviewScreen()),
-                routes: const [
+                routes: [
+                  GoRoute(
+                    path: NewEntryPictologScreen.path,
+                    name: NewEntryPictologScreen.name,
+                    builder: (context, state) => const NewEntryPictologScreen(),
+                  ),
                   // Sub-pages of the dashboard
                   // GoRoute(
                   //   path: SubScreen.path,
