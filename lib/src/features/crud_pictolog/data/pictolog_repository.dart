@@ -30,6 +30,22 @@ class PictologRepository {
     await box.add(pictolog);
   }
 
+  /// Update an existing Pictolog
+  Future<void> updatePictolog(
+    Pictolog pictolog, {
+    String? name,
+    String? overviewDescription,
+  }) async {
+    if (name != null) {
+      pictolog.name = name;
+    }
+    if (overviewDescription != null) {
+      pictolog.overviewDescription = overviewDescription;
+    }
+    pictolog.updatedAt = DateTime.now();
+    await pictolog.save();
+  }
+
   /// Delete a Pictolog
   Future<void> deletePictolog(Pictolog pictolog) async {
     // Optional: Delete associated images from disk here to clean up space

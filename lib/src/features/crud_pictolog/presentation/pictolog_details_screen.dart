@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
 import 'package:pictolog/src/features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
+import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_fullscreen_gallery.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_report_card.dart';
 
 import '../../../constants/app_style.dart';
@@ -76,9 +77,8 @@ class PictologDetailsScreen extends HookConsumerWidget {
                 ),
                 if (pictolog.reports.isEmpty)
                   const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Text('Keine Einträge bis jetzt.'),
+                    child: Text(
+                      'Keine Einträge bis jetzt.',
                     ),
                   )
                 else
@@ -89,10 +89,23 @@ class PictologDetailsScreen extends HookConsumerWidget {
                       itemCount: pictolog.reports.length,
                       itemBuilder: (context, index) {
                         final report = pictolog.reports[index];
-                        return SizedBox(
-                          width: 300,
-                          child: PictologReportCard(
-                            report: report,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PictologFullscreenGallery(
+                                  pictolog: pictolog,
+
+                                  initialIndex: index,
+                                ),
+                              ),
+                            );
+                          },
+                          child: SizedBox(
+                            width: 300,
+                            child: PictologReportCard(
+                              report: report,
+                            ),
                           ),
                         );
                       },

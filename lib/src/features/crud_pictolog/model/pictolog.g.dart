@@ -21,13 +21,14 @@ class PictologAdapter extends TypeAdapter<Pictolog> {
       overviewDescription: fields[1] as String,
       reports: (fields[2] as List).cast<Report>(),
       createdAt: fields[3] as DateTime,
+      updatedAt: fields[4] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Pictolog obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class PictologAdapter extends TypeAdapter<Pictolog> {
       ..writeByte(2)
       ..write(obj.reports)
       ..writeByte(3)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.updatedAt);
   }
 
   @override

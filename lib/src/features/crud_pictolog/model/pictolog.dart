@@ -17,10 +17,14 @@ class Pictolog extends HiveObject {
   @HiveField(3)
   DateTime createdAt;
 
+  @HiveField(4)
+  DateTime? updatedAt;
+
   Pictolog({
     required this.name,
     required this.overviewDescription,
     this.reports = const [],
     required this.createdAt,
+    this.updatedAt,
   });
 }
