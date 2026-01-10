@@ -62,8 +62,8 @@ class HomeOverviewScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(
           isSelectionMode.value
-              ? '${selectedKeys.value.length} Selected for Deletion'
-              : 'My Pictologs',
+              ? '${selectedKeys.value.length} ausgewählt zum Löschen'
+              : 'Meine Pictologs',
         ),
         // Change leading icon in selection mode to allow cancelling
         leading: isSelectionMode.value
@@ -116,7 +116,8 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     TextSpan(
                       children: [
                         const TextSpan(
-                          text: 'No pictologs yet.\nCreate one using the ',
+                          text:
+                              'Noch keine Pictologs.\nErstelle einen mit dem ',
                         ),
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
@@ -126,7 +127,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                             color: AppColor.primary.withValues(alpha: 0.5),
                           ),
                         ),
-                        const TextSpan(text: ' button!'),
+                        const TextSpan(text: ' Button!'),
                       ],
                     ),
                     textAlign: TextAlign.center,

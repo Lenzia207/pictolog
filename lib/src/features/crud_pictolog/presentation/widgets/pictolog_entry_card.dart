@@ -79,7 +79,7 @@ class PictologEntryCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '$projectLength reports',
+                            '$projectLength Einträge',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           const Spacer(),

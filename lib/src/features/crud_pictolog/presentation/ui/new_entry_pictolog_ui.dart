@@ -18,7 +18,7 @@ class NewEntryPictologUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Entry'),
+        title: const Text('Neuer Eintrag'),
         actions: [IconButton(onPressed: savePictolog, icon: icon)],
       ),
       body: SingleChildScrollView(
@@ -30,7 +30,7 @@ class NewEntryPictologUi extends StatelessWidget {
             TextField(
               controller: nameController,
               decoration: const InputDecoration(
-                labelText: 'Name of Project',
+                labelText: 'Name des Projekts',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -41,8 +41,7 @@ class NewEntryPictologUi extends StatelessWidget {
               controller: overviewController,
               maxLines: 3,
               decoration: const InputDecoration(
-                labelText:
-                    'General description about the project... (optional)',
+                labelText: 'Allgemeine Beschreibung des Projekts... (Optional)',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
               ),
