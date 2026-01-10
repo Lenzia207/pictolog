@@ -15,10 +15,7 @@ final pdfGeneratorRepositoryProvider = Provider<PdfGeneratorRepository>((ref) {
 });
 
 class PdfGeneratorRepository {
-  Future<Uint8List> generatePictologPdf(
-    PdfPageFormat format,
-    Pictolog pictolog,
-  ) async {
+  Future<Uint8List> generatePdf(PdfPageFormat format, Pictolog pictolog) async {
     final pdf = pw.Document();
 
     // Generate report widgets
@@ -55,10 +52,10 @@ class PdfGeneratorRepository {
         pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
           crossAxisAlignment: pw.CrossAxisAlignment.center,
-          header: (pw.Context context) => PdfContentPage(pictolog: pictolog),
+          header: (pw.Context context) => PdfHeaderPage(pictolog: pictolog),
           footer: (pw.Context context) => PdfFooter(pictolog: pictolog),
           build: (pw.Context context) {
-            return [pw.SizedBox(height: 10), pw.Column(children: validReports)];
+            return [pw.SizedBox(height: 10), ...validReports];
           },
         ),
       );

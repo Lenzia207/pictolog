@@ -14,25 +14,22 @@ class PdfImageDescriptionSection extends pw.StatelessWidget {
 
   @override
   pw.Widget build(pw.Context context) {
-    return pw.Center(
-      child: pw.Container(
-        width: 400,
-        margin: const pw.EdgeInsets.only(bottom: 30),
-        child: pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.center,
-          children: [
-            pw.AspectRatio(
-              aspectRatio: 3 / 4,
-              child: pw.Image(image, fit: pw.BoxFit.cover),
-            ),
-            pw.SizedBox(height: 10),
-            pw.Text(
-              reportDescription,
-              style: const pw.TextStyle(fontSize: 12),
-              textAlign: pw.TextAlign.start,
-            ),
-          ],
-        ),
+    return pw.Container(
+      width: 400,
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.center,
+        children: [
+          pw.AspectRatio(
+            aspectRatio: 3 / 4,
+            child: pw.Image(image, fit: pw.BoxFit.cover),
+          ),
+          pw.SizedBox(height: 10),
+          pw.Text(
+            reportDescription,
+            style: const pw.TextStyle(fontSize: 12),
+            textAlign: pw.TextAlign.start,
+          ),
+        ],
       ),
     );
   }

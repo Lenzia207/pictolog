@@ -3,8 +3,8 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../crud_pictolog/model/pictolog.dart';
 
-class PdfContentPage extends pw.StatelessWidget {
-  PdfContentPage({required this.pictolog});
+class PdfHeaderPage extends pw.StatelessWidget {
+  PdfHeaderPage({required this.pictolog});
   final Pictolog pictolog;
 
   @override

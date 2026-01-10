@@ -20,7 +20,7 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
         child: PdfPreview(
           build: (format) => ref
               .read(pdfGeneratorRepositoryProvider)
-              .generatePictologPdf(format, pictolog),
+              .generatePdf(format, pictolog),
           canDebug: false,
         ),
       ),
