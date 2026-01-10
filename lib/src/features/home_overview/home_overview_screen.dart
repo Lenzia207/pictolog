@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_entry_card.dart';
 
+import '../bottom_navigation/config/navigation_config.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';
 import '../crud_pictolog/model/pictolog.dart';
 
@@ -60,7 +62,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(
           isSelectionMode.value
-              ? '${selectedKeys.value.length} Selected'
+              ? '${selectedKeys.value.length} Selected for Deletion'
               : 'My Pictologs',
         ),
         // Change leading icon in selection mode to allow cancelling
@@ -77,7 +79,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
           IconButton(
             icon: Icon(
               isSelectionMode.value ? Icons.delete : Icons.delete_outline,
-              color: isSelectionMode.value ? Colors.red : null,
+              color: isSelectionMode.value ? AppColor.red : null,
             ),
             onPressed: () {
               if (isSelectionMode.value) {
@@ -110,8 +112,23 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     color: Colors.grey,
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    'No pictologs yet.\nCreate one using the + button!',
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'No pictologs yet.\nCreate one using the ',
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            NavigationConfig.fabIcon,
+                            size: 20,
+                            color: AppColor.primary.withValues(alpha: 0.5),
+                          ),
+                        ),
+                        const TextSpan(text: ' button!'),
+                      ],
+                    ),
                     textAlign: TextAlign.center,
                     style: Theme.of(
                       context,
