@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/src/constants/app_color.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_entry_card.dart';
 
 import '../bottom_navigation/config/navigation_config.dart';
@@ -162,7 +164,12 @@ class HomeOverviewScreen extends HookConsumerWidget {
                   if (isSelectionMode.value) {
                     toggleSelection(log.key);
                   } else {
-                    // TODO: Navigate to detail view
+                    context.goNamed(
+                      PictologDetailsScreen.name,
+                      pathParameters: {
+                        PictologDetailsScreen.paramId: log.key.toString(),
+                      },
+                    );
                   }
                 },
                 onLongPressed: () {
