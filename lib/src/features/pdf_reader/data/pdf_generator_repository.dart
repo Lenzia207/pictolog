@@ -23,19 +23,21 @@ class PdfGeneratorRepository {
 
     // Generate report widgets
     final reportWidgets = await Future.wait(
-      pictolog.reports.map((report) async {
-        final file = File(report.imagePath);
-        if (!await file.exists()) return null;
+      pictolog.reports.map(
+        (report) async {
+          final file = File(report.imagePath);
+          if (!await file.exists()) return null;
 
-        final bytes = await file.readAsBytes();
-        final image = pw.MemoryImage(bytes);
+          final bytes = await file.readAsBytes();
+          final image = pw.MemoryImage(bytes);
 
-        return PdfImageDescriptionSection(
-          pictolog: pictolog,
-          image: image,
-          reportDescription: report.description,
-        );
-      }),
+          return PdfImageDescriptionSection(
+            pictolog: pictolog,
+            image: image,
+            reportDescription: report.description,
+          );
+        },
+      ),
     );
 
     // Filter out any null widgets (in case some images were missing)

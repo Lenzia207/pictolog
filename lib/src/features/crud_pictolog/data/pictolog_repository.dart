@@ -16,9 +16,9 @@ final pictologRepositoryProvider = Provider<PictologRepository>((ref) {
 });
 
 class PictologRepository {
-  final Box<Pictolog> box;
-
   PictologRepository(this.box);
+
+  final Box<Pictolog> box;
 
   /// Get all Pictologs
   List<Pictolog> getAllPictologs() {

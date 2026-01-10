@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/src/constants/app_color.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_entry_card.dart';
 
@@ -116,9 +117,8 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     size: 64,
                     color: Colors.grey,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  Space.h16,
+
                   Text.rich(
                     TextSpan(
                       children: [

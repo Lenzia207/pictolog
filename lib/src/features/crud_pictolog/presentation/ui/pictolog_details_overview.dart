@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_style.dart';
 
 import '../../model/pictolog.dart';
 
@@ -13,7 +14,7 @@ class PictologDetailsOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,31 +22,31 @@ class PictologDetailsOverview extends StatelessWidget {
             'Overview',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          const SizedBox(height: 8),
+          Space.h8,
           Text(
             pictolog.overviewDescription.isNotEmpty
                 ? pictolog.overviewDescription
                 : 'No description provided.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          const SizedBox(height: 12),
+          Space.h16,
           Text(
             'Erstellt: ${pictolog.createdAt.day}.${pictolog.createdAt.month}.${pictolog.createdAt.year}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          const Divider(height: 32),
+          const Divider(
+            height: 32,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Einträge (${pictolog.reports.length})',
+                'Seiten (${pictolog.reports.length})',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          Space.h16,
         ],
       ),
     );

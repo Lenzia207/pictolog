@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../../../../constants/app_style.dart';
 import '../../model/report.dart';
 
 class PictologReportCard extends StatelessWidget {
@@ -15,8 +16,8 @@ class PictologReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
+        horizontal: p16,
+        vertical: p8,
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -37,8 +38,14 @@ class PictologReportCard extends StatelessWidget {
           ),
           if (report.description.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(report.description),
+              padding: const EdgeInsets.all(
+                p16,
+              ),
+              child: Text(
+                report.description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
             ),
         ],
       ),

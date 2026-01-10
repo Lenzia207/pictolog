@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_style.dart';
 
 class PictologEntryCard extends StatelessWidget {
   const PictologEntryCard({
@@ -62,7 +63,7 @@ class PictologEntryCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      Space.h8,
                       if (overviewDescription.isNotEmpty)
                         Text(
                           overviewDescription,
@@ -70,7 +71,7 @@ class PictologEntryCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      const SizedBox(height: 12),
+                      Space.h12,
                       Row(
                         children: [
                           const Icon(
@@ -78,9 +79,9 @@ class PictologEntryCard extends StatelessWidget {
                             size: 16,
                             color: Colors.grey,
                           ),
-                          const SizedBox(width: 4),
+                          Space.w4,
                           Text(
-                            '$projectLength Einträge',
+                            '$projectLength Seiten',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           const Spacer(),

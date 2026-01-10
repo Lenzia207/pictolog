@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_style.dart';
 
 class NewEntryPictologUi extends StatelessWidget {
   const NewEntryPictologUi({
@@ -39,8 +40,7 @@ class NewEntryPictologUi extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
-
+            Space.h16,
             // Overview Field
             TextField(
               controller: overviewController,

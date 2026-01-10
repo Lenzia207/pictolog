@@ -1,4 +1,5 @@
 import 'package:pdf/widgets.dart' as pw;
+import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 
 class PdfImageDescriptionSection extends pw.StatelessWidget {
@@ -27,12 +28,12 @@ class PdfImageDescriptionSection extends pw.StatelessWidget {
             ),
           ),
           pw.SizedBox(
-            height: 10,
+            height: p10,
           ),
           pw.Text(
             reportDescription,
             style: const pw.TextStyle(
-              fontSize: 12,
+              fontSize: p12,
             ),
             textAlign: pw.TextAlign.start,
           ),
