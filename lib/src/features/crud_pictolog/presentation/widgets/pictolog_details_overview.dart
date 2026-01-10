@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../model/pictolog.dart';
 
 class PictologDetailsOverview extends StatelessWidget {
-  const PictologDetailsOverview({super.key, required this.pictolog});
+  const PictologDetailsOverview({
+    super.key,
+    required this.pictolog,
+  });
 
   final Pictolog pictolog;
 
@@ -14,7 +17,10 @@ class PictologDetailsOverview extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Overview', style: Theme.of(context).textTheme.headlineSmall),
+          Text(
+            'Overview',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
           const SizedBox(height: 8),
           Text(
             pictolog.overviewDescription.isNotEmpty
@@ -37,7 +43,9 @@ class PictologDetailsOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );

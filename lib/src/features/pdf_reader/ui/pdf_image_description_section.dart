@@ -21,12 +21,19 @@ class PdfImageDescriptionSection extends pw.StatelessWidget {
         children: [
           pw.AspectRatio(
             aspectRatio: 3 / 4,
-            child: pw.Image(image, fit: pw.BoxFit.cover),
+            child: pw.Image(
+              image,
+              fit: pw.BoxFit.cover,
+            ),
           ),
-          pw.SizedBox(height: 10),
+          pw.SizedBox(
+            height: 10,
+          ),
           pw.Text(
             reportDescription,
-            style: const pw.TextStyle(fontSize: 12),
+            style: const pw.TextStyle(
+              fontSize: 12,
+            ),
             textAlign: pw.TextAlign.start,
           ),
         ],

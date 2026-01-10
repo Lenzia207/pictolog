@@ -21,13 +21,20 @@ class TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = index == currentIndex ? AppColor.green : AppColor.primary;
+
     return GestureDetector(
       onTap: () => onTap(index),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 4),
+          Icon(
+            icon,
+            color: color,
+            size: 24,
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           Text(
             label,
             style: TextStyle(

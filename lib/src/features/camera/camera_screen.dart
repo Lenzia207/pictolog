@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class CameraScreen extends HookWidget {
-  const CameraScreen({super.key});
+  const CameraScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +15,22 @@ class CameraScreen extends HookWidget {
 
     // 2. While fetching cameras, show loader or empty
     if (camerasSnapshot.connectionState != ConnectionState.done) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
 
     // 3. Handle case where no cameras are found
     if (camerasSnapshot.hasError ||
         !camerasSnapshot.hasData ||
         camerasSnapshot.data!.isEmpty) {
-      return const Scaffold(body: Center(child: Text('No camera found')));
+      return const Scaffold(
+        body: Center(
+          child: Text('No camera found'),
+        ),
+      );
     }
 
     final camera = camerasSnapshot.data!.first;
@@ -41,7 +51,9 @@ class CameraScreen extends HookWidget {
     final initSnapshot = useFuture(initFuture);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a Picture')),
+      appBar: AppBar(
+        title: const Text('Take a Picture'),
+      ),
       body: Builder(
         builder: (context) {
           if (initSnapshot.connectionState == ConnectionState.done) {
@@ -50,7 +62,9 @@ class CameraScreen extends HookWidget {
               child: CameraPreview(controller),
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),
@@ -63,13 +77,17 @@ class CameraScreen extends HookWidget {
             if (!context.mounted) return;
 
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Picture taken: ${image.path}')),
+              SnackBar(
+                content: Text('Picture taken: ${image.path}'),
+              ),
             );
           } catch (e) {
             debugPrint('Error taking picture: $e');
           }
         },
-        child: const Icon(Icons.camera),
+        child: const Icon(
+          Icons.camera,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

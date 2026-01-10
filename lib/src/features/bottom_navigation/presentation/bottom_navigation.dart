@@ -6,7 +6,10 @@ import 'package:pictolog/src/features/bottom_navigation/presentation/widget/floa
 import '../controller/bottom_navigation_controller.dart';
 
 class BottomNavigation extends HookWidget {
-  const BottomNavigation({super.key, required this.navigationShell});
+  const BottomNavigation({
+    super.key,
+    required this.navigationShell,
+  });
 
   final StatefulNavigationShell navigationShell;
 
@@ -19,9 +22,13 @@ class BottomNavigation extends HookWidget {
       extendBody: true,
 
       body: navigationShell,
-      floatingActionButton: FloatingActionButtonWidget(controller: controller),
+      floatingActionButton: FloatingActionButtonWidget(
+        controller: controller,
+      ),
 
-      bottomNavigationBar: BottomNavigationBarWidget(controller: controller),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        controller: controller,
+      ),
     );
   }
 }

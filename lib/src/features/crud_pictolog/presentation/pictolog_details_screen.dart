@@ -14,13 +14,16 @@ import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolo
 import 'widgets/pictolog_details_overview.dart';
 
 class PictologDetailsScreen extends HookConsumerWidget {
+  const PictologDetailsScreen({
+    super.key,
+    required this.pictologKey,
+  });
+
   static const String path = 'details';
   static const String name = 'PictologDetails';
   static const String paramId = 'id';
 
   final dynamic pictologKey;
-
-  const PictologDetailsScreen({super.key, required this.pictologKey});
 
   Future<void> _addReport({
     required BuildContext context,
@@ -99,22 +102,34 @@ class PictologDetailsScreen extends HookConsumerWidget {
     final repository = ref.watch(pictologRepositoryProvider);
 
     return ValueListenableBuilder(
-      valueListenable: repository.box.listenable(keys: [pictologKey]),
+      valueListenable: repository.box.listenable(
+        keys: [
+          pictologKey,
+        ],
+      ),
       builder: (context, box, _) {
         final pictolog = box.get(pictologKey);
 
         if (pictolog == null) {
           return const Scaffold(
-            body: Center(child: Text('Pictolog not found')),
+            body: Center(
+              child: Text(
+                'Pictolog not found',
+              ),
+            ),
           );
         }
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(pictolog.name),
+            title: Text(
+              pictolog.name,
+            ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.picture_as_pdf),
+                icon: const Icon(
+                  Icons.picture_as_pdf,
+                ),
                 onPressed: () {
                   context.pushNamed(
                     PictologPdfPreviewScreen.name,
@@ -131,7 +146,9 @@ class PictologDetailsScreen extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PictologDetailsOverview(pictolog: pictolog),
+                PictologDetailsOverview(
+                  pictolog: pictolog,
+                ),
                 if (pictolog.reports.isEmpty)
                   const Center(
                     child: Padding(
@@ -144,32 +161,43 @@ class PictologDetailsScreen extends HookConsumerWidget {
                     height: 350,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
                       itemCount: pictolog.reports.length,
                       itemBuilder: (context, index) {
                         final report = pictolog.reports[index];
                         return SizedBox(
                           width: 300,
-                          child: PictologReportCard(report: report),
+                          child: PictologReportCard(
+                            report: report,
+                          ),
                         );
                       },
                     ),
                   ),
-                // Add some bottom padding for FAB
-                const SizedBox(height: 150),
+                const SizedBox(
+                  height: 150,
+                ),
               ],
             ),
           ),
           floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 130),
+            padding: const EdgeInsets.only(
+              bottom: 130,
+            ),
             child: FloatingActionButton.extended(
               onPressed: () => _addReport(
                 context: context,
                 repository: repository,
                 pictolog: pictolog,
               ),
-              label: const Text('Eintrag hinzufügen'),
-              icon: const Icon(Icons.add_a_photo),
+              label: const Text(
+                'Eintrag hinzufügen',
+              ),
+              icon: const Icon(
+                Icons.add_a_photo,
+              ),
             ),
           ),
         );

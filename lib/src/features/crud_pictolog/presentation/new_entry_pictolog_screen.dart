@@ -9,10 +9,12 @@ import '../model/pictolog.dart';
 import '../model/report.dart';
 
 class NewEntryPictologScreen extends HookConsumerWidget {
+  const NewEntryPictologScreen({
+    super.key,
+  });
+
   static const String path = 'new_entry';
   static const String name = 'NewEntryPictolog';
-
-  const NewEntryPictologScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,9 +30,16 @@ class NewEntryPictologScreen extends HookConsumerWidget {
       if (nameController.text.isEmpty) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Please enter a name')));
+        ).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please enter a name',
+            ),
+          ),
+        );
         return;
       }
+
       isLoading.value = true;
 
       try {
@@ -48,14 +57,22 @@ class NewEntryPictologScreen extends HookConsumerWidget {
         if (context.mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text('New Pictolog Created!')));
+          ).showSnackBar(
+            SnackBar(
+              content: Text('New Pictolog Created!'),
+            ),
+          );
           context.pop();
         }
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text('Error saving: $e')));
+          ).showSnackBar(
+            SnackBar(
+              content: Text('Error saving: $e'),
+            ),
+          );
         }
       } finally {
         isLoading.value = false;

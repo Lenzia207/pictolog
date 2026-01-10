@@ -10,5 +10,8 @@ class Report extends HiveObject {
   @HiveField(1)
   String description;
 
-  Report({required this.imagePath, required this.description});
+  Report({
+    required this.imagePath,
+    required this.description,
+  });
 }

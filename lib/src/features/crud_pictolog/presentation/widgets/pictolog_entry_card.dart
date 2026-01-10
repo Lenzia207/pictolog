@@ -26,7 +26,9 @@ class PictologEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(
+        bottom: 16,
+      ),
       elevation: isSelectedItem ? 4 : 2,
       color: isSelectedItem
           ? Theme.of(context).primaryColor.withAlpha(25)
@@ -34,14 +36,15 @@ class PictologEntryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: isSelectedItem
-            ? BorderSide(color: Theme.of(context).primaryColor, width: 2)
+            ? BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 2,
+              )
             : BorderSide.none,
       ),
       child: InkWell(
         onTap: onTapItem,
-
         onLongPress: onLongPressed,
-
         child: Stack(
           children: [
             Column(

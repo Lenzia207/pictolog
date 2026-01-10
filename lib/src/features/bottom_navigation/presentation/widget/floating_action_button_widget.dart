@@ -9,7 +9,10 @@ import '../../controller/bottom_navigation_controller.dart';
 
 /// Widget: Represents the floating action button in the bottom navigation.
 class FloatingActionButtonWidget extends HookWidget {
-  const FloatingActionButtonWidget({super.key, required this.controller});
+  const FloatingActionButtonWidget({
+    super.key,
+    required this.controller,
+  });
 
   final BottomNavigationController controller;
 
@@ -28,9 +31,15 @@ class FloatingActionButtonWidget extends HookWidget {
 
     return FloatingActionButton(
       shape: const CircleBorder(),
-      onPressed: () => context.pushNamed(NewEntryPictologScreen.name),
+      onPressed: () => context.pushNamed(
+        NewEntryPictologScreen.name,
+      ),
       backgroundColor: AppColor.white,
-      child: Icon(size: 30, NavigationConfig.fabIcon, color: AppColor.primary),
+      child: Icon(
+        size: 30,
+        NavigationConfig.fabIcon,
+        color: AppColor.primary,
+      ),
     );
   }
 }

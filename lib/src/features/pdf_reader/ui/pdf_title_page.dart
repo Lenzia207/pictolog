@@ -13,17 +13,26 @@ class PdfTitlePage extends pw.StatelessWidget {
         children: [
           pw.Text(
             pictolog.name,
-            style: pw.TextStyle(fontSize: 28, fontWeight: pw.FontWeight.bold),
+            style: pw.TextStyle(
+              fontSize: 28,
+              fontWeight: pw.FontWeight.bold,
+            ),
           ),
           pw.SizedBox(height: 20),
           pw.Text(
             pictolog.createdAt.toString().split(' ')[0],
-            style: const pw.TextStyle(fontSize: 12),
+            style: const pw.TextStyle(
+              fontSize: 12,
+            ),
           ),
-          pw.SizedBox(height: 100),
+          pw.SizedBox(
+            height: 100,
+          ),
           pw.Text(
             pictolog.overviewDescription,
-            style: const pw.TextStyle(fontSize: 12),
+            style: const pw.TextStyle(
+              fontSize: 12,
+            ),
           ),
         ],
       ),

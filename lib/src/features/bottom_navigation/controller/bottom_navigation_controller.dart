@@ -7,7 +7,9 @@ import 'package:go_router/go_router.dart';
 class BottomNavigationController {
   final StatefulNavigationShell navigationShell;
 
-  BottomNavigationController({required this.navigationShell});
+  BottomNavigationController({
+    required this.navigationShell,
+  });
 
   int get currentIndex => navigationShell.currentIndex;
 

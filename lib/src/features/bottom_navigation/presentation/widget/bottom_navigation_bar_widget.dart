@@ -5,9 +5,12 @@ import '../../config/navigation_config.dart';
 import '../../controller/bottom_navigation_controller.dart';
 import 'tab_item.dart';
 
-/// Widget: Represents the bottom navigation bar of the application.
+/// Represents the bottom navigation bar of the application.
 class BottomNavigationBarWidget extends StatelessWidget {
-  const BottomNavigationBarWidget({super.key, required this.controller});
+  const BottomNavigationBarWidget({
+    super.key,
+    required this.controller,
+  });
 
   final BottomNavigationController controller;
 

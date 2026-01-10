@@ -15,7 +15,9 @@ void main() async {
 
   // Open the box
   await Hive.openBox<Pictolog>('pictologs');
-  runApp(const MainApp());
+  runApp(
+    const MainApp(),
+  );
 }
 
 class MainApp extends HookWidget {
@@ -25,7 +27,9 @@ class MainApp extends HookWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ProviderScope(child: PictologApp()),
+      home: ProviderScope(
+        child: PictologApp(),
+      ),
     );
   }
 }

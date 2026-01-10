@@ -3,8 +3,16 @@ import 'navigation_item.dart';
 
 class NavigationConfig {
   static const List<NavigationItem> items = [
-    NavigationItem(icon: Icons.home, label: 'Übersicht', index: 0),
-    NavigationItem(icon: Icons.group_rounded, label: 'Einstellungen', index: 1),
+    NavigationItem(
+      icon: Icons.home,
+      label: 'Übersicht',
+      index: 0,
+    ),
+    NavigationItem(
+      icon: Icons.group_rounded,
+      label: 'Einstellungen',
+      index: 1,
+    ),
   ];
 
   static const int fabIndex = 2;

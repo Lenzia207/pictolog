@@ -3,17 +3,25 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../crud_pictolog/model/pictolog.dart';
 
 class PdfFooter extends pw.StatelessWidget {
-  PdfFooter({required this.pictolog});
+  PdfFooter({
+    required this.pictolog,
+  });
+
   final Pictolog pictolog;
 
   @override
   pw.Widget build(pw.Context context) {
     return pw.Container(
       alignment: pw.Alignment.centerRight,
-      padding: pw.EdgeInsets.only(top: 10),
+      padding: pw.EdgeInsets.only(
+        top: 10,
+      ),
       child: pw.Text(
         'Page ${context.pageNumber} of ${context.pagesCount}',
-        style: pw.TextStyle(fontSize: 10, color: PdfColors.grey),
+        style: pw.TextStyle(
+          fontSize: 10,
+          color: PdfColors.grey,
+        ),
       ),
     );
   }

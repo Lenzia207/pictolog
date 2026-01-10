@@ -10,7 +10,9 @@ final pictologRepositoryProvider = Provider<PictologRepository>((ref) {
   // For simplicity with synchronous access in ValueListenableBuilder, keeping the box open globally is preferred,
   // but here we can open it lazily if needed.
   // Note: Hive.box() only works if the box is already opened.
-  return PictologRepository(Hive.box<Pictolog>('pictologs'));
+  return PictologRepository(
+    Hive.box<Pictolog>('pictologs'),
+  );
 });
 
 class PictologRepository {
@@ -33,6 +35,7 @@ class PictologRepository {
     // Optional: Delete associated images from disk here to clean up space
     for (var report in pictolog.reports) {
       final file = File(report.imagePath);
+
       if (await file.exists()) {
         await file.delete();
       }
@@ -46,6 +49,7 @@ class PictologRepository {
     final appDir = await getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
     final savedImage = await imageFile.copy('${appDir.path}/$fileName');
+
     return savedImage.path;
   }
 }

@@ -10,17 +10,27 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
 
   final Pictolog pictolog;
 
-  const PictologPdfPreviewScreen({super.key, required this.pictolog});
+  const PictologPdfPreviewScreen({
+    super.key,
+    required this.pictolog,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('PDF Preview')),
+      appBar: AppBar(
+        title: const Text(
+          'PDF Preview',
+        ),
+      ),
       body: Center(
         child: PdfPreview(
           build: (format) => ref
               .read(pdfGeneratorRepositoryProvider)
-              .generatePdf(format, pictolog),
+              .generatePdf(
+                format,
+                pictolog,
+              ),
           canDebug: false,
         ),
       ),

@@ -4,7 +4,9 @@ import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/router/app_router.dart';
 
 class PictologApp extends HookConsumerWidget {
-  const PictologApp({super.key});
+  const PictologApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -12,7 +14,9 @@ class PictologApp extends HookConsumerWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: goRouter,
-      theme: ThemeData(scaffoldBackgroundColor: AppColor.background),
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColor.background,
+      ),
     );
   }
 }

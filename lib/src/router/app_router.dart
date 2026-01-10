@@ -32,7 +32,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           // the UI shell
-          return BottomNavigation(navigationShell: navigationShell);
+          return BottomNavigation(
+            navigationShell: navigationShell,
+          );
         },
         branches: [
           StatefulShellBranch(
@@ -41,8 +43,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: HomeOverviewScreen.path,
                 name: HomeOverviewScreen.name,
-                pageBuilder: (context, state) =>
-                    NoTransitionPage(child: const HomeOverviewScreen()),
+                pageBuilder: (context, state) => NoTransitionPage(
+                  child: const HomeOverviewScreen(),
+                ),
                 routes: [
                   GoRoute(
                     path: NewEntryPictologScreen.path,
@@ -59,7 +62,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                           state.pathParameters[PictologDetailsScreen.paramId];
                       // Try to parse as int, fallback to string if parsing fails
                       final key = int.tryParse(id ?? '') ?? id;
-                      return PictologDetailsScreen(pictologKey: key);
+                      return PictologDetailsScreen(
+                        pictologKey: key,
+                      );
                     },
                     routes: [
                       GoRoute(
@@ -68,7 +73,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                         parentNavigatorKey: _rootNavigatorKey,
                         builder: (context, state) {
                           final pictolog = state.extra as Pictolog;
-                          return PictologPdfPreviewScreen(pictolog: pictolog);
+                          return PictologPdfPreviewScreen(
+                            pictolog: pictolog,
+                          );
                         },
                       ),
                     ],

@@ -19,7 +19,12 @@ class NewEntryPictologUi extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Neuer Eintrag'),
-        actions: [IconButton(onPressed: savePictolog, icon: icon)],
+        actions: [
+          IconButton(
+            onPressed: savePictolog,
+            icon: icon,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

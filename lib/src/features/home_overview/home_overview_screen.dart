@@ -30,6 +30,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
     // Helper to toggle selection
     void toggleSelection(dynamic key) {
       final newSet = Set<dynamic>.from(selectedKeys.value);
+
       if (newSet.contains(key)) {
         newSet.remove(key);
       } else {
@@ -70,7 +71,9 @@ class HomeOverviewScreen extends HookConsumerWidget {
         // Change leading icon in selection mode to allow cancelling
         leading: isSelectionMode.value
             ? IconButton(
-                icon: const Icon(Icons.close),
+                icon: const Icon(
+                  Icons.close,
+                ),
                 onPressed: () {
                   isSelectionMode.value = false;
                   selectedKeys.value = {};
@@ -113,7 +116,9 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     size: 64,
                     color: Colors.grey,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Text.rich(
                     TextSpan(
                       children: [
@@ -126,16 +131,23 @@ class HomeOverviewScreen extends HookConsumerWidget {
                           child: Icon(
                             NavigationConfig.fabIcon,
                             size: 20,
-                            color: AppColor.primary.withValues(alpha: 0.5),
+                            color: AppColor.primary.withValues(
+                              alpha: 0.5,
+                            ),
                           ),
                         ),
-                        const TextSpan(text: ' Button!'),
+                        const TextSpan(
+                          text: ' Button!',
+                        ),
                       ],
                     ),
                     textAlign: TextAlign.center,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleMedium?.copyWith(color: Colors.grey),
+                    style:
+                        Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          color: Colors.grey,
+                        ),
                   ),
                 ],
               ),
