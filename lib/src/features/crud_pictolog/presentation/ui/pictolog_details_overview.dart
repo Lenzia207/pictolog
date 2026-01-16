@@ -9,9 +9,13 @@ class PictologDetailsOverview extends ConsumerWidget {
   const PictologDetailsOverview({
     super.key,
     required this.pictolog,
+    required this.icon,
+    required this.onPressed,
   });
 
   final Pictolog pictolog;
+  final Widget icon;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,6 +65,10 @@ class PictologDetailsOverview extends ConsumerWidget {
               Text(
                 'Seiten (${pictolog.reports.length})',
                 style: Theme.of(context).textTheme.titleLarge,
+              ),
+              IconButton(
+                icon: icon,
+                onPressed: onPressed,
               ),
             ],
           ),

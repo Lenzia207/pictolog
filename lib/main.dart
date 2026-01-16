@@ -15,6 +15,7 @@ void main() async {
 
   // Open the box
   await Hive.openBox<Pictolog>('pictologs');
+  await Hive.openBox<Report>('reports');
   runApp(
     const MainApp(),
   );

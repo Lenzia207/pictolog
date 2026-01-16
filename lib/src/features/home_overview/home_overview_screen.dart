@@ -8,6 +8,7 @@ import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_entry_card.dart';
 
+import '../../helper/helper.dart';
 import '../bottom_navigation/config/navigation_config.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';
 import '../crud_pictolog/model/pictolog.dart';
@@ -27,24 +28,6 @@ class HomeOverviewScreen extends HookConsumerWidget {
     // Selection state
     final isSelectionMode = useState(false);
     final selectedKeys = useState<Set<dynamic>>({});
-
-    // Helper to toggle selection
-    void toggleSelection(dynamic key) {
-      final newSet = Set<dynamic>.from(selectedKeys.value);
-
-      if (newSet.contains(key)) {
-        newSet.remove(key);
-      } else {
-        newSet.add(key);
-      }
-      selectedKeys.value = newSet;
-
-      // Optional: Auto-exit selection mode if empty?
-      // User might want to unselect all then select others, so maybe keep it active.
-      if (newSet.isEmpty && !isSelectionMode.value) {
-        // Should not happen if logic is correct
-      }
-    }
 
     Future<void> deleteSelected() async {
       final box = repository.box;
@@ -174,7 +157,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     '${log.createdAt.day}.${log.createdAt.month}.${log.createdAt.year}',
                 onTapItem: () {
                   if (isSelectionMode.value) {
-                    toggleSelection(log.key);
+                    Helper.toggleSelection(selectedKeys, log.key);
                   } else {
                     context.goNamed(
                       PictologDetailsScreen.name,
@@ -188,7 +171,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                   if (!isSelectionMode.value) {
                     isSelectionMode.value = true;
                   }
-                  toggleSelection(log.key);
+                  Helper.toggleSelection(selectedKeys, log.key);
                 },
               );
             },
