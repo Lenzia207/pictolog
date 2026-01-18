@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 
@@ -8,7 +7,7 @@ import '../../config/navigation_config.dart';
 import '../../controller/bottom_navigation_controller.dart';
 
 /// Widget: Represents the floating action button in the bottom navigation.
-class FloatingActionButtonWidget extends HookWidget {
+class FloatingActionButtonWidget extends StatelessWidget {
   const FloatingActionButtonWidget({
     super.key,
     required this.controller,
@@ -18,11 +17,11 @@ class FloatingActionButtonWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = GoRouter.of(context);
-    // Listen to route changes
-    useListenable(router.routeInformationProvider);
+    // Use GoRouterState.of to reliably rebuild on route changes (including back navigation!)
+    final routerState = GoRouterState.of(context);
 
-    final String location = router.routeInformationProvider.value.uri.path;
+    // Get the current location
+    final String location = routerState.uri.path;
 
     // Only show FAB on the home screen
     if (location != '/') {
