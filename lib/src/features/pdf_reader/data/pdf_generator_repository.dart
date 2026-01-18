@@ -34,7 +34,7 @@ class PdfGeneratorRepository {
           return PdfImageDescriptionSection(
             pictolog: pictolog,
             image: image,
-            reportDescription: report.description,
+            reportDescription: report.description ?? '',
           );
         },
       ),

@@ -34,26 +34,27 @@ class PictologReportCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 250,
-                width: double.infinity,
-                child: Image.file(
-                  File(report.imagePath),
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, _, _) => const Center(
-                    child: Icon(
-                      Icons.broken_image,
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Image.file(
+                    File(report.imagePath),
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                      ),
                     ),
                   ),
                 ),
               ),
-              if (report.description.isNotEmpty)
+              if (report.description?.isNotEmpty ?? false)
                 Padding(
                   padding: const EdgeInsets.all(
                     p16,
                   ),
                   child: Text(
-                    report.description,
+                    report.description!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ),

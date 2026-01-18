@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
-import 'package:pictolog/src/features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 
 import '../../../constants/app_style.dart';
+import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../data/report_repository.dart';
 import '../model/report.dart';
+import 'ui/empty_entries_message.dart';
+import 'ui/pictolog_detail_floating_button.dart';
 import 'ui/pictolog_details_overview.dart';
+import 'widgets/pictolog_details_app_bar.dart';
 import 'widgets/report_reorderable_list.dart';
 
 class PictologDetailsScreen extends HookConsumerWidget {
@@ -63,49 +66,29 @@ class PictologDetailsScreen extends HookConsumerWidget {
         }
 
         return Scaffold(
-          appBar: AppBar(
-            title: isSelectionMode.value
-                ? Text('${selectedKeys.value.length} ausgewählt')
-                : Text(
-                    pictolog.name,
-                  ),
-            leading: isSelectionMode.value
-                ? IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      isSelectionMode.value = false;
-                      selectedKeys.value = {};
-                    },
-                  )
-                : null,
-            actions: [
-              if (isSelectionMode.value)
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: deleteSelected,
-                )
-              else ...[
-                IconButton(
-                  icon: const Icon(
-                    Icons.picture_as_pdf,
-                  ),
-
-                  onPressed: () {
-                    context.pushNamed(
-                      PictologPdfPreviewScreen.name,
-                      pathParameters: {
-                        PictologDetailsScreen.paramId: pictologKey.toString(),
-                      },
-                      extra: pictolog,
-                    );
-                  },
-                ),
-              ],
-            ],
+          appBar: PictologDetailsAppBar(
+            isSelectionMode: isSelectionMode,
+            selectedKeys: selectedKeys,
+            title: pictolog.name,
+            onClose: () {
+              isSelectionMode.value = false;
+              selectedKeys.value = {};
+            },
+            onDelete: deleteSelected,
+            onPdfPressed: () {
+              context.pushNamed(
+                PictologPdfPreviewScreen.name,
+                pathParameters: {
+                  PictologDetailsScreen.paramId: pictologKey.toString(),
+                },
+                extra: pictolog,
+              );
+            },
           ),
+
           body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 PictologDetailsOverview(
                   pictolog: pictolog,
@@ -127,43 +110,29 @@ class PictologDetailsScreen extends HookConsumerWidget {
                   },
                 ),
                 if (pictolog.reports.isEmpty)
-                  const Center(
-                    child: Text(
-                      'Keine Einträge bis jetzt.',
-                    ),
-                  )
-                else
+                  const EmptyEntriesMessage()
+                else ...[
                   ReportReorderableList(
                     pictolog: pictolog,
                     isReorderMode: isReorderMode,
                     isSelectionMode: isSelectionMode,
                     selectedKeys: selectedKeys,
                   ),
-                Space.h200,
+                  Space.h200,
+                ],
               ],
             ),
           ),
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(
-              bottom: p120,
-            ),
-            child: FloatingActionButton.extended(
-              onPressed: () {
-                final report = ref.read(reportRepositoryProvider);
+          floatingActionButton: PictologDetailFloatingButton(
+            onButtonPressed: () {
+              final report = ref.read(reportRepositoryProvider);
 
-                report.addReport(
-                  context: context,
-                  repository: repository,
-                  pictolog: pictolog,
-                );
-              },
-              label: const Text(
-                'Seiten hinzufügen',
-              ),
-              icon: const Icon(
-                Icons.add_a_photo,
-              ),
-            ),
+              report.addReport(
+                context: context,
+                repository: repository,
+                pictolog: pictolog,
+              );
+            },
           ),
         );
       },

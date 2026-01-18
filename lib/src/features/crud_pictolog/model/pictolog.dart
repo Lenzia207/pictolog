@@ -27,6 +27,4 @@ class Pictolog extends HiveObject {
     required this.createdAt,
     this.updatedAt,
   });
-
-  operator [](int other) {}
 }

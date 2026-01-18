@@ -11,6 +11,8 @@ import '../../model/report.dart';
 import 'report_page.dart';
 
 class ReportFullscreenGallery extends HookConsumerWidget {
+  static const String path = '/report_fullscreen_gallery';
+  static const String name = 'ReportFullscreenGallery';
   const ReportFullscreenGallery({
     super.key,
     required this.pictolog,

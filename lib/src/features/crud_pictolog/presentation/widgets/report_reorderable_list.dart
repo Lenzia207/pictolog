@@ -3,6 +3,7 @@ import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_report_card.dart';
 
 import '../../../../helper/helper.dart';
+import '../../model/report.dart';
 import '../report/report_fullscreen_gallery.dart';
 
 class ReportReorderableList extends StatelessWidget {
@@ -16,7 +17,7 @@ class ReportReorderableList extends StatelessWidget {
   final Pictolog pictolog;
   final ValueNotifier<bool> isSelectionMode;
   final ValueNotifier<bool> isReorderMode;
-  final ValueNotifier<Set<dynamic>> selectedKeys;
+  final ValueNotifier<Set<Report>> selectedKeys;
 
   @override
   Widget build(BuildContext context) {

@@ -44,7 +44,7 @@ class ReportPage extends HookWidget {
             ),
           ),
         ),
-        if (report.description.isNotEmpty)
+        if (report.description != null && report.description!.isNotEmpty)
           AnimatedOpacity(
             opacity: areControlsVisible ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 300),
@@ -104,8 +104,10 @@ class ReportPage extends HookWidget {
                           child: SafeArea(
                             top: false,
                             child: Text(
-                              report.description,
-                              style: const TextStyle(color: Colors.white),
+                              report.description ?? '',
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),

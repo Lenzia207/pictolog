@@ -8,10 +8,10 @@ class Report extends HiveObject {
   String imagePath; // Store the path, not the blob
 
   @HiveField(1)
-  String description;
+  String? description;
 
   Report({
     required this.imagePath,
-    required this.description,
+    this.description,
   });
 }
