@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
+import '../../../../widgets/selection_checkbox.dart';
 import '../../model/report.dart';
 
 class PictologReportCard extends StatelessWidget {
@@ -67,24 +68,8 @@ class PictologReportCard extends StatelessWidget {
             ],
           ),
           if (isSelectionMode)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: Container(
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: isSelectedItem
-                    ? Icon(
-                        Icons.check_circle,
-                        color: Theme.of(context).primaryColor,
-                      )
-                    : const Icon(
-                        Icons.radio_button_unchecked,
-                        color: Colors.grey,
-                      ),
-              ),
+            SelectionCheckbox(
+              isSelectedItem: isSelectedItem,
             ),
         ],
       ),

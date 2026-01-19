@@ -3,6 +3,8 @@ import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/constants/app_text_style.dart';
 
+import '../../../widgets/selection_checkbox.dart';
+
 class PictologEntryCard extends StatelessWidget {
   const PictologEntryCard({
     super.key,
@@ -103,26 +105,8 @@ class PictologEntryCard extends StatelessWidget {
             ),
             // Selection Checkbox Overlay
             if (isSelectionMode)
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isSelectedItem
-                        ? context.colors.accentRed
-                        : context.colors.surface,
-                  ),
-                  child: isSelectedItem
-                      ? Icon(
-                          Icons.check_circle,
-                          color: context.colors.surface,
-                        )
-                      : Icon(
-                          Icons.radio_button_unchecked,
-                          color: context.colors.primary,
-                        ),
-                ),
+              SelectionCheckbox(
+                isSelectedItem: isSelectedItem,
               ),
           ],
         ),
