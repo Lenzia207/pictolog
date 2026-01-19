@@ -1,13 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/constants/app_color.dart';
-import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
+import '../../controller/pictolog_controller.dart';
 import '../../model/pictolog.dart';
-import '../../model/report.dart';
-import '../ui/edit_report_dialog.dart';
 import 'report_page.dart';
 
 class ReportFullscreenGallery extends HookConsumerWidget {
@@ -81,7 +77,11 @@ class ReportFullscreenGallery extends HookConsumerWidget {
                   ),
                   onPressed: () async {
                     final currentReport = pictolog.reports[selectedIndex.value];
-                    await _showEditDialog(
+                    final editPageDialog = ref
+                        .read(pictologControllerProvider)
+                        .showEditPageDialog;
+
+                    await editPageDialog(
                       context,
                       ref,
                       currentReport,
@@ -94,64 +94,6 @@ class ReportFullscreenGallery extends HookConsumerWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Future<void> _showEditDialog(
-    BuildContext context,
-    WidgetRef ref,
-    Report report,
-    Pictolog pictolog,
-    ValueNotifier<int> rebuildToken,
-  ) async {
-    final descriptionController = TextEditingController(
-      text: report.description,
-    );
-    String? newImagePath;
-
-    await showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) {
-          return EditReportDialog(
-            onImageChange: () async {
-              final picker = ImagePicker();
-              final pickedFile = await picker.pickImage(
-                source: ImageSource.gallery,
-              );
-              if (pickedFile != null) {
-                setState(() {
-                  newImagePath = pickedFile.path;
-                });
-              }
-            },
-            imagePath: newImagePath ?? report.imagePath,
-            descriptionController: descriptionController,
-            onSave: () async {
-              // Update Description
-              report.description = descriptionController.text.trim();
-
-              // Update Image if changed
-              if (newImagePath != null) {
-                final savedPath = await ref
-                    .read(pictologRepositoryProvider)
-                    .saveImageToAppStorage(File(newImagePath!));
-                report.imagePath = savedPath;
-              }
-
-              // Save Changes
-              await pictolog.save();
-
-              // Trigger UI Rebuild
-              rebuildToken.value++;
-
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            },
-          );
-        },
       ),
     );
   }

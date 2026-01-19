@@ -9,10 +9,9 @@ import 'package:pictolog/src/widgets/primary_button.dart';
 import '../../../constants/app_style.dart';
 import '../../../constants/app_text_style.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
+import '../controller/pictolog_controller.dart';
 import '../data/report_repository.dart';
-import '../model/pictolog.dart';
 import '../model/report.dart';
-import 'ui/edit_entry_dialog.dart';
 import 'ui/empty_entries_message.dart';
 import 'ui/pictolog_detail_floating_button.dart';
 import 'ui/pictolog_details_overview.dart';
@@ -78,7 +77,11 @@ class PictologDetailsScreen extends HookConsumerWidget {
             },
             onDelete: deleteSelectedReport,
             onSettingsPressed: () {
-              showEditDialog(context, ref, pictolog);
+              final editDialog = ref
+                  .read(pictologControllerProvider)
+                  .showEditDialog;
+
+              editDialog(context, ref, pictolog);
             },
           ),
 
@@ -152,35 +155,4 @@ class PictologDetailsScreen extends HookConsumerWidget {
       },
     );
   }
-}
-
-Future<void> showEditDialog(
-  BuildContext context,
-  WidgetRef ref,
-  Pictolog pictolog,
-) async {
-  final nameController = TextEditingController(
-    text: pictolog.name,
-  );
-  final descriptionController = TextEditingController(
-    text: pictolog.overviewDescription,
-  );
-
-  await showDialog(
-    context: context,
-    builder: (context) => EditEntryDialog(
-      nameController: nameController,
-      descriptionController: descriptionController,
-      onSave: () {
-        ref
-            .read(pictologRepositoryProvider)
-            .updatePictolog(
-              pictolog,
-              name: nameController.text.trim(),
-              overviewDescription: descriptionController.text.trim(),
-            );
-        Navigator.of(context).pop();
-      },
-    ),
-  );
 }
