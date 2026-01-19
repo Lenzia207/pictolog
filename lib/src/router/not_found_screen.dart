@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_color.dart';
+
 class NotFoundScreen extends StatelessWidget {
   const NotFoundScreen({
     super.key,
@@ -16,7 +18,7 @@ class NotFoundScreen extends StatelessWidget {
           errorMessage,
           style: TextStyle(
             fontSize: 24,
-            color: Colors.red,
+            color: context.colors.accentRed,
           ),
         ),
       ),

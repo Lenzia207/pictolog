@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_text_style.dart';
 
+import '../constants/app_style.dart';
+
 class ChipsButton extends StatelessWidget {
   const ChipsButton({
     super.key,
@@ -17,17 +19,22 @@ class ChipsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColor.surfaceLight,
-      borderRadius: BorderRadius.circular(20),
+      color: context.colors.surface,
+      borderRadius: BorderRadius.circular(p20),
       child: InkWell(
         onTap: onPressed,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(p20),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(
+            horizontal: p16,
+            vertical: p8,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: AppColor.textSecondaryLight.withValues(alpha: 0.5),
+              color: AppColor.textSecondaryLight.withValues(
+                alpha: 0.5,
+              ),
               width: 1,
             ),
           ),
@@ -40,7 +47,7 @@ class ChipsButton extends StatelessWidget {
                   size: 18,
                   color: AppColor.textPrimaryLight,
                 ),
-                const SizedBox(width: 8),
+                Space.h8,
               ],
               Text(
                 label,
