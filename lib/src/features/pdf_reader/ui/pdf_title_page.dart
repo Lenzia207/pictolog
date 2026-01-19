@@ -1,5 +1,6 @@
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
+import 'package:pictolog/src/widgets/app_date_format.dart';
 
 class PdfTitlePage extends pw.StatelessWidget {
   PdfTitlePage({required this.pictolog});
@@ -20,7 +21,7 @@ class PdfTitlePage extends pw.StatelessWidget {
           ),
           pw.SizedBox(height: 20),
           pw.Text(
-            pictolog.createdAt.toString().split(' ')[0],
+            pictolog.createdAt.toFormatDMY,
             style: const pw.TextStyle(
               fontSize: 12,
             ),

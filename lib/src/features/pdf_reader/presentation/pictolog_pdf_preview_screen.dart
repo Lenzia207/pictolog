@@ -4,6 +4,9 @@ import 'package:printing/printing.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/pdf_reader/data/pdf_generator_repository.dart';
 
+import '../../../constants/app_color.dart';
+import '../../../constants/app_text_style.dart';
+
 class PictologPdfPreviewScreen extends ConsumerWidget {
   static const String path = 'pdf_preview';
   static const String name = 'pictolog_pdf_preview';
@@ -19,8 +22,13 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: context.colors.surface.withAlpha(0),
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 2,
+        centerTitle: true,
+        title: Text(
           'PDF Preview',
+          style: AppTextStyle.headlineLarge,
         ),
       ),
       body: Center(

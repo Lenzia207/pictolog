@@ -4,13 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/src/constants/app_color.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
+import 'package:pictolog/src/features/home_overview/ui/no_pictologs_message.dart';
 import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart';
+import 'package:pictolog/src/widgets/app_date_format.dart';
 
 import '../../constants/app_text_style.dart';
 import '../../helper/helper.dart';
-import '../bottom_navigation/config/navigation_config.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';
 import '../crud_pictolog/model/pictolog.dart';
 
@@ -30,6 +30,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
     final isSelectionMode = useState(false);
     final selectedKeys = useState<Set<Pictolog>>({});
 
+    // Deletes all selected pictologs from the repository.
     Future<void> deleteSelected() async {
       final logsToDelete = selectedKeys.value.toList();
 
@@ -90,51 +91,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
           final logs = box.values.toList().cast<Pictolog>();
 
           if (logs.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.note_alt_outlined,
-                    size: 64,
-                    color: Colors.grey,
-                  ),
-                  Space.h16,
-
-                  // TODO Create Widget for this
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text:
-                              'Noch keine Pictologs.\nErstelle einen mit dem ',
-                        ),
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            NavigationConfig.fabIcon,
-                            size: 20,
-                            color: context.colors.accentGreen.withValues(
-                              alpha: 0.5,
-                            ),
-                          ),
-                        ),
-                        const TextSpan(
-                          text: ' Button!',
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.center,
-                    style:
-                        Theme.of(
-                          context,
-                        ).textTheme.titleMedium?.copyWith(
-                          color: Colors.grey,
-                        ),
-                  ),
-                ],
-              ),
-            );
+            return NoPictologsMessage();
           }
 
           return ListView.builder(
@@ -152,8 +109,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                 projectName: log.name,
                 projectLength: log.reports.length.toString(),
                 overviewDescription: log.overviewDescription,
-                projectCreatedAt:
-                    '${log.createdAt.day}.${log.createdAt.month}.${log.createdAt.year}',
+                projectCreatedAt: log.createdAt.toFormatDMY,
                 onTapItem: () {
                   if (isSelectionMode.value) {
                     Helper.toggleSelection(selectedKeys, log);

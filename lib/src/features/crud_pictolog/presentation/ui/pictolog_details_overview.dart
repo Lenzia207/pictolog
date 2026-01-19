@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pictolog/src/widgets/app_date_format.dart';
 
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
@@ -39,20 +40,19 @@ class PictologDetailsOverview extends ConsumerWidget {
             ],
           ),
           Space.h8,
-          Text(
-            pictolog.overviewDescription.isNotEmpty
-                ? pictolog.overviewDescription
-                : 'No description provided.',
-            style: AppTextStyle.bodyMedium,
-          ),
+          if (pictolog.overviewDescription.isNotEmpty)
+            Text(
+              pictolog.overviewDescription,
+              style: AppTextStyle.bodyMedium,
+            ),
           Space.h16,
           Text(
-            'Erstellt: ${pictolog.createdAt.day}.${pictolog.createdAt.month}.${pictolog.createdAt.year}',
+            'Erstellt: ${pictolog.createdAt.toFormatDMY}',
             style: AppTextStyle.bodySmall,
           ),
           if (pictolog.updatedAt != null)
             Text(
-              'Bearbeitet: ${pictolog.updatedAt!.day}.${pictolog.updatedAt!.month}.${pictolog.updatedAt!.year}',
+              'Bearbeitet: ${pictolog.updatedAt!.toFormatDMY}',
               style: AppTextStyle.bodySmall,
             ),
           const Divider(
@@ -67,9 +67,8 @@ class PictologDetailsOverview extends ConsumerWidget {
               ),
               ChipsButton(
                 onPressed: onPressedIcon,
-                label: "Seiten Sortieren",
+                label: "Reihenfolge ändern",
                 icon: icon,
-                // icon: isReorderMode.value ? Icons.check : Icons.sort,
               ),
             ],
           ),
