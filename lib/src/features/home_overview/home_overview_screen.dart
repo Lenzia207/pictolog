@@ -67,7 +67,9 @@ class HomeOverviewScreen extends HookConsumerWidget {
         actions: [
           IconButton(
             icon: Icon(
-              isSelectionMode.value ? Icons.delete : Icons.delete_outline,
+              selectedKeys.value.isNotEmpty
+                  ? Icons.delete
+                  : Icons.delete_outline,
               color: isSelectionMode.value ? context.colors.accentRed : null,
             ),
             onPressed: () {
