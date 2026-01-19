@@ -16,30 +16,34 @@ class BottomNavigationBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      height: 70,
-      color: context.colors.surface,
-      notchMargin: 8,
-      shape: const CircularNotchedRectangle(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    return SafeArea(
+      child: Container(
+        height: 70,
+        margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(50),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 100,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Left side items
-            ...NavigationConfig.items
-                .take(2)
-                .map(
-                  (item) => TabItem(
-                    icon: item.icon,
-                    label: item.label,
-                    index: item.index,
-                    currentIndex: controller.currentIndex,
-                    onTap: controller.goBranch,
-                  ),
-                ),
+            ...NavigationConfig.items.map(
+              (item) => TabItem(
+                icon: item.icon,
+                label: item.label,
+                index: item.index,
+                currentIndex: controller.currentIndex,
+                onTap: controller.goBranch,
+              ),
+            ),
           ],
         ),
       ),

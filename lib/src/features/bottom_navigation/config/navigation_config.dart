@@ -9,7 +9,7 @@ class NavigationConfig {
       index: 0,
     ),
     NavigationItem(
-      icon: Icons.group_rounded,
+      icon: Icons.settings,
       label: 'Einstellungen',
       index: 1,
     ),
