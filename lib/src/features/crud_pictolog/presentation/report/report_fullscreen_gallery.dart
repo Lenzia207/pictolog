@@ -4,20 +4,21 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/constants/app_color.dart';
-import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
 import '../../model/pictolog.dart';
 import '../../model/report.dart';
+import '../ui/edit_report_dialog.dart';
 import 'report_page.dart';
 
 class ReportFullscreenGallery extends HookConsumerWidget {
-  static const String path = 'report_fullscreen_gallery';
-  static const String name = 'ReportFullscreenGallery';
   const ReportFullscreenGallery({
     super.key,
     required this.pictolog,
     required this.initialIndex,
   });
+
+  static const String path = 'report_fullscreen_gallery';
+  static const String name = 'ReportFullscreenGallery';
 
   final Pictolog pictolog;
   final int initialIndex;
@@ -113,93 +114,42 @@ class ReportFullscreenGallery extends HookConsumerWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) {
-          return AlertDialog(
-            title: const Text(
-              'Eintrag bearbeiten',
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    final picker = ImagePicker();
-                    final pickedFile = await picker.pickImage(
-                      source: ImageSource.gallery,
-                    );
-                    if (pickedFile != null) {
-                      setState(() {
-                        newImagePath = pickedFile.path;
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: 200,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: context.colors.surface,
-                      borderRadius: BorderRadius.circular(p20),
-                      image: DecorationImage(
-                        opacity: 0.6,
-                        image: FileImage(
-                          File(
-                            newImagePath ?? report.imagePath,
-                          ),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white70,
-                        size: 40,
-                      ),
-                    ),
-                  ),
-                ),
-                Space.h16,
-                TextField(
-                  controller: descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Beschreibung',
-                    hintText: 'Beschreibung eingeben...',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 2,
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Abbrechen'),
-              ),
-              FilledButton(
-                onPressed: () async {
-                  // Update Description
-                  report.description = descriptionController.text.trim();
+          return EditReportDialog(
+            onImageChange: () async {
+              final picker = ImagePicker();
+              final pickedFile = await picker.pickImage(
+                source: ImageSource.gallery,
+              );
+              if (pickedFile != null) {
+                setState(() {
+                  newImagePath = pickedFile.path;
+                });
+              }
+            },
+            imagePath: newImagePath ?? report.imagePath,
+            descriptionController: descriptionController,
+            onSave: () async {
+              // Update Description
+              report.description = descriptionController.text.trim();
 
-                  // Update Image if changed
-                  if (newImagePath != null) {
-                    final savedPath = await ref
-                        .read(pictologRepositoryProvider)
-                        .saveImageToAppStorage(File(newImagePath!));
-                    report.imagePath = savedPath;
-                  }
+              // Update Image if changed
+              if (newImagePath != null) {
+                final savedPath = await ref
+                    .read(pictologRepositoryProvider)
+                    .saveImageToAppStorage(File(newImagePath!));
+                report.imagePath = savedPath;
+              }
 
-                  // Save Changes
-                  await pictolog.save();
+              // Save Changes
+              await pictolog.save();
 
-                  // Trigger UI Rebuild
-                  rebuildToken.value++;
+              // Trigger UI Rebuild
+              rebuildToken.value++;
 
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: const Text('Speichern'),
-              ),
-            ],
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            },
           );
         },
       ),

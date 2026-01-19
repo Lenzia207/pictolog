@@ -26,7 +26,7 @@ class AppTextField extends StatelessWidget {
       controller: controller,
       maxLines: switch (type) {
         AppTextFieldType.oneLiner => 1,
-        AppTextFieldType.multiLines => 5,
+        AppTextFieldType.multiLines => 7,
       },
       cursorColor: AppColor.accentGreen,
       decoration: InputDecoration(
@@ -53,9 +53,7 @@ class AppTextField extends StatelessWidget {
         labelStyle: TextStyle(
           color: context.colors.textSecondary,
         ),
-        floatingLabelStyle: const TextStyle(
-          color: AppColor.accentGreen,
-        ),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
     );
   }
