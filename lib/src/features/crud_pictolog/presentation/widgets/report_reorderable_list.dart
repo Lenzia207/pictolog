@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_report_card.dart';
@@ -25,8 +26,13 @@ class ReportReorderableList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 360,
-
       child: ReorderableListView.builder(
+        proxyDecorator: (child, index, animation) {
+          return Material(
+            color: Colors.transparent,
+            child: child,
+          );
+        },
         scrollDirection: Axis.horizontal,
         buildDefaultDragHandles: isReorderMode.value,
         itemCount: pictolog.reports.length,
@@ -51,6 +57,7 @@ class ReportReorderableList extends StatelessWidget {
 
           return GestureDetector(
             key: ValueKey(report),
+            // Long press to enter selection mode and select item to delete
             onLongPress: isReorderMode.value
                 ? null
                 : () {
@@ -59,6 +66,9 @@ class ReportReorderableList extends StatelessWidget {
                     }
                     Helper.toggleSelection(selectedKeys, report);
                   },
+
+            // If in selection mode, tapping toggles selection
+            // If not in selection mode, then it will navigate and open the report
             onTap: isReorderMode.value
                 ? null
                 : () {
@@ -84,7 +94,7 @@ class ReportReorderableList extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: 300,
+                  width: p300,
                   margin: const EdgeInsets.only(
                     right: p20,
                   ), // Spacing between items
@@ -97,13 +107,13 @@ class ReportReorderableList extends StatelessWidget {
                 if (isReorderMode.value)
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.3),
+                      color: context.colors.accentGreen,
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(12),
                     child: const Icon(
                       Icons.drag_indicator,
-                      color: Colors.white,
+                      color: Colors.black,
                       size: 32,
                     ),
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
+import '../../../../widgets/chips_button.dart';
 import '../../model/pictolog.dart';
 
 class PictologDetailsOverview extends ConsumerWidget {
@@ -11,13 +12,13 @@ class PictologDetailsOverview extends ConsumerWidget {
     required this.pictolog,
     required this.title,
     required this.icon,
-    required this.onPressed,
+    required this.onPressedIcon,
   });
 
   final Pictolog pictolog;
   final String title;
-  final Widget icon;
-  final VoidCallback onPressed;
+  final IconData icon;
+  final VoidCallback onPressedIcon;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,9 +65,11 @@ class PictologDetailsOverview extends ConsumerWidget {
                 'Seiten (${pictolog.reports.length})',
                 style: AppTextStyle.headlineMedium,
               ),
-              IconButton(
+              ChipsButton(
+                onPressed: onPressedIcon,
+                label: "Seiten Sortieren",
                 icon: icon,
-                onPressed: onPressed,
+                // icon: isReorderMode.value ? Icons.check : Icons.sort,
               ),
             ],
           ),

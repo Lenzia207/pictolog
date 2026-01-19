@@ -7,7 +7,6 @@ import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dar
 
 import 'package:pictolog/src/widgets/primary_button.dart';
 import '../../../constants/app_style.dart';
-import '../../../constants/app_text_style.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../controller/pictolog_controller.dart';
 import '../data/report_repository.dart';
@@ -92,23 +91,12 @@ class PictologDetailsScreen extends HookConsumerWidget {
                 PictologDetailsOverview(
                   pictolog: pictolog,
                   title: pictolog.name,
-                  icon: Row(
-                    spacing: p8,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        isReorderMode.value ? Icons.check : Icons.sort,
-                      ),
-                      Text(
-                        'Seiten Sortieren',
-                        style: AppTextStyle.titleMedium,
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    isReorderMode.value = !isReorderMode.value;
-                  },
+                  icon: isReorderMode.value ? Icons.check : Icons.sort,
+                  onPressedIcon: () =>
+                      isReorderMode.value = !isReorderMode.value,
                 ),
+
+                // Pages List
                 if (pictolog.reports.isEmpty)
                   const EmptyEntriesMessage()
                 else ...[
@@ -121,7 +109,9 @@ class PictologDetailsScreen extends HookConsumerWidget {
                   Space.h50,
                 ],
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: p10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: p10,
+                  ),
                   child: PrimaryButton(
                     label: 'PDF Erstellen',
                     onPressed: () {
@@ -135,7 +125,6 @@ class PictologDetailsScreen extends HookConsumerWidget {
                     },
                   ),
                 ),
-
                 Space.h300,
               ],
             ),
