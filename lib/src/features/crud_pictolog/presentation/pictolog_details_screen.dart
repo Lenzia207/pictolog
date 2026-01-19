@@ -117,7 +117,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
                   Space.h50,
                 ],
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: p16),
+                  padding: const EdgeInsets.symmetric(horizontal: p10),
                   child: PrimaryButton(
                     label: 'PDF Erstellen',
                     onPressed: () {

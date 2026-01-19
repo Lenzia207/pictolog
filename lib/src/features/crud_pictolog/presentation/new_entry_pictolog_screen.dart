@@ -92,7 +92,7 @@ class NewEntryPictologScreen extends HookConsumerWidget {
           : const Icon(Icons.check),
       nameController: nameController,
       overviewController: overviewController,
-      savePictolog: isLoading.value ? null : savePictolog,
+      savePictolog: isLoading.value ? () {} : savePictolog,
     );
   }
 }

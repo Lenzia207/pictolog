@@ -33,8 +33,6 @@ class PictologDetailsAppBar extends StatelessWidget
         return AppBar(
           backgroundColor: context.colors.surface.withAlpha(0),
           surfaceTintColor: Colors.transparent,
-
-          // shadowColor: Colors.black,
           scrolledUnderElevation: 2,
           centerTitle: true,
           title: selectionMode

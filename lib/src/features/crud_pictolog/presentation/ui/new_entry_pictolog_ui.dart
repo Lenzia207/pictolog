@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 
+import '../../../../constants/app_color.dart';
+import '../../../../constants/app_text_style.dart';
+import '../../../../widgets/app_text_fields.dart';
+import '../../../../widgets/primary_button.dart';
+
 class NewEntryPictologUi extends StatelessWidget {
   const NewEntryPictologUi({
     super.key,
@@ -13,134 +18,74 @@ class NewEntryPictologUi extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController overviewController;
   final Widget icon;
-  final Future<void> Function()? savePictolog;
+  final VoidCallback savePictolog;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Neuer Eintrag'),
-        actions: [
-          IconButton(
-            onPressed: savePictolog,
-            icon: icon,
-          ),
-        ],
+        backgroundColor: context.colors.surface.withAlpha(0),
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 2,
+        centerTitle: true,
+        title: Text(
+          'Neuer Pictolog Eintrag',
+          style: AppTextStyle.headlineLarge,
+        ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: p10,
+          vertical: p20,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Name Field
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Name des Projekts',
-                border: OutlineInputBorder(),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: p8,
+                bottom: p10,
+              ),
+              child: Text(
+                "Titel",
+                style: AppTextStyle.titleLarge,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-            Space.h16,
-            // Overview Field
-            TextField(
-              controller: overviewController,
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: 'Allgemeine Beschreibung des Projekts... (Optional)',
-                border: OutlineInputBorder(),
-                alignLabelWithHint: true,
-              ),
-            ),
-            // Reports Section Header
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Text(
-            //       'Reports (${tempReports.value.length})',
-            //       style: Theme.of(context).textTheme.titleLarge,
-            //     ),
-            //     TextButton.icon(
-            //       onPressed: addPhoto,
-            //       icon: const Icon(Icons.add_a_photo),
-            //       label: const Text('Add Photo'),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(height: 8),
 
-            // Reports List
-            // if (tempReports.value.isEmpty)
-            //   Container(
-            //     padding: const EdgeInsets.all(32),
-            //     alignment: Alignment.center,
-            //     decoration: BoxDecoration(
-            //       border: Border.all(color: Colors.grey.shade300),
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //     child: const Text('No photos added yet'),
-            //   )
-            // else
-            //   ListView.builder(
-            //     shrinkWrap: true,
-            //     physics: const NeverScrollableScrollPhysics(),
-            //     itemCount: tempReports.value.length,
-            //     itemBuilder: (context, index) {
-            //       final tempReport = tempReports.value[index];
-            //       return Card(
-            //         margin: const EdgeInsets.only(bottom: 16),
-            //         clipBehavior: Clip.antiAlias,
-            //         child: Column(
-            //           children: [
-            //             // Image Preview
-            //             Stack(
-            //               children: [
-            //                 SizedBox(
-            //                   height: 200,
-            //                   width: double.infinity,
-            //                   child: Image.file(
-            //                     File(tempReport.imageFile.path),
-            //                     fit: BoxFit.cover,
-            //                   ),
-            //                 ),
-            //                 Positioned(
-            //                   top: 8,
-            //                   right: 8,
-            //                   child: CircleAvatar(
-            //                     backgroundColor: Colors.black54,
-            //                     child: IconButton(
-            //                       icon: const Icon(
-            //                         Icons.close,
-            //                         color: Colors.white,
-            //                       ),
-            //                       onPressed: () {
-            //                         final newList = [...tempReports.value];
-            //                         newList.removeAt(index);
-            //                         tempReports.value = newList;
-            //                       },
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //             // Description Field for this specific report
-            //             Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: TextField(
-            //                 decoration: const InputDecoration(
-            //                   labelText: 'Description',
-            //                   border: InputBorder.none,
-            //                   prefixIcon: Icon(Icons.description),
-            //                 ),
-            //                 onChanged: (val) {
-            //                   tempReport.description = val;
-            //                 },
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //   ),
+            AppTextField(
+              type: AppTextFieldType.oneLiner,
+              controller: nameController,
+              labelText: 'Name des Projekts',
+            ),
+
+            Space.h30,
+
+            // Overview Field
+            Padding(
+              padding: const EdgeInsets.only(
+                left: p8,
+                bottom: p10,
+              ),
+              child: Text(
+                "Beschreibung (Optional)",
+                style: AppTextStyle.titleLarge,
+              ),
+            ),
+
+            AppTextField(
+              controller: overviewController,
+              labelText: 'Allgemeine Beschreibung des Projekts...',
+              type: AppTextFieldType.multiLines,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: p30),
+              child: PrimaryButton(
+                label: 'Eintrag speichern',
+                onPressed: savePictolog,
+              ),
+            ),
           ],
         ),
       ),
