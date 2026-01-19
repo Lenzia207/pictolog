@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_report_card.dart';
@@ -67,13 +68,15 @@ class ReportReorderableList extends StatelessWidget {
                         report,
                       );
                     } else {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ReportFullscreenGallery(
-                            pictolog: pictolog,
-                            initialIndex: index,
-                          ),
-                        ),
+                      context.pushNamed(
+                        ReportFullscreenGallery.name,
+                        pathParameters: {
+                          'id': pictolog.key.toString(),
+                        },
+                        extra: {
+                          'pictolog': pictolog,
+                          'index': index,
+                        },
                       );
                     }
                   },

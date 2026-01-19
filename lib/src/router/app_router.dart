@@ -7,6 +7,7 @@ import '../features/account_settings/presentation/account_settings_screen.dart';
 import '../features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 import '../features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import '../features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
+import '../features/crud_pictolog/presentation/report/report_fullscreen_gallery.dart';
 import '../features/bottom_navigation/presentation/bottom_navigation.dart';
 import 'not_found_screen.dart';
 
@@ -75,6 +76,18 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                           final pictolog = state.extra as Pictolog;
                           return PictologPdfPreviewScreen(
                             pictolog: pictolog,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: ReportFullscreenGallery.path,
+                        name: ReportFullscreenGallery.name,
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) {
+                          final args = state.extra as Map<String, dynamic>;
+                          return ReportFullscreenGallery(
+                            pictolog: args['pictolog'] as Pictolog,
+                            initialIndex: args['index'] as int,
                           );
                         },
                       ),

@@ -11,7 +11,7 @@ import '../../model/report.dart';
 import 'report_page.dart';
 
 class ReportFullscreenGallery extends HookConsumerWidget {
-  static const String path = '/report_fullscreen_gallery';
+  static const String path = 'report_fullscreen_gallery';
   static const String name = 'ReportFullscreenGallery';
   const ReportFullscreenGallery({
     super.key,
@@ -37,7 +37,7 @@ class ReportFullscreenGallery extends HookConsumerWidget {
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-          // 1. PageView for Images (Background)
+          // PageView for Images (Background)
           PageView.builder(
             controller: pageController,
             itemCount: pictolog.reports.length,
@@ -57,7 +57,7 @@ class ReportFullscreenGallery extends HookConsumerWidget {
             },
           ),
 
-          // 2. Custom App Bar (Overlay)
+          // Custom App Bar (Overlay)
           AnimatedPositioned(
             duration: const Duration(milliseconds: 300),
             top: areControlsVisible.value ? 0 : -kToolbarHeight - 50,
@@ -65,12 +65,19 @@ class ReportFullscreenGallery extends HookConsumerWidget {
             right: 0,
             height: kToolbarHeight + MediaQuery.of(context).padding.top,
             child: AppBar(
-              backgroundColor: context.colors.background.withValues(alpha: 0.6),
-              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: context.colors.background.withValues(
+                alpha: 0.8,
+              ),
+              iconTheme: IconThemeData(
+                color: context.colors.primary,
+              ),
               elevation: 0,
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.edit),
+                  icon: Icon(
+                    Icons.edit,
+                    color: context.colors.primary,
+                  ),
                   onPressed: () async {
                     final currentReport = pictolog.reports[selectedIndex.value];
                     await _showEditDialog(
@@ -130,7 +137,7 @@ class ReportFullscreenGallery extends HookConsumerWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: context.colors.surface,
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(p20),
                       image: DecorationImage(
                         opacity: 0.6,
                         image: FileImage(

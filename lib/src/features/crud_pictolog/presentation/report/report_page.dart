@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pictolog/src/constants/app_text_style.dart';
 
 import '../../../../constants/app_color.dart';
+import '../../../../constants/app_style.dart';
 import '../../model/report.dart';
 
 class ReportPage extends HookWidget {
@@ -18,8 +20,8 @@ class ReportPage extends HookWidget {
     required this.onToggleControls,
   });
 
-  static const double minSize = 0.18;
-  static const double maxSize = 1.0;
+  static const double minSize = 0.40;
+  static const double maxSize = .8;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class ReportPage extends HookWidget {
             child: Image.file(
               File(report.imagePath),
               fit: BoxFit.contain,
-              errorBuilder: (_, _, _) => const Center(
+              errorBuilder: (_, _, _) => Center(
                 child: Icon(
                   Icons.broken_image,
-                  color: Colors.white,
+                  color: context.colors.surface,
                   size: 48,
                 ),
               ),
@@ -50,7 +52,7 @@ class ReportPage extends HookWidget {
             duration: const Duration(milliseconds: 300),
             child: DraggableScrollableSheet(
               controller: draggableController,
-              initialChildSize: 0.38,
+              initialChildSize: minSize,
               minChildSize: minSize,
               maxChildSize: maxSize,
               snap: true,
@@ -73,7 +75,7 @@ class ReportPage extends HookWidget {
                           alpha: opacity,
                         ),
                         borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(10),
+                          top: Radius.circular(40),
                         ),
                       ),
                       child: child,
@@ -86,13 +88,13 @@ class ReportPage extends HookWidget {
                         Center(
                           child: Container(
                             margin: const EdgeInsets.symmetric(
-                              vertical: 12,
+                              vertical: p20,
                             ),
                             height: 4,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: Colors.white54,
-                              borderRadius: BorderRadius.circular(2),
+                              color: context.colors.primary,
+                              borderRadius: BorderRadius.circular(p20),
                             ),
                           ),
                         ),
@@ -105,14 +107,11 @@ class ReportPage extends HookWidget {
                             top: false,
                             child: Text(
                               report.description ?? '',
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
+                              style: AppTextStyle.bodyMedium,
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
