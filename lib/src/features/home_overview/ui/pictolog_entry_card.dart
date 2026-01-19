@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 
 class PictologEntryCard extends StatelessWidget {
@@ -31,14 +32,12 @@ class PictologEntryCard extends StatelessWidget {
         bottom: 16,
       ),
       elevation: isSelectedItem ? 4 : 2,
-      color: isSelectedItem
-          ? Theme.of(context).primaryColor.withAlpha(25)
-          : null,
+      color: context.colors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: isSelectedItem
             ? BorderSide(
-                color: Theme.of(context).primaryColor,
+                color: context.colors.primary,
                 width: 2,
               )
             : BorderSide.none,
@@ -103,18 +102,20 @@ class PictologEntryCard extends StatelessWidget {
                 top: 8,
                 right: 8,
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    color: isSelectedItem
+                        ? context.colors.accentRed
+                        : context.colors.surface,
                   ),
                   child: isSelectedItem
                       ? Icon(
                           Icons.check_circle,
-                          color: Theme.of(context).primaryColor,
+                          color: context.colors.surface,
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.radio_button_unchecked,
-                          color: Colors.grey,
+                          color: context.colors.primary,
                         ),
                 ),
               ),

@@ -33,11 +33,11 @@ class FloatingActionButtonWidget extends StatelessWidget {
       onPressed: () => context.pushNamed(
         NewEntryPictologScreen.name,
       ),
-      backgroundColor: AppColor.white,
+      backgroundColor: context.colors.accentGreen,
       child: Icon(
         size: 30,
         NavigationConfig.fabIcon,
-        color: AppColor.primary,
+        color: context.colors.primary,
       ),
     );
   }

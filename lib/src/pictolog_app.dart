@@ -15,7 +15,7 @@ class PictologApp extends HookConsumerWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: goRouter,
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColor.background,
+        scaffoldBackgroundColor: context.colors.background,
       ),
     );
   }

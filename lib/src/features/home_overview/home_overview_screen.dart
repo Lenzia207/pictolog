@@ -6,7 +6,7 @@ import 'package:pictolog/src/constants/app_color.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
-import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_entry_card.dart';
+import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart';
 
 import '../../helper/helper.dart';
 import '../bottom_navigation/config/navigation_config.dart';
@@ -68,7 +68,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
           IconButton(
             icon: Icon(
               isSelectionMode.value ? Icons.delete : Icons.delete_outline,
-              color: isSelectionMode.value ? AppColor.red : null,
+              color: isSelectionMode.value ? context.colors.accentRed : null,
             ),
             onPressed: () {
               if (isSelectionMode.value) {
@@ -114,7 +114,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                           child: Icon(
                             NavigationConfig.fabIcon,
                             size: 20,
-                            color: AppColor.primary.withValues(
+                            color: context.colors.accentGreen.withValues(
                               alpha: 0.5,
                             ),
                           ),

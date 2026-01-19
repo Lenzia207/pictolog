@@ -69,7 +69,7 @@ class ReportPage extends HookWidget {
 
                     return Container(
                       decoration: BoxDecoration(
-                        color: AppColor.primary.withValues(
+                        color: context.colors.surface.withValues(
                           alpha: opacity,
                         ),
                         borderRadius: const BorderRadius.vertical(

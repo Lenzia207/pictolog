@@ -65,7 +65,7 @@ class ReportFullscreenGallery extends HookConsumerWidget {
             right: 0,
             height: kToolbarHeight + MediaQuery.of(context).padding.top,
             child: AppBar(
-              backgroundColor: AppColor.background.withValues(alpha: 0.6),
+              backgroundColor: context.colors.background.withValues(alpha: 0.6),
               iconTheme: const IconThemeData(color: Colors.white),
               elevation: 0,
               actions: [
@@ -129,7 +129,7 @@ class ReportFullscreenGallery extends HookConsumerWidget {
                     height: 200,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColor.background,
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.circular(4),
                       image: DecorationImage(
                         opacity: 0.6,

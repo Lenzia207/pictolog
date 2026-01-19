@@ -20,7 +20,9 @@ class TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = index == currentIndex ? AppColor.green : AppColor.primary;
+    final color = index == currentIndex
+        ? context.colors.textPrimary
+        : context.colors.textSecondary;
 
     return GestureDetector(
       onTap: () => onTap(index),

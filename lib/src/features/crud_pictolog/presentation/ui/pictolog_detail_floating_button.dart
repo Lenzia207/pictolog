@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 
 class PictologDetailFloatingButton extends StatelessWidget {
@@ -17,12 +18,17 @@ class PictologDetailFloatingButton extends StatelessWidget {
         bottom: p120,
       ),
       child: FloatingActionButton.extended(
+        backgroundColor: context.colors.accentGreen,
         onPressed: onButtonPressed,
-        label: const Text(
+        label: Text(
           'Seiten hinzufügen',
+          style: TextStyle(
+            color: context.colors.textPrimary,
+          ),
         ),
-        icon: const Icon(
+        icon: Icon(
           Icons.add_a_photo,
+          color: context.colors.textPrimary,
         ),
       ),
     );

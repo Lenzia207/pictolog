@@ -18,7 +18,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       height: 70,
-      color: AppColor.white,
+      color: context.colors.surface,
       notchMargin: 8,
       shape: const CircularNotchedRectangle(),
       child: Padding(
