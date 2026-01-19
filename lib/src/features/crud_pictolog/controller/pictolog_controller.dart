@@ -101,4 +101,13 @@ class PictologController {
       ),
     );
   }
+
+  Future<void> onReorder(int oldIndex, int newIndex, Pictolog pictolog) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final item = pictolog.reports.removeAt(oldIndex);
+    pictolog.reports.insert(newIndex, item);
+    await pictolog.save();
+  }
 }
