@@ -80,7 +80,9 @@ class NewEntryPictologUi extends StatelessWidget {
               type: AppTextFieldType.multiLines,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: p30),
+              padding: const EdgeInsets.symmetric(
+                vertical: p30,
+              ),
               child: PrimaryButton(
                 label: 'Eintrag speichern',
                 onPressed: savePictolog,

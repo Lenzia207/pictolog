@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/src/features/home_overview/home_overview_screen.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
+import '../features/account_settings/presentation/account_settings_screen.dart';
 import '../features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 import '../features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import '../features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
@@ -15,9 +16,9 @@ final _shellNavigatorHomeOverviewKey = GlobalKey<NavigatorState>(
   debugLabel: 'homeOverviewShell',
 );
 // );
-// final _shellNavigatorSettingsKey = GlobalKey<NavigatorState>(
-//   debugLabel: 'settingsShell',
-// );
+final _shellNavigatorAccountSettingsKey = GlobalKey<NavigatorState>(
+  debugLabel: 'accountSettingsShell',
+);
 
 /// App Navigation by GoRouter is structured with starting off with StatefulShellRoute that represents the bottom Navigation.
 /// The branches represent the bottom navigation items.
@@ -83,20 +84,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
-          // StatefulShellBranch(
-          //   navigatorKey: _shellNavigatorSettingsKey,
-          //   routes: [
-          //     GoRoute(
-          //       path: SettingsScreen.path,
-          //       name: SettingsScreen.name,
-          //       pageBuilder: (context, state) =>
-          //           NoTransitionPage(child: const SettingsScreen()),
-          //       routes: [
-
-          //       ],
-          //     ),
-          //   ],
-          // ),
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorAccountSettingsKey,
+            routes: [
+              GoRoute(
+                path: AccountSettingsScreen.path,
+                name: AccountSettingsScreen.name,
+                pageBuilder: (context, state) => NoTransitionPage(
+                  child: const AccountSettingsScreen(),
+                ),
+                routes: [],
+              ),
+            ],
+          ),
         ],
       ),
     ],
