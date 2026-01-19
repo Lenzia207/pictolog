@@ -27,17 +27,13 @@ class HomeOverviewScreen extends HookConsumerWidget {
 
     // Selection state
     final isSelectionMode = useState(false);
-    final selectedKeys = useState<Set<dynamic>>({});
+    final selectedKeys = useState<Set<Pictolog>>({});
 
     Future<void> deleteSelected() async {
-      final box = repository.box;
-      final keysToDelete = selectedKeys.value.toList();
+      final logsToDelete = selectedKeys.value.toList();
 
-      for (final key in keysToDelete) {
-        final log = box.get(key);
-        if (log != null) {
-          await repository.deletePictolog(log);
-        }
+      for (final log in logsToDelete) {
+        await repository.deletePictolog(log);
       }
 
       // Reset state
@@ -101,7 +97,6 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     color: Colors.grey,
                   ),
                   Space.h16,
-
                   Text.rich(
                     TextSpan(
                       children: [
@@ -144,8 +139,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
             itemBuilder: (context, index) {
               // Calculate reverse index
               final log = logs[logs.length - 1 - index];
-
-              final isSelected = selectedKeys.value.contains(log.key);
+              final isSelected = selectedKeys.value.contains(log);
 
               return PictologEntryCard(
                 isSelectedItem: isSelected,
@@ -157,7 +151,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                     '${log.createdAt.day}.${log.createdAt.month}.${log.createdAt.year}',
                 onTapItem: () {
                   if (isSelectionMode.value) {
-                    Helper.toggleSelection(selectedKeys, log.key);
+                    Helper.toggleSelection(selectedKeys, log);
                   } else {
                     context.goNamed(
                       PictologDetailsScreen.name,
@@ -171,7 +165,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
                   if (!isSelectionMode.value) {
                     isSelectionMode.value = true;
                   }
-                  Helper.toggleSelection(selectedKeys, log.key);
+                  Helper.toggleSelection(selectedKeys, log);
                 },
               );
             },

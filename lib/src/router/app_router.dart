@@ -59,9 +59,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                     name: PictologDetailsScreen.name,
                     builder: (context, state) {
                       final id =
-                          state.pathParameters[PictologDetailsScreen.paramId];
-                      // Try to parse as int, fallback to string if parsing fails
-                      final key = int.tryParse(id ?? '') ?? id;
+                          state.pathParameters[PictologDetailsScreen.paramId]!;
+                      final key = int.parse(id);
                       return PictologDetailsScreen(
                         pictologKey: key,
                       );

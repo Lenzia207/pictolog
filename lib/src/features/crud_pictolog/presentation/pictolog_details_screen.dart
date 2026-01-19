@@ -25,7 +25,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
   static const String name = 'PictologDetails';
   static const String paramId = 'id';
 
-  final dynamic pictologKey;
+  final Object pictologKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,13 +34,11 @@ class PictologDetailsScreen extends HookConsumerWidget {
     final isReorderMode = useState(false);
     final selectedKeys = useState<Set<Report>>({});
 
-    Future<void> deleteSelected() async {
-      final box = repository.box;
-      final pictolog = box.get(pictologKey);
+    Future<void> deleteSelectedReport() async {
+      final pictolog = repository.box.get(pictologKey);
 
       if (pictolog != null && selectedKeys.value.isNotEmpty) {
-        pictolog.reports.removeWhere((r) => selectedKeys.value.contains(r));
-        await pictolog.save();
+        await repository.deleteReports(pictolog, selectedKeys.value);
         selectedKeys.value = {};
         isSelectionMode.value = false;
       }
@@ -74,7 +72,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
               isSelectionMode.value = false;
               selectedKeys.value = {};
             },
-            onDelete: deleteSelected,
+            onDelete: deleteSelectedReport,
             onPdfPressed: () {
               context.pushNamed(
                 PictologPdfPreviewScreen.name,

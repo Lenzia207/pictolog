@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import '../model/pictolog.dart';
+import '../model/report.dart';
 
 final pictologRepositoryProvider = Provider<PictologRepository>((ref) {
   // We assume the box is already opened in main.dart or we handle opening it here.
@@ -57,6 +58,34 @@ class PictologRepository {
       }
     }
     await pictolog.delete();
+  }
+
+  /// Delete a single report and its image
+  Future<void> deleteReport(
+    Pictolog pictolog,
+    Report report,
+  ) async {
+    final file = File(report.imagePath);
+    if (await file.exists()) {
+      await file.delete();
+    }
+    pictolog.reports.remove(report);
+    await pictolog.save();
+  }
+
+  /// Delete multiple reports and their images (more efficient for bulk deletion)
+  Future<void> deleteReports(
+    Pictolog pictolog,
+    Set<Report> reports,
+  ) async {
+    for (final report in reports) {
+      final file = File(report.imagePath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    }
+    pictolog.reports.removeWhere((r) => reports.contains(r));
+    await pictolog.save();
   }
 
   /// Helper to save an image file to the app's document directory
