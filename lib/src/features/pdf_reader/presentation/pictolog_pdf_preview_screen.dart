@@ -33,6 +33,12 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
       ),
       body: Center(
         child: PdfPreview(
+          dpi: 300,
+          actionBarTheme: PdfActionBarTheme(
+            backgroundColor: context.colors.primary,
+            iconColor: context.colors.surface,
+            textStyle: AppTextStyle.bodyMedium,
+          ),
           build: (format) => ref
               .read(pdfGeneratorRepositoryProvider)
               .generatePdf(
