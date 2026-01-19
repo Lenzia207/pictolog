@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_style.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../config/navigation_config.dart';
@@ -19,10 +20,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return SafeArea(
       child: Container(
         height: 70,
-        margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+        margin: const EdgeInsets.fromLTRB(p20, 0, p20, p20),
         decoration: BoxDecoration(
           color: context.colors.surface,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(p20),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.1),
