@@ -15,7 +15,7 @@ class PictologDetailFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: p120,
+        bottom: p150,
       ),
       child: FloatingActionButton.extended(
         backgroundColor: context.colors.accentGreen,

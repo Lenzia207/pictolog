@@ -5,9 +5,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
 
+import 'package:pictolog/src/widgets/primary_button.dart';
 import '../../../constants/app_style.dart';
+import '../../../constants/app_text_style.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../data/report_repository.dart';
+import '../model/pictolog.dart';
 import '../model/report.dart';
 import 'ui/empty_entries_message.dart';
 import 'ui/pictolog_detail_floating_button.dart';
@@ -67,20 +70,14 @@ class PictologDetailsScreen extends HookConsumerWidget {
           appBar: PictologDetailsAppBar(
             isSelectionMode: isSelectionMode,
             selectedKeys: selectedKeys,
-            title: pictolog.name,
+            title: "Überblick",
             onClose: () {
               isSelectionMode.value = false;
               selectedKeys.value = {};
             },
             onDelete: deleteSelectedReport,
-            onPdfPressed: () {
-              context.pushNamed(
-                PictologPdfPreviewScreen.name,
-                pathParameters: {
-                  PictologDetailsScreen.paramId: pictologKey.toString(),
-                },
-                extra: pictolog,
-              );
+            onSettingsPressed: () {
+              showEditDialog(context, ref, pictolog);
             },
           ),
 
@@ -90,6 +87,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
               children: [
                 PictologDetailsOverview(
                   pictolog: pictolog,
+                  title: pictolog.name,
                   icon: Row(
                     spacing: p8,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +97,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
                       ),
                       Text(
                         'Seiten Sortieren',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: AppTextStyle.titleMedium,
                       ),
                     ],
                   ),
@@ -116,8 +114,25 @@ class PictologDetailsScreen extends HookConsumerWidget {
                     isSelectionMode: isSelectionMode,
                     selectedKeys: selectedKeys,
                   ),
-                  Space.h200,
+                  Space.h50,
                 ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: p16),
+                  child: PrimaryButton(
+                    label: 'PDF Erstellen',
+                    onPressed: () {
+                      context.pushNamed(
+                        PictologPdfPreviewScreen.name,
+                        pathParameters: {
+                          PictologDetailsScreen.paramId: pictologKey.toString(),
+                        },
+                        extra: pictolog,
+                      );
+                    },
+                  ),
+                ),
+
+                Space.h300,
               ],
             ),
           ),
@@ -136,4 +151,62 @@ class PictologDetailsScreen extends HookConsumerWidget {
       },
     );
   }
+}
+
+Future<void> showEditDialog(
+  BuildContext context,
+  WidgetRef ref,
+  Pictolog pictolog,
+) async {
+  final nameController = TextEditingController(text: pictolog.name);
+  final descriptionController = TextEditingController(
+    text: pictolog.overviewDescription,
+  );
+
+  await showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Pictolog bearbeiten'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              labelText: 'Name',
+              hintText: 'Name des Pictologs',
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: descriptionController,
+            decoration: const InputDecoration(
+              labelText: 'Beschreibung',
+              hintText: 'Kurze Beschreibung...',
+            ),
+            maxLines: 3,
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Abbrechen'),
+        ),
+        FilledButton(
+          onPressed: () {
+            ref
+                .read(pictologRepositoryProvider)
+                .updatePictolog(
+                  pictolog,
+                  name: nameController.text.trim(),
+                  overviewDescription: descriptionController.text.trim(),
+                );
+            Navigator.of(context).pop();
+          },
+          child: const Text('Speichern'),
+        ),
+      ],
+    ),
+  );
 }

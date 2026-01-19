@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/widgets/pictolog_report_card.dart';
 
@@ -23,10 +24,14 @@ class ReportReorderableList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 360,
+
       child: ReorderableListView.builder(
         scrollDirection: Axis.horizontal,
         buildDefaultDragHandles: isReorderMode.value,
         itemCount: pictolog.reports.length,
+        padding: EdgeInsets.symmetric(
+          horizontal: isReorderMode.value ? 16 : 10,
+        ),
         onReorder: (oldIndex, newIndex) async {
           if (oldIndex < newIndex) {
             newIndex -= 1;
@@ -75,8 +80,11 @@ class ReportReorderableList extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                SizedBox(
+                Container(
                   width: 300,
+                  margin: const EdgeInsets.only(
+                    right: p20,
+                  ), // Spacing between items
                   child: PictologReportCard(
                     isSelectedItem: isSelected,
                     isSelectionMode: isSelectionMode.value,

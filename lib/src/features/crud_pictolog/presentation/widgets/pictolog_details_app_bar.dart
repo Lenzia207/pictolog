@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pictolog/src/constants/app_text_style.dart';
 
 import '../../../../constants/app_color.dart';
 
@@ -12,7 +13,7 @@ class PictologDetailsAppBar extends StatelessWidget
   final String title;
   final VoidCallback onClose;
   final VoidCallback onDelete;
-  final VoidCallback? onPdfPressed;
+  final VoidCallback? onSettingsPressed;
 
   const PictologDetailsAppBar({
     super.key,
@@ -21,7 +22,7 @@ class PictologDetailsAppBar extends StatelessWidget
     required this.title,
     required this.onClose,
     required this.onDelete,
-    this.onPdfPressed,
+    this.onSettingsPressed,
   });
 
   @override
@@ -31,14 +32,25 @@ class PictologDetailsAppBar extends StatelessWidget
       builder: (context, selectionMode, _) {
         return AppBar(
           backgroundColor: context.colors.surface.withAlpha(0),
+          surfaceTintColor: Colors.transparent,
+
+          // shadowColor: Colors.black,
+          scrolledUnderElevation: 2,
+          centerTitle: true,
           title: selectionMode
               ? ValueListenableBuilder<Set>(
                   valueListenable: selectedKeys,
                   builder: (context, items, _) {
-                    return Text('${items.length} ausgewählt');
+                    return Text(
+                      '${items.length} ausgewählt',
+                      style: AppTextStyle.headlineLarge,
+                    );
                   },
                 )
-              : Text(title),
+              : Text(
+                  title,
+                  style: AppTextStyle.headlineLarge,
+                ),
           leading: selectionMode
               ? IconButton(
                   icon: const Icon(Icons.close),
@@ -48,13 +60,18 @@ class PictologDetailsAppBar extends StatelessWidget
           actions: [
             if (selectionMode)
               IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
                 onPressed: onDelete,
               )
-            else if (onPdfPressed != null) ...[
+            else if (onSettingsPressed != null) ...[
               IconButton(
-                icon: const Icon(Icons.picture_as_pdf),
-                onPressed: onPdfPressed,
+                icon: const Icon(
+                  Icons.more_vert,
+                ),
+                onPressed: onSettingsPressed,
               ),
             ],
           ],

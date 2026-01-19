@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../model/report.dart';
 
@@ -19,15 +20,18 @@ class PictologReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: isSelectedItem ? 4 : 2,
+      borderOnForeground: false,
+      color: Colors.transparent,
+      elevation: isSelectedItem ? 4 : 0,
+      shadowColor: context.colors.surface,
+      surfaceTintColor: context.colors.surface,
       shape: RoundedRectangleBorder(
+        side: BorderSide.none,
         borderRadius: BorderRadius.circular(
-          p2,
+          p10,
         ),
       ),
-      margin: const EdgeInsets.symmetric(
-        horizontal: p6,
-      ),
+      margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
@@ -49,7 +53,8 @@ class PictologReportCard extends StatelessWidget {
                 ),
               ),
               if (report.description?.isNotEmpty ?? false)
-                Padding(
+                Container(
+                  color: context.colors.surface,
                   padding: const EdgeInsets.all(
                     p16,
                   ),

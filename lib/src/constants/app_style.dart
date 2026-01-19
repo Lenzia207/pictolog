@@ -14,7 +14,9 @@ const double p40 = 40;
 const double p50 = 50;
 const double p100 = 100;
 const double p120 = 120;
+const double p150 = 150;
 const double p200 = 200;
+const double p300 = 300;
 
 class Space {
   static const SizedBox h2 = SizedBox(height: p2);
@@ -31,6 +33,7 @@ class Space {
   static const SizedBox h50 = SizedBox(height: p50);
   static const SizedBox h100 = SizedBox(height: p100);
   static const SizedBox h200 = SizedBox(height: p200);
+  static const SizedBox h300 = SizedBox(height: p300);
 
   static const SizedBox w2 = SizedBox(width: p2);
   static const SizedBox w4 = SizedBox(width: p4);
@@ -45,6 +48,7 @@ class Space {
   static const SizedBox w50 = SizedBox(width: p50);
   static const SizedBox w100 = SizedBox(width: p100);
   static const SizedBox w200 = SizedBox(width: p200);
+  static const SizedBox w300 = SizedBox(width: p300);
 
   Space._();
 }
