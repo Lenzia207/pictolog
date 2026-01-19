@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_color.dart';
-
-/// Font family constant for the application.
-class AppFont {
-  static const String primary = 'Istok Web';
-
-  // Prevent instantiation
-  AppFont._();
-}
 
 /// Font weight constants for consistency.
 class AppFontWeight {
@@ -42,126 +35,109 @@ class AppFontSize {
 /// Use .copyWith(color: ...) to change colors when needed.
 class AppTextStyle {
   // Display styles
-  static const TextStyle displayLarge = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle displayLarge = GoogleFonts.istokWeb(
     fontSize: AppFontSize.display3,
     fontWeight: AppFontWeight.bold,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle displayMedium = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle displayMedium = GoogleFonts.istokWeb(
     fontSize: AppFontSize.display2,
     fontWeight: AppFontWeight.bold,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle displaySmall = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle displaySmall = GoogleFonts.istokWeb(
     fontSize: AppFontSize.display1,
     fontWeight: AppFontWeight.bold,
     color: AppColor.textPrimaryLight,
   );
 
   // Headline styles
-  static const TextStyle headlineLarge = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle headlineLarge = GoogleFonts.istokWeb(
     fontSize: AppFontSize.xxxl,
     fontWeight: AppFontWeight.semiBold,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle headlineMedium = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle headlineMedium = GoogleFonts.istokWeb(
     fontSize: AppFontSize.xxl,
     fontWeight: AppFontWeight.semiBold,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle headlineSmall = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle headlineSmall = GoogleFonts.istokWeb(
     fontSize: AppFontSize.xl,
     fontWeight: AppFontWeight.semiBold,
     color: AppColor.textPrimaryLight,
   );
 
   // Title styles
-  static const TextStyle titleLarge = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle titleLarge = GoogleFonts.istokWeb(
     fontSize: AppFontSize.lg,
     fontWeight: AppFontWeight.semiBold,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle titleMedium = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle titleMedium = GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.medium,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle titleSmall = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle titleSmall = GoogleFonts.istokWeb(
     fontSize: AppFontSize.sm,
     fontWeight: AppFontWeight.medium,
     color: AppColor.textPrimaryLight,
   );
 
   // Body styles
-  static const TextStyle bodyLarge = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle bodyLarge = GoogleFonts.istokWeb(
     fontSize: AppFontSize.lg,
     fontWeight: AppFontWeight.regular,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle bodyMedium = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle bodyMedium = GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.regular,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle bodySmall = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle bodySmall = GoogleFonts.istokWeb(
     fontSize: AppFontSize.sm,
     fontWeight: AppFontWeight.regular,
     color: AppColor.textPrimaryLight,
   );
 
   // Label styles
-  static const TextStyle labelLarge = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle labelLarge = GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.medium,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle labelMedium = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle labelMedium = GoogleFonts.istokWeb(
     fontSize: AppFontSize.sm,
     fontWeight: AppFontWeight.medium,
     color: AppColor.textPrimaryLight,
   );
 
-  static const TextStyle labelSmall = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle labelSmall = GoogleFonts.istokWeb(
     fontSize: AppFontSize.xs,
     fontWeight: AppFontWeight.medium,
     color: AppColor.textPrimaryLight,
   );
 
   // Button text style
-  static const TextStyle button = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle button = GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.semiBold,
     color: AppColor.textPrimaryLight,
   );
 
   // Caption style
-  static const TextStyle caption = TextStyle(
-    fontFamily: AppFont.primary,
+  static TextStyle caption = GoogleFonts.istokWeb(
     fontSize: AppFontSize.xs,
     fontWeight: AppFontWeight.regular,
     color: AppColor.textSecondaryLight,
@@ -176,21 +152,23 @@ TextTheme createTextTheme({
   required Color textColor,
   required Color secondaryTextColor,
 }) {
-  return TextTheme(
-    displayLarge: AppTextStyle.displayLarge.copyWith(color: textColor),
-    displayMedium: AppTextStyle.displayMedium.copyWith(color: textColor),
-    displaySmall: AppTextStyle.displaySmall.copyWith(color: textColor),
-    headlineLarge: AppTextStyle.headlineLarge.copyWith(color: textColor),
-    headlineMedium: AppTextStyle.headlineMedium.copyWith(color: textColor),
-    headlineSmall: AppTextStyle.headlineSmall.copyWith(color: textColor),
-    titleLarge: AppTextStyle.titleLarge.copyWith(color: textColor),
-    titleMedium: AppTextStyle.titleMedium.copyWith(color: textColor),
-    titleSmall: AppTextStyle.titleSmall.copyWith(color: textColor),
-    bodyLarge: AppTextStyle.bodyLarge.copyWith(color: textColor),
-    bodyMedium: AppTextStyle.bodyMedium.copyWith(color: textColor),
-    bodySmall: AppTextStyle.bodySmall.copyWith(color: textColor),
-    labelLarge: AppTextStyle.labelLarge.copyWith(color: textColor),
-    labelMedium: AppTextStyle.labelMedium.copyWith(color: textColor),
-    labelSmall: AppTextStyle.labelSmall.copyWith(color: secondaryTextColor),
+  return GoogleFonts.istokWebTextTheme(
+    TextTheme(
+      displayLarge: AppTextStyle.displayLarge.copyWith(color: textColor),
+      displayMedium: AppTextStyle.displayMedium.copyWith(color: textColor),
+      displaySmall: AppTextStyle.displaySmall.copyWith(color: textColor),
+      headlineLarge: AppTextStyle.headlineLarge.copyWith(color: textColor),
+      headlineMedium: AppTextStyle.headlineMedium.copyWith(color: textColor),
+      headlineSmall: AppTextStyle.headlineSmall.copyWith(color: textColor),
+      titleLarge: AppTextStyle.titleLarge.copyWith(color: textColor),
+      titleMedium: AppTextStyle.titleMedium.copyWith(color: textColor),
+      titleSmall: AppTextStyle.titleSmall.copyWith(color: textColor),
+      bodyLarge: AppTextStyle.bodyLarge.copyWith(color: textColor),
+      bodyMedium: AppTextStyle.bodyMedium.copyWith(color: textColor),
+      bodySmall: AppTextStyle.bodySmall.copyWith(color: textColor),
+      labelLarge: AppTextStyle.labelLarge.copyWith(color: textColor),
+      labelMedium: AppTextStyle.labelMedium.copyWith(color: textColor),
+      labelSmall: AppTextStyle.labelSmall.copyWith(color: secondaryTextColor),
+    ),
   );
 }
