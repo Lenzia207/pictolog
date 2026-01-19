@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 /// - Archive Projects
 /// - Dark/Light Mode Toggle
 class AccountSettingsScreen extends StatelessWidget {
+  const AccountSettingsScreen({super.key});
+
   static const String path = "/account_settings";
   static const String name = "account_settings";
-  const AccountSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
