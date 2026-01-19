@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_style.dart';
+import 'package:pictolog/src/constants/app_text_style.dart';
 
 class PictologEntryCard extends StatelessWidget {
   const PictologEntryCard({
@@ -58,9 +59,11 @@ class PictologEntryCard extends StatelessWidget {
                     children: [
                       Text(
                         projectName,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        style: AppTextStyle.headlineSmall.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Space.h8,
                       if (overviewDescription.isNotEmpty)
@@ -68,8 +71,9 @@ class PictologEntryCard extends StatelessWidget {
                           overviewDescription,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: AppTextStyle.bodyMedium,
                         ),
+
                       Space.h12,
                       Row(
                         children: [
@@ -81,13 +85,14 @@ class PictologEntryCard extends StatelessWidget {
                           Space.w4,
                           Text(
                             '$projectLength Seiten',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: AppTextStyle.bodySmall,
                           ),
                           const Spacer(),
                           Text(
                             // Simple date formatting
                             projectCreatedAt,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: AppTextStyle.bodyLarge,
+                            // style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),

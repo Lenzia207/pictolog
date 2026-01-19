@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../constants/app_color.dart';
+
 /// A reusable AppBar that supports a selection mode with a close and
 /// delete action, and a normal mode with an optional PDF action.
 class PictologDetailsAppBar extends StatelessWidget
@@ -28,6 +30,7 @@ class PictologDetailsAppBar extends StatelessWidget
       valueListenable: isSelectionMode,
       builder: (context, selectionMode, _) {
         return AppBar(
+          backgroundColor: context.colors.surface.withAlpha(0),
           title: selectionMode
               ? ValueListenableBuilder<Set>(
                   valueListenable: selectedKeys,

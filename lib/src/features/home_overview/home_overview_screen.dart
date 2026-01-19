@@ -8,6 +8,7 @@ import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart';
 
+import '../../constants/app_text_style.dart';
 import '../../helper/helper.dart';
 import '../bottom_navigation/config/navigation_config.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';
@@ -43,10 +44,12 @@ class HomeOverviewScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: context.colors.surface.withAlpha(0),
         title: Text(
           isSelectionMode.value
-              ? '${selectedKeys.value.length} ausgewählt zum Löschen'
+              ? '${selectedKeys.value.length} Ausgewählt'
               : 'Meine Pictologs',
+          style: AppTextStyle.headlineLarge,
         ),
         // Change leading icon in selection mode to allow cancelling
         leading: isSelectionMode.value
