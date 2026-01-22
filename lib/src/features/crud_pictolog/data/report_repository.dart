@@ -8,9 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/report.dart';
 
 import '../../../../l10n/localization_extension.dart';
-import '../../../constants/constants.dart';
-import '../model/pictolog.dart';
 import '../../camera/camera_screen.dart';
+import '../../camera/service/app_camera_image_service.dart';
+import '../model/pictolog.dart';
+import '../controller/report_service.dart';
 import 'pictolog_repository.dart';
 
 final reportRepositoryProvider = Provider<ReportRepository>((ref) {
@@ -29,10 +30,13 @@ class ReportRepository {
     required BuildContext context,
     required PictologRepository repository,
     required Pictolog pictolog,
+    Report? report,
   }) async {
     try {
       // Show dialog to choose between camera or gallery
-      final imageSource = await _showImageSourceDialog(context);
+      final imageSource = await AppCameraImageService.showImageSourceDialog(
+        context,
+      );
       if (imageSource == null) return;
 
       String? imagePath;
@@ -65,42 +69,17 @@ class ReportRepository {
 
       if (!context.mounted) return;
 
-      // Show dialog for description
-      final shouldSave = await showDialog<bool>(
+      final createdReport = ReportController.saveReportDialog;
+
+      // Show dialog to apply description if needed
+      final shouldSave = await createdReport(
         context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(context.appLanguage.addDescription),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.file(
-                  File(imagePath!),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Space.h12,
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  labelText: context.appLanguage.description,
-                  hintText: context.appLanguage.generalProjectDescription,
-                ),
-                maxLines: 3,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(context.appLanguage.cancel),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(context.appLanguage.save),
-            ),
-          ],
+        imagePath: imagePath,
+        descriptionController: descriptionController,
+        onImageChange: () => addReport(
+          context: context,
+          repository: repository,
+          pictolog: pictolog,
         ),
       );
 
@@ -131,29 +110,5 @@ class ReportRepository {
         );
       }
     }
-  }
-
-  Future<ImageSource?> _showImageSourceDialog(BuildContext context) async {
-    return showDialog<ImageSource>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(context.appLanguage.chooseImageSource),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title: Text(context.appLanguage.camera),
-              onTap: () => Navigator.pop(ctx, ImageSource.camera),
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: Text(context.appLanguage.gallery),
-              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

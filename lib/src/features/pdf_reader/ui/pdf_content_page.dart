@@ -7,8 +7,10 @@ import '../../crud_pictolog/model/pictolog.dart';
 class PdfContentPage extends pw.StatelessWidget {
   PdfContentPage({
     required this.pictolog,
+    required this.createdLabel,
   });
   final Pictolog pictolog;
+  final String createdLabel;
 
   @override
   pw.Widget build(pw.Context context) {
@@ -26,7 +28,7 @@ class PdfContentPage extends pw.StatelessWidget {
           height: 5,
         ),
         pw.Text(
-          'Erstellt: ${pictolog.createdAt.toFormatDMY}',
+          '$createdLabel: ${pictolog.createdAt.toFormatDMY}',
           style: const pw.TextStyle(
             fontSize: 10,
             color: PdfColors.grey,

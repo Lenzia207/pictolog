@@ -45,6 +45,7 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
               .generatePdf(
                 format,
                 pictolog,
+                context.appLanguage.created,
               ),
           canDebug: false,
         ),

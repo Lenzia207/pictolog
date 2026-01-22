@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 
 import '../../controller/pictolog_controller.dart';
 import '../../model/report.dart';
 import '../ui/report_item.dart';
 
-class ReportReorderableList extends StatelessWidget {
+class ReportReorderableList extends HookConsumerWidget {
   const ReportReorderableList({
     super.key,
     required this.pictolog,
@@ -20,7 +22,7 @@ class ReportReorderableList extends StatelessWidget {
   final ValueNotifier<Set<Report>> selectedKeys;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       height: 360,
       child: ReorderableListView.builder(
@@ -36,8 +38,10 @@ class ReportReorderableList extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: isReorderMode.value ? 16 : 10,
         ),
-        onReorder: (oldIndex, newIndex) =>
-            PictologController().onReorder(oldIndex, newIndex, pictolog),
+        onReorder: (oldIndex, newIndex) async {
+          final onReorder = ref.read(pictologControllerProvider).onReorder;
+          await onReorder(oldIndex, newIndex, pictolog);
+        },
         itemBuilder: (context, index) {
           final report = pictolog.reports[index];
           final isSelected = selectedKeys.value.contains(report);

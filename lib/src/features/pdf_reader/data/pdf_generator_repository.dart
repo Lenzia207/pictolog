@@ -18,6 +18,7 @@ class PdfGeneratorRepository {
   Future<Uint8List> generatePdf(
     PdfPageFormat format,
     Pictolog pictolog,
+    String createdLabel,
   ) async {
     final pdf = pw.Document();
 
@@ -65,6 +66,7 @@ class PdfGeneratorRepository {
           crossAxisAlignment: pw.CrossAxisAlignment.center,
           header: (pw.Context context) => PdfContentPage(
             pictolog: pictolog,
+            createdLabel: createdLabel,
           ),
           footer: (pw.Context context) => PdfFooter(
             pictolog: pictolog,

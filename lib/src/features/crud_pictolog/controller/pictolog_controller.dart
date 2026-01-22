@@ -1,12 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/ui/edit_entry_dialog.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/ui/edit_report_dialog.dart';
 
 import '../data/pictolog_repository.dart';
+import '../data/report_repository.dart';
 import '../model/pictolog.dart';
 import '../model/report.dart';
 
@@ -54,6 +53,7 @@ class PictologController {
     final descriptionController = TextEditingController(
       text: report.description,
     );
+    final repository = ref.watch(pictologRepositoryProvider);
     String? newImagePath;
 
     await showDialog(
@@ -62,29 +62,19 @@ class PictologController {
         builder: (context, setState) {
           return EditReportDialog(
             onImageChange: () async {
-              final picker = ImagePicker();
-              final pickedFile = await picker.pickImage(
-                source: ImageSource.gallery,
+              final report = ref.read(reportRepositoryProvider);
+
+              report.addReport(
+                context: context,
+                repository: repository,
+                pictolog: pictolog,
               );
-              if (pickedFile != null) {
-                setState(() {
-                  newImagePath = pickedFile.path;
-                });
-              }
             },
             imagePath: newImagePath ?? report.imagePath,
             descriptionController: descriptionController,
             onSave: () async {
               // Update Description
               report.description = descriptionController.text.trim();
-
-              // Update Image if changed
-              if (newImagePath != null) {
-                final savedPath = await ref
-                    .read(pictologRepositoryProvider)
-                    .saveImageToAppStorage(File(newImagePath!));
-                report.imagePath = savedPath;
-              }
 
               // Save Changes
               await pictolog.save();
@@ -93,7 +83,7 @@ class PictologController {
               rebuildToken.value++;
 
               if (context.mounted) {
-                Navigator.of(context).pop();
+                context.pop();
               }
             },
           );
