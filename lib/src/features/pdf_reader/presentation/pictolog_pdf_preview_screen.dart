@@ -5,7 +5,7 @@ import 'package:printing/printing.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/pdf_reader/data/pdf_generator_repository.dart';
 
-import '../../../constants/app_text_style.dart';
+import '../../../constants/constants.dart';
 import '../../../theme/theme.dart';
 
 class PictologPdfPreviewScreen extends ConsumerWidget {

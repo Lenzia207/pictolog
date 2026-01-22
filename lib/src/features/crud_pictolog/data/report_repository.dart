@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/report.dart';
 
 import '../../../../l10n/localization_extension.dart';
-import '../../../constants/app_style.dart';
+import '../../../constants/constants.dart';
 import '../model/pictolog.dart';
 import 'pictolog_repository.dart';
 

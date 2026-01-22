@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pictolog/src/constants/app_style.dart';
 
 import '../../../../../l10n/localization_extension.dart';
-import '../../../../constants/app_text_style.dart';
+
+import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/app_text_fields.dart';
 import '../../../../widgets/primary_button.dart';

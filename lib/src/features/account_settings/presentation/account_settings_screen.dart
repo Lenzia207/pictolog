@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/l10n/localization_extension.dart';
-import 'package:pictolog/src/constants/app_style.dart';
-import 'package:pictolog/src/constants/app_text_style.dart';
+
 import 'package:pictolog/src/features/account_settings/provider/locale_provider.dart';
 
+import '../../../constants/constants.dart';
 import '../../../theme/theme.dart';
 import '../../app_localization/widget/language_selection_tile.dart';
 import 'widget/settings_section.dart';

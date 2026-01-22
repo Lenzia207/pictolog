@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/app_text_style.dart';
+import '../../../constants/constants.dart';
 import '../../../theme/theme.dart';
 
 /// Individual language option in the selection dialog

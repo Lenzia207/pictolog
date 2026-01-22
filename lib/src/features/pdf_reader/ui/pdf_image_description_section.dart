@@ -1,6 +1,7 @@
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
+
+import '../../../constants/constants.dart';
 
 class PdfImageDescriptionSection extends pw.StatelessWidget {
   PdfImageDescriptionSection({

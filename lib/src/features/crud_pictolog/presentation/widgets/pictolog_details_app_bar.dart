@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pictolog/l10n/localization_extension.dart';
-import 'package:pictolog/src/constants/app_text_style.dart';
 
+import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
 
 /// A reusable AppBar that supports a selection mode with a close and

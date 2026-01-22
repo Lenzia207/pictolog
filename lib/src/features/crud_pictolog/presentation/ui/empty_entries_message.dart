@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../l10n/localization_extension.dart';
-import '../../../../constants/app_style.dart';
-import '../../../../constants/app_text_style.dart';
+import '../../../../constants/constants.dart';
 
 class EmptyEntriesMessage extends StatelessWidget {
   const EmptyEntriesMessage({super.key});

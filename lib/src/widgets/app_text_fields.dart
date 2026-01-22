@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../constants/app_style.dart';
-import '../constants/app_text_style.dart';
+
+import '../constants/constants.dart';
 import '../theme/theme.dart';
 
 enum AppTextFieldType {

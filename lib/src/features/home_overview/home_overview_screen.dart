@@ -9,7 +9,7 @@ import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart'
 import 'package:pictolog/src/widgets/app_date_format.dart';
 
 import '../../../l10n/localization_extension.dart';
-import '../../constants/app_text_style.dart';
+import '../../constants/constants.dart';
 import '../../helper/helper.dart';
 import '../../theme/theme.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';

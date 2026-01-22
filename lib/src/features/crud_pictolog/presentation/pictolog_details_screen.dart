@@ -7,7 +7,7 @@ import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dar
 
 import 'package:pictolog/src/widgets/primary_button.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../constants/app_style.dart';
+import '../../../constants/constants.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../controller/pictolog_controller.dart';
 import '../data/report_repository.dart';
