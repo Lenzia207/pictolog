@@ -25,7 +25,6 @@ class NoPictologsMessage extends StatelessWidget {
               children: [
                 TextSpan(
                   text: context.appLanguage.noPictologsMessage,
-                  // text: 'Noch keine Pictologs.\nErstelle einen mit dem ',
                 ),
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
