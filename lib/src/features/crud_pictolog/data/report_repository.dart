@@ -1,14 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/report.dart';
 
 import '../../../../l10n/localization_extension.dart';
 import '../../../constants/constants.dart';
 import '../model/pictolog.dart';
+import '../presentation/camera_screen.dart';
 import 'pictolog_repository.dart';
 
 final reportRepositoryProvider = Provider<ReportRepository>((ref) {
@@ -30,13 +33,32 @@ class ReportRepository {
     required Pictolog pictolog,
   }) async {
     try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 80,
-      );
+      // Show dialog to choose between camera or gallery
+      final imageSource = await _showImageSourceDialog(context);
+      if (imageSource == null) return;
 
-      if (pickedFile == null) return;
+      String? imagePath;
+
+      if (imageSource == ImageSource.camera) {
+        // Use camera package directly with 4:3 aspect ratio
+        if (!context.mounted) return;
+        imagePath = await context.pushNamed<String>(CameraScreen.name);
+      } else {
+        // Use image picker for gallery
+        final picker = ImagePicker();
+        final pickedFile = await picker.pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 80,
+        );
+
+        if (pickedFile != null) {
+          // Crop the image to 4:3 aspect ratio
+          final croppedFile = await _cropImage(pickedFile.path);
+          imagePath = croppedFile?.path;
+        }
+      }
+
+      if (imagePath == null) return;
 
       final descriptionController = TextEditingController();
 
@@ -53,7 +75,7 @@ class ReportRepository {
               SizedBox(
                 height: p200,
                 child: Image.file(
-                  File(pickedFile.path),
+                  File(imagePath!),
                 ),
               ),
               Space.h12,
@@ -82,7 +104,7 @@ class ReportRepository {
 
       if (shouldSave == true) {
         final permanentPath = await repository.saveImageToAppStorage(
-          File(pickedFile.path),
+          File(imagePath),
         );
         final newReport = Report(
           imagePath: permanentPath,
@@ -103,5 +125,50 @@ class ReportRepository {
         );
       }
     }
+  }
+
+  Future<ImageSource?> _showImageSourceDialog(BuildContext context) async {
+    return showDialog<ImageSource>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(context.appLanguage.chooseImageSource),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: Text(context.appLanguage.camera),
+              onTap: () => Navigator.pop(ctx, ImageSource.camera),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(context.appLanguage.gallery),
+              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<CroppedFile?> _cropImage(String imagePath) async {
+    return await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      aspectRatio: const CropAspectRatio(ratioX: 3, ratioY: 4),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Image',
+          toolbarColor: Colors.black,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.ratio4x3,
+          lockAspectRatio: true,
+        ),
+        IOSUiSettings(
+          title: 'Crop Image',
+          aspectRatioLockEnabled: true,
+          resetAspectRatioEnabled: false,
+        ),
+      ],
+    );
   }
 }

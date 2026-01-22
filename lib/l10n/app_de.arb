@@ -225,5 +225,17 @@
     "systemMode": "System",
     "@systemMode": {
         "description": "System theme mode label (follows device setting)"
+    },
+    "chooseImageSource": "Bildquelle wählen",
+    "@chooseImageSource": {
+        "description": "Dialogtitel für die Auswahl zwischen Kamera oder Galerie"
+    },
+    "camera": "Kamera",
+    "@camera": {
+        "description": "Kamera-Option"
+    },
+    "gallery": "Galerie",
+    "@gallery": {
+        "description": "Galerie-Option"
     }
 }

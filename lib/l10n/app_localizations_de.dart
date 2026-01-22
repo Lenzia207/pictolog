@@ -167,4 +167,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get systemMode => 'System';
+
+  @override
+  String get chooseImageSource => 'Bildquelle wählen';
+
+  @override
+  String get camera => 'Kamera';
+
+  @override
+  String get gallery => 'Galerie';
 }

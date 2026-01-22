@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/src/features/home_overview/home_overview_screen.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import '../features/account_settings/account_settings_screen.dart';
+import '../features/camera/camera_screen.dart';
 import '../features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 import '../features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import '../features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
@@ -90,6 +91,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                             initialIndex: args['index'] as int,
                           );
                         },
+                      ),
+                      GoRoute(
+                        path: CameraScreen.path,
+                        name: CameraScreen.name,
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => const CameraScreen(),
                       ),
                     ],
                   ),
