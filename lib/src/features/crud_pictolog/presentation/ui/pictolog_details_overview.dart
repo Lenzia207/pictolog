@@ -48,12 +48,12 @@ class PictologDetailsOverview extends ConsumerWidget {
             ),
           Space.h16,
           Text(
-            'Erstellt: ${pictolog.createdAt.toFormatDMY}',
+            '${context.appLanguage.created}: ${pictolog.createdAt.toFormatDMY}',
             style: AppTextStyle.bodySmall,
           ),
           if (pictolog.updatedAt != null)
             Text(
-              'Bearbeitet: ${pictolog.updatedAt!.toFormatDMY}',
+              '${context.appLanguage.edited}: ${pictolog.updatedAt!.toFormatDMY}',
               style: AppTextStyle.bodySmall,
             ),
           const Divider(

@@ -185,5 +185,25 @@
     "page": "Seite",
     "@page": {
         "description": "Generic page label"
+    },
+    "button": " Button!",
+    "@button": {
+        "description": "Button text after icon in no pictologs message"
+    },
+    "noEntriesYet": "Keine Einträge bis jetzt.\n\nFüge einen neuen Eintrag hinzu unter\n\"Seiten hinzufügen\"",
+    "@noEntriesYet": {
+        "description": "Message when there are no report entries"
+    },
+    "created": "Erstellt",
+    "@created": {
+        "description": "Created date label"
+    },
+    "edited": "Bearbeitet",
+    "@edited": {
+        "description": "Edited/Modified date label"
+    },
+    "overview": "Übersicht",
+    "@overview": {
+        "description": "Overview label"
     }
 }

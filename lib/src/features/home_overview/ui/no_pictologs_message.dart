@@ -37,8 +37,8 @@ class NoPictologsMessage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const TextSpan(
-                  text: ' Button!',
+                TextSpan(
+                  text: context.appLanguage.button,
                 ),
               ],
             ),

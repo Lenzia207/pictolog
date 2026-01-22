@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Pictolog';
 
   @override
-  String get myPictologs => 'Overview';
+  String get myPictologs => 'My Pictologs';
 
   @override
   String get noPictologsMessage => 'No pictologs yet.\nCreate one with the ';
@@ -134,4 +134,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get page => 'Page';
+
+  @override
+  String get button => ' Button!';
+
+  @override
+  String get noEntriesYet =>
+      'No entries yet.\n\nAdd a new entry under\n\"Add Report\"';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get edited => 'Edited';
+
+  @override
+  String get overview => 'Overview';
 }

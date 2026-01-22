@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pictolog/l10n/localization_extension.dart';
 import 'package:printing/printing.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
 import 'package:pictolog/src/features/pdf_reader/data/pdf_generator_repository.dart';
@@ -27,7 +28,7 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
         scrolledUnderElevation: 2,
         centerTitle: true,
         title: Text(
-          'PDF Preview',
+          context.appLanguage.pdfPreview,
           style: AppTextStyle.headlineLarge,
         ),
       ),

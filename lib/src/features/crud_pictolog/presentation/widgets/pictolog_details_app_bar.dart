@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pictolog/l10n/localization_extension.dart';
 import 'package:pictolog/src/constants/app_text_style.dart';
 
 import '../../../../constants/app_color.dart';
@@ -40,7 +41,7 @@ class PictologDetailsAppBar extends StatelessWidget
                   valueListenable: selectedKeys,
                   builder: (context, items, _) {
                     return Text(
-                      '${items.length} ausgewählt',
+                      context.appLanguage.selectedItems(items.length),
                       style: AppTextStyle.headlineLarge,
                     );
                   },

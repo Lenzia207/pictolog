@@ -107,7 +107,7 @@ abstract class AppLocalizations {
   /// Navigation label for overview screen
   ///
   /// In en, this message translates to:
-  /// **'Overview'**
+  /// **'My Pictologs'**
   String get myPictologs;
 
   /// Message shown when there are no pictologs
@@ -331,6 +331,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Page'**
   String get page;
+
+  /// Button text after icon in no pictologs message
+  ///
+  /// In en, this message translates to:
+  /// **' Button!'**
+  String get button;
+
+  /// Message when there are no report entries
+  ///
+  /// In en, this message translates to:
+  /// **'No entries yet.\n\nAdd a new entry under\n\"Add Report\"'**
+  String get noEntriesYet;
+
+  /// Created date label
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// Edited/Modified date label
+  ///
+  /// In en, this message translates to:
+  /// **'Edited'**
+  String get edited;
+
+  /// Overview label
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overview;
 }
 
 class _AppLocalizationsDelegate

@@ -4,10 +4,9 @@
     "@appTitle": {
         "description": "The application title"
     },
-    "myPictologs": "Overview",
+    "myPictologs": "My Pictologs",
     "@myPictologs": {
-        "description": "Navigation label for overview screen",
-        "noPictologsMessage":"No pictologs yet.\nCreate one with the "
+        "description": "Navigation label for overview screen"
     },
       "noPictologsMessage": "No pictologs yet.\nCreate one with the ",
     "@noPictologsMessage": {
@@ -186,5 +185,25 @@
     "page": "Page",
     "@page": {
         "description": "Generic page label"
+    },
+    "button": " Button!",
+    "@button": {
+        "description": "Button text after icon in no pictologs message"
+    },
+    "noEntriesYet": "No entries yet.\n\nAdd a new entry under\n\"Add Report\"",
+    "@noEntriesYet": {
+        "description": "Message when there are no report entries"
+    },
+    "created": "Created",
+    "@created": {
+        "description": "Created date label"
+    },
+    "edited": "Edited",
+    "@edited": {
+        "description": "Edited/Modified date label"
+    },
+    "overview": "Overview",
+    "@overview": {
+        "description": "Overview label"
     }
 }

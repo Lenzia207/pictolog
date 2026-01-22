@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
 
@@ -20,8 +21,7 @@ class EmptyEntriesMessage extends StatelessWidget {
               vertical: p30,
             ),
             child: Text(
-              'Keine Einträge bis jetzt.\n\nFüge einen neuen Eintrag hinzu unter\n"Seiten hinzufügen"',
-
+              context.appLanguage.noEntriesYet,
               style: AppTextStyle.bodyMedium,
               textAlign: TextAlign.center,
             ),

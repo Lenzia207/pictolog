@@ -9,6 +9,7 @@ import 'package:pictolog/src/features/home_overview/ui/no_pictologs_message.dart
 import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart';
 import 'package:pictolog/src/widgets/app_date_format.dart';
 
+import '../../../l10n/localization_extension.dart';
 import '../../constants/app_text_style.dart';
 import '../../helper/helper.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';
@@ -48,8 +49,10 @@ class HomeOverviewScreen extends HookConsumerWidget {
         backgroundColor: context.colors.surface.withAlpha(0),
         title: Text(
           isSelectionMode.value
-              ? '${selectedKeys.value.length} Ausgewählt'
-              : 'Meine Pictologs',
+              ? context.appLanguage.selectedItems(selectedKeys.value.length)
+              : context.appLanguage.myPictologs,
+          // ? '${selectedKeys.value.length} Ausgewählt'
+          // : 'Meine Pictologs',
           style: AppTextStyle.headlineLarge,
         ),
         // Change leading icon in selection mode to allow cancelling

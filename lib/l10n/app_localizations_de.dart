@@ -136,4 +136,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get page => 'Seite';
+
+  @override
+  String get button => ' Button!';
+
+  @override
+  String get noEntriesYet =>
+      'Keine Einträge bis jetzt.\n\nFüge einen neuen Eintrag hinzu unter\n\"Seiten hinzufügen\"';
+
+  @override
+  String get created => 'Erstellt';
+
+  @override
+  String get edited => 'Bearbeitet';
+
+  @override
+  String get overview => 'Übersicht';
 }
