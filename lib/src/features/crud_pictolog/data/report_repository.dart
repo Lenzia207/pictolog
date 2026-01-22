@@ -11,7 +11,7 @@ import '../../../../l10n/localization_extension.dart';
 import '../../camera/camera_screen.dart';
 import '../../camera/service/app_camera_image_service.dart';
 import '../model/pictolog.dart';
-import '../controller/report_service.dart';
+import '../presentation/ui/edit_report_dialog.dart';
 import 'pictolog_repository.dart';
 
 final reportRepositoryProvider = Provider<ReportRepository>((ref) {
@@ -25,6 +25,23 @@ final reportRepositoryProvider = Provider<ReportRepository>((ref) {
 class ReportRepository {
   ReportRepository(this.box);
   final Box<Report> box;
+
+  static Future<bool?> saveReportDialog({
+    required BuildContext context,
+    required VoidCallback onImageChange,
+    required TextEditingController descriptionController,
+    required String imagePath,
+  }) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (ctx) => EditReportDialog(
+        onImageChange: onImageChange,
+        descriptionController: descriptionController,
+        imagePath: imagePath,
+        onSave: () => Navigator.pop(ctx, true),
+      ),
+    );
+  }
 
   Future<void> addReport({
     required BuildContext context,
@@ -69,10 +86,8 @@ class ReportRepository {
 
       if (!context.mounted) return;
 
-      final createdReport = ReportController.saveReportDialog;
-
       // Show dialog to apply description if needed
-      final shouldSave = await createdReport(
+      final shouldSave = await saveReportDialog(
         context: context,
         imagePath: imagePath,
         descriptionController: descriptionController,
