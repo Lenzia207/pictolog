@@ -47,7 +47,7 @@ class ChipsButton extends StatelessWidget {
                   size: 18,
                   color: AppColor.textPrimaryLight,
                 ),
-                Space.h8,
+                Space.w8,
               ],
               Text(
                 label,
