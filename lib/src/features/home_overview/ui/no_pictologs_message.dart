@@ -31,9 +31,7 @@ class NoPictologsMessage extends StatelessWidget {
                   child: Icon(
                     NavigationConfig.fabIcon,
                     size: 20,
-                    color: context.colors.accentGreen.withValues(
-                      alpha: 0.5,
-                    ),
+                    color: context.colors.primary,
                   ),
                 ),
                 TextSpan(
