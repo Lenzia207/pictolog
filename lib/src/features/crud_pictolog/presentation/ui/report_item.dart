@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../../../helper/helper.dart';
+import '../../../../theme/theme.dart';
 import '../../model/pictolog.dart';
 import '../../model/report.dart';
 import '../report/report_fullscreen_gallery.dart';

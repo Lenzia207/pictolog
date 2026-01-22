@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'app_color.dart';
 
 /// Font weight constants for consistency.
 class AppFontWeight {
@@ -31,116 +30,99 @@ class AppFontSize {
 }
 
 /// Pre-defined text styles for the application.
-/// These use the default text color (black for light theme).
-/// Use .copyWith(color: ...) to change colors when needed.
+/// These adapt to the current theme (light/dark mode).
+/// Use context.colors to get theme-aware colors.
 class AppTextStyle {
   // Display styles
-  static TextStyle displayLarge = GoogleFonts.istokWeb(
+  static TextStyle get displayLarge => GoogleFonts.istokWeb(
     fontSize: AppFontSize.display3,
     fontWeight: AppFontWeight.bold,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle displayMedium = GoogleFonts.istokWeb(
+  static TextStyle get displayMedium => GoogleFonts.istokWeb(
     fontSize: AppFontSize.display2,
     fontWeight: AppFontWeight.bold,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle displaySmall = GoogleFonts.istokWeb(
+  static TextStyle get displaySmall => GoogleFonts.istokWeb(
     fontSize: AppFontSize.display1,
     fontWeight: AppFontWeight.bold,
-    color: AppColor.textPrimaryLight,
   );
 
   // Headline styles
-  static TextStyle headlineLarge = GoogleFonts.istokWeb(
+  static TextStyle get headlineLarge => GoogleFonts.istokWeb(
     fontSize: AppFontSize.xxxl,
     fontWeight: AppFontWeight.semiBold,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle headlineMedium = GoogleFonts.istokWeb(
+  static TextStyle get headlineMedium => GoogleFonts.istokWeb(
     fontSize: AppFontSize.xxl,
     fontWeight: AppFontWeight.semiBold,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle headlineSmall = GoogleFonts.istokWeb(
+  static TextStyle get headlineSmall => GoogleFonts.istokWeb(
     fontSize: AppFontSize.xl,
     fontWeight: AppFontWeight.semiBold,
-    color: AppColor.textPrimaryLight,
   );
 
   // Title styles
-  static TextStyle titleLarge = GoogleFonts.istokWeb(
+  static TextStyle get titleLarge => GoogleFonts.istokWeb(
     fontSize: AppFontSize.lg,
     fontWeight: AppFontWeight.semiBold,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle titleMedium = GoogleFonts.istokWeb(
+  static TextStyle get titleMedium => GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.medium,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle titleSmall = GoogleFonts.istokWeb(
+  static TextStyle get titleSmall => GoogleFonts.istokWeb(
     fontSize: AppFontSize.sm,
     fontWeight: AppFontWeight.medium,
-    color: AppColor.textPrimaryLight,
   );
 
   // Body styles
-  static TextStyle bodyLarge = GoogleFonts.istokWeb(
+  static TextStyle get bodyLarge => GoogleFonts.istokWeb(
     fontSize: AppFontSize.lg,
     fontWeight: AppFontWeight.regular,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle bodyMedium = GoogleFonts.istokWeb(
+  static TextStyle get bodyMedium => GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.regular,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle bodySmall = GoogleFonts.istokWeb(
+  static TextStyle get bodySmall => GoogleFonts.istokWeb(
     fontSize: AppFontSize.sm,
     fontWeight: AppFontWeight.regular,
-    color: AppColor.textPrimaryLight,
   );
 
   // Label styles
-  static TextStyle labelLarge = GoogleFonts.istokWeb(
+  static TextStyle get labelLarge => GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.medium,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle labelMedium = GoogleFonts.istokWeb(
+  static TextStyle get labelMedium => GoogleFonts.istokWeb(
     fontSize: AppFontSize.sm,
     fontWeight: AppFontWeight.medium,
-    color: AppColor.textPrimaryLight,
   );
 
-  static TextStyle labelSmall = GoogleFonts.istokWeb(
+  static TextStyle get labelSmall => GoogleFonts.istokWeb(
     fontSize: AppFontSize.xs,
     fontWeight: AppFontWeight.medium,
-    color: AppColor.textPrimaryLight,
   );
 
   // Button text style
-  static TextStyle button = GoogleFonts.istokWeb(
+  static TextStyle get button => GoogleFonts.istokWeb(
     fontSize: AppFontSize.md,
     fontWeight: AppFontWeight.semiBold,
-    color: AppColor.textPrimaryLight,
   );
 
   // Caption style
-  static TextStyle caption = GoogleFonts.istokWeb(
+  static TextStyle get caption => GoogleFonts.istokWeb(
     fontSize: AppFontSize.xs,
     fontWeight: AppFontWeight.regular,
-    color: AppColor.textSecondaryLight,
   );
 
   // Prevent instantiation

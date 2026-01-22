@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/localization_extension.dart';
-import '../../../constants/app_color.dart';
 import '../../../constants/app_style.dart';
 import '../../../constants/app_text_style.dart';
+import '../../../theme/theme.dart';
 import '../../account_settings/provider/locale_provider.dart';
 import 'language_option.dart';
 

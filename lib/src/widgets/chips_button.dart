@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_text_style.dart';
 
 import '../constants/app_style.dart';
+import '../theme/theme.dart';
 
 class ChipsButton extends StatelessWidget {
   const ChipsButton({
@@ -32,7 +32,7 @@ class ChipsButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: AppColor.textSecondaryLight.withValues(
+              color: context.colors.primary.withValues(
                 alpha: 0.5,
               ),
               width: 1,
@@ -45,7 +45,7 @@ class ChipsButton extends StatelessWidget {
                 Icon(
                   icon,
                   size: 18,
-                  color: AppColor.textPrimaryLight,
+                  color: context.colors.primary,
                 ),
                 Space.w8,
               ],

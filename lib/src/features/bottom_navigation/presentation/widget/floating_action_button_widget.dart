@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
 
-import '../../../../constants/app_color.dart';
+import '../../../../theme/theme.dart';
 import '../../config/navigation_config.dart';
 import '../../controller/bottom_navigation_controller.dart';
 

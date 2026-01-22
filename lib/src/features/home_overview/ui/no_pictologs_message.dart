@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/localization_extension.dart';
-import '../../../constants/app_color.dart';
 import '../../../constants/app_style.dart';
+import '../../../theme/theme.dart';
 import '../../bottom_navigation/config/navigation_config.dart';
 
 class NoPictologsMessage extends StatelessWidget {

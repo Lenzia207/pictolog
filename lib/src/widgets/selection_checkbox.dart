@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_color.dart';
+import '../theme/theme.dart';
 
 /// A small circled checkbox widget to indicate selection state.
 class SelectionCheckbox extends StatelessWidget {

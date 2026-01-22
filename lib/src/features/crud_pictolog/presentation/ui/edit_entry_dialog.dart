@@ -3,9 +3,9 @@ import 'package:pictolog/src/widgets/app_text_fields.dart';
 import 'package:pictolog/src/widgets/primary_button.dart';
 
 import '../../../../../l10n/localization_extension.dart';
-import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
+import '../../../../theme/theme.dart';
 
 class EditEntryDialog extends StatelessWidget {
   const EditEntryDialog({

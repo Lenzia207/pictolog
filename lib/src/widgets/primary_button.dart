@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../constants/app_color.dart';
 import '../constants/app_style.dart';
 import '../constants/app_text_style.dart';
+import '../theme/theme.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -27,8 +27,8 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColor.black,
-          foregroundColor: textColor ?? AppColor.white,
+          backgroundColor: backgroundColor ?? context.colors.primary,
+          foregroundColor: textColor ?? context.colors.surface,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100), // Fully rounded caps
@@ -36,18 +36,20 @@ class PrimaryButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: p20),
         ),
         child: isLoading
-            ? const SizedBox(
+            ? SizedBox(
                 height: 24,
                 width: 24,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    context.colors.surface,
+                  ),
                 ),
               )
             : Text(
                 label,
                 style: AppTextStyle.button.copyWith(
-                  color: textColor ?? AppColor.white,
+                  color: textColor ?? context.colors.surface,
                 ),
               ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/localization_extension.dart';
-import '../constants/app_color.dart';
+import '../theme/theme_colors_extension.dart';
 
 class NotFoundScreen extends StatelessWidget {
   const NotFoundScreen({

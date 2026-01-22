@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pictolog/src/constants/app_color.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
 import 'package:pictolog/src/features/home_overview/ui/no_pictologs_message.dart';
@@ -12,6 +11,7 @@ import 'package:pictolog/src/widgets/app_date_format.dart';
 import '../../../l10n/localization_extension.dart';
 import '../../constants/app_text_style.dart';
 import '../../helper/helper.dart';
+import '../../theme/theme.dart';
 import '../crud_pictolog/data/pictolog_repository.dart';
 import '../crud_pictolog/model/pictolog.dart';
 

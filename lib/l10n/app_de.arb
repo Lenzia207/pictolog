@@ -205,5 +205,25 @@
     "overview": "Übersicht",
     "@overview": {
         "description": "Overview label"
+    },
+    "theme": "Design",
+    "@theme": {
+        "description": "Theme selection label"
+    },
+    "selectTheme": "Design auswählen",
+    "@selectTheme": {
+        "description": "Theme selection dialog title"
+    },
+    "lightMode": "Hell",
+    "@lightMode": {
+        "description": "Light theme mode label"
+    },
+    "darkMode": "Dunkel",
+    "@darkMode": {
+        "description": "Dark theme mode label"
+    },
+    "systemMode": "System",
+    "@systemMode": {
+        "description": "System theme mode label (follows device setting)"
     }
 }

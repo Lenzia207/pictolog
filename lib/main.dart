@@ -26,31 +26,8 @@ class MainApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ProviderScope(
-        child: PictologApp(),
-      ),
+    return const ProviderScope(
+      child: PictologApp(),
     );
   }
 }
-
-// class HomePage extends HookWidget {
-//   const HomePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Pictolog Overview')),
-//       body: const Center(child: Text('Hello World!')),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.of(
-//             context,
-//           ).push(MaterialPageRoute(builder: (context) => const CameraScreen()));
-//         },
-//         child: const Icon(Icons.camera_alt),
-//       ),
-//     );
-//   }
-// }

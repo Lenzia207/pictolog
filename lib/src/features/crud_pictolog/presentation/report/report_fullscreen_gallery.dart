@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pictolog/src/constants/app_color.dart';
+import '../../../../theme/theme.dart';
 import '../../controller/pictolog_controller.dart';
 import '../../model/pictolog.dart';
 import 'report_page.dart';

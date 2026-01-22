@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/app_color.dart';
+import '../../../../theme/theme.dart';
 
 /// Widget: Representing a single tab item in the bottom navigation bar.
 class TabItem extends StatelessWidget {

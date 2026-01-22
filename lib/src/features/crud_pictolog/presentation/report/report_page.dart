@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pictolog/src/constants/app_text_style.dart';
 
-import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
+import '../../../../theme/theme.dart';
 import '../../model/report.dart';
 
 class ReportPage extends HookWidget {

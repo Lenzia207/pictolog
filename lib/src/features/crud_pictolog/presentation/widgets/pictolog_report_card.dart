@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
+import '../../../../theme/theme.dart';
 import '../../../../widgets/selection_checkbox.dart';
 import '../../model/report.dart';
 
@@ -55,6 +55,7 @@ class PictologReportCard extends StatelessWidget {
               ),
               if (report.description?.isNotEmpty ?? false)
                 Container(
+                  width: double.infinity,
                   color: context.colors.surface,
                   padding: const EdgeInsets.all(
                     p16,

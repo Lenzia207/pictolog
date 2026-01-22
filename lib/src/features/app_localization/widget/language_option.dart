@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/app_color.dart';
 import '../../../constants/app_text_style.dart';
+import '../../../theme/theme.dart';
 
 /// Individual language option in the selection dialog
 class LanguageOption extends StatelessWidget {

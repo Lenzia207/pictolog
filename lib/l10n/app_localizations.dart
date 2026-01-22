@@ -361,6 +361,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Overview'**
   String get overview;
+
+  /// Theme selection label
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// Theme selection dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Select Theme'**
+  String get selectTheme;
+
+  /// Light theme mode label
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get lightMode;
+
+  /// Dark theme mode label
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkMode;
+
+  /// System theme mode label (follows device setting)
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get systemMode;
 }
 
 class _AppLocalizationsDelegate
