@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../theme/theme.dart';
+import '../../../theme/theme.dart';
 
 /// Settings section widget for grouping related settings
 class SettingsSection extends StatelessWidget {

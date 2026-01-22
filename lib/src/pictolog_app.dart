@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pictolog/src/features/account_settings/provider/locale_provider.dart';
-import 'package:pictolog/src/features/account_settings/provider/theme_provider.dart';
 import 'package:pictolog/src/router/app_router.dart';
 
 import '../l10n/app_localizations.dart';
 import 'constants/constants.dart';
+import 'features/app_localization/app_localization.dart';
 import 'theme/theme.dart';
 
 class PictologApp extends HookConsumerWidget {
