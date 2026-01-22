@@ -4,8 +4,8 @@ import 'package:pictolog/src/widgets/app_date_format.dart';
 
 import '../../crud_pictolog/model/pictolog.dart';
 
-class PdfHeaderPage extends pw.StatelessWidget {
-  PdfHeaderPage({
+class PdfContentPage extends pw.StatelessWidget {
+  PdfContentPage({
     required this.pictolog,
   });
   final Pictolog pictolog;

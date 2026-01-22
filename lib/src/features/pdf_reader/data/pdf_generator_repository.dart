@@ -31,10 +31,13 @@ class PdfGeneratorRepository {
           final bytes = await file.readAsBytes();
           final image = pw.MemoryImage(bytes);
 
-          return PdfImageDescriptionSection(
-            pictolog: pictolog,
-            image: image,
-            reportDescription: report.description ?? '',
+          return pw.Container(
+            margin: const pw.EdgeInsets.only(bottom: 20),
+            child: PdfImageDescriptionSection(
+              pictolog: pictolog,
+              image: image,
+              reportDescription: report.description ?? '',
+            ),
           );
         },
       ),
@@ -58,20 +61,16 @@ class PdfGeneratorRepository {
       pdf.addPage(
         pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
+          maxPages: 200,
           crossAxisAlignment: pw.CrossAxisAlignment.center,
-          header: (pw.Context context) => PdfHeaderPage(
+          header: (pw.Context context) => PdfContentPage(
             pictolog: pictolog,
           ),
           footer: (pw.Context context) => PdfFooter(
             pictolog: pictolog,
           ),
           build: (pw.Context context) {
-            return [
-              pw.SizedBox(
-                height: 10,
-              ),
-              ...validReports,
-            ];
+            return validReports;
           },
         ),
       );

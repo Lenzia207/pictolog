@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
@@ -65,10 +66,18 @@ class PictologRepository {
     Pictolog pictolog,
     Report report,
   ) async {
-    final file = File(report.imagePath);
-    if (await file.exists()) {
-      await file.delete();
+    // Delete image file first
+    try {
+      final file = File(report.imagePath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    } catch (e) {
+      // Log error but continue with database deletion
+      debugPrint('Error deleting image file: $e');
     }
+
+    await report.delete();
     pictolog.reports.remove(report);
     await pictolog.save();
   }
@@ -78,14 +87,27 @@ class PictologRepository {
     Pictolog pictolog,
     Set<Report> reports,
   ) async {
+    // Delete image files
     for (final report in reports) {
-      final file = File(report.imagePath);
-      if (await file.exists()) {
-        await file.delete();
+      try {
+        final file = File(report.imagePath);
+        if (await file.exists()) {
+          await file.delete();
+        }
+      } catch (e) {
+        debugPrint('Error deleting image file: $e');
       }
     }
+
+    // Remove from pictolog's reports list
     pictolog.reports.removeWhere((r) => reports.contains(r));
+
+    // Save pictolog (this updates the relationship)
     await pictolog.save();
+
+    // Delete report objects from Hive
+
+    await Future.wait(reports.map((report) => report.delete()));
   }
 
   /// Helper to save an image file to the app's document directory

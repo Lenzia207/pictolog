@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/report.dart';
 
 import '../../../../l10n/localization_extension.dart';
 import '../../../constants/constants.dart';
 import '../model/pictolog.dart';
-import '../presentation/camera_screen.dart';
+import '../../camera/camera_screen.dart';
 import 'pictolog_repository.dart';
 
 final reportRepositoryProvider = Provider<ReportRepository>((ref) {
-  // We assume the box is already opened in main.dart or we handle opening it here.
   // For simplicity with synchronous access in ValueListenableBuilder, keeping the box open globally is preferred,
   // but here we can open it lazily if needed.
   return ReportRepository(
@@ -40,9 +38,14 @@ class ReportRepository {
       String? imagePath;
 
       if (imageSource == ImageSource.camera) {
-        // Use camera package directly with 4:3 aspect ratio
+        // Use camera package directly with 4:3 aspect ratio (auto-cropped)
         if (!context.mounted) return;
-        imagePath = await context.pushNamed<String>(CameraScreen.name);
+        imagePath = await context.pushNamed<String>(
+          CameraScreen.name,
+          pathParameters: {
+            'id': pictolog.key.toString(),
+          },
+        );
       } else {
         // Use image picker for gallery
         final picker = ImagePicker();
@@ -52,9 +55,7 @@ class ReportRepository {
         );
 
         if (pickedFile != null) {
-          // Crop the image to 4:3 aspect ratio
-          final croppedFile = await _cropImage(pickedFile.path);
-          imagePath = croppedFile?.path;
+          imagePath = pickedFile.path;
         }
       }
 
@@ -72,10 +73,11 @@ class ReportRepository {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: p200,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
                 child: Image.file(
                   File(imagePath!),
+                  fit: BoxFit.cover,
                 ),
               ),
               Space.h12,
@@ -120,7 +122,11 @@ class ReportRepository {
           context,
         ).showSnackBar(
           SnackBar(
-            content: Text(context.appLanguage.errorAddingReport(e.toString())),
+            content: Text(
+              context.appLanguage.errorAddingReport(
+                e.toString(),
+              ),
+            ),
           ),
         );
       }
@@ -148,27 +154,6 @@ class ReportRepository {
           ],
         ),
       ),
-    );
-  }
-
-  Future<CroppedFile?> _cropImage(String imagePath) async {
-    return await ImageCropper().cropImage(
-      sourcePath: imagePath,
-      aspectRatio: const CropAspectRatio(ratioX: 3, ratioY: 4),
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Crop Image',
-          toolbarColor: Colors.black,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.ratio4x3,
-          lockAspectRatio: true,
-        ),
-        IOSUiSettings(
-          title: 'Crop Image',
-          aspectRatioLockEnabled: true,
-          resetAspectRatioEnabled: false,
-        ),
-      ],
     );
   }
 }

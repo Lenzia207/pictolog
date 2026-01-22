@@ -21,11 +21,11 @@ class PdfImageDescriptionSection extends pw.StatelessWidget {
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.center,
         children: [
-          pw.AspectRatio(
-            aspectRatio: 3 / 4,
+          pw.Container(
+            height: 500,
             child: pw.Image(
               image,
-              fit: pw.BoxFit.cover,
+              fit: pw.BoxFit.contain,
             ),
           ),
           pw.SizedBox(
