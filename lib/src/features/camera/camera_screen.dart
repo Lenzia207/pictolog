@@ -2,6 +2,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../l10n/app_localizations.dart';
+import '../../../l10n/localization_extension.dart';
+
 class CameraScreen extends HookWidget {
   const CameraScreen({
     super.key,
@@ -26,9 +29,9 @@ class CameraScreen extends HookWidget {
     if (camerasSnapshot.hasError ||
         !camerasSnapshot.hasData ||
         camerasSnapshot.data!.isEmpty) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
-          child: Text('No camera found'),
+          child: Text(AppLocalizations.of(context)!.noCameraFound),
         ),
       );
     }
@@ -52,7 +55,7 @@ class CameraScreen extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Take a Picture'),
+        title: Text(context.appLanguage.takePicture),
       ),
       body: Builder(
         builder: (context) {
@@ -78,7 +81,7 @@ class CameraScreen extends HookWidget {
 
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Picture taken: ${image.path}'),
+                content: Text(context.appLanguage.pictureTaken(image.path)),
               ),
             );
           } catch (e) {

@@ -1,0 +1,189 @@
+{
+    "@@locale": "de",
+    "appTitle": "Pictolog",
+    "@appTitle": {
+        "description": "The application title"
+    },
+    "myPictologs": "Meine Pictologs",
+    "@myPictologs": {
+        "description": "Navigation label for overview screen"
+    },
+    "noPictologsMessage": "Noch keine Pictologs.\nErstelle einen mit dem ",
+    "@noPictologsMessage": {
+        "description": "Message shown when there are no pictologs"
+    },
+    "settings": "Einstellungen",
+    "@settings": {
+        "description": "Navigation label for settings screen"
+    },
+    "accountSettings": "Einstellungen",
+    "@accountSettings": {
+        "description": "Account settings screen title"
+    },
+    "language": "Sprache",
+    "@language": {
+        "description": "Language selection label"
+    },
+    "selectLanguage": "Sprache auswählen",
+    "@selectLanguage": {
+        "description": "Language selection dialog title"
+    },
+    "newPictologEntry": "Neuer Pictolog Eintrag",
+    "@newPictologEntry": {
+        "description": "Title for new pictolog entry screen"
+    },
+    "title": "Titel",
+    "@title": {
+        "description": "Generic title label"
+    },
+    "projectName": "Name des Projekts",
+    "@projectName": {
+        "description": "Label for project name field"
+    },
+    "description": "Beschreibung",
+    "@description": {
+        "description": "Generic description label"
+    },
+    "descriptionOptional": "Beschreibung (Optional)",
+    "@descriptionOptional": {
+        "description": "Optional description label"
+    },
+    "generalProjectDescription": "Allgemeine Beschreibung des Projekts...",
+    "@generalProjectDescription": {
+        "description": "Placeholder for project description field"
+    },
+    "saveEntry": "Eintrag speichern",
+    "@saveEntry": {
+        "description": "Button label to save entry"
+    },
+    "pages": "Seiten",
+    "@pages": {
+        "description": "Label for number of pages"
+    },
+    "pagesCount": "{count} Seiten",
+    "@pagesCount": {
+        "description": "Shows the number of pages",
+        "placeholders": {
+            "count": {
+                "type": "String",
+                "example": "5"
+            }
+        }
+    },
+    "takePicture": "Foto aufnehmen",
+    "@takePicture": {
+        "description": "Title for camera screen"
+    },
+    "noCameraFound": "Keine Kamera gefunden",
+    "@noCameraFound": {
+        "description": "Error message when no camera is available"
+    },
+    "pictureTaken": "Foto aufgenommen: {path}",
+    "@pictureTaken": {
+        "description": "Success message after taking picture",
+        "placeholders": {
+            "path": {
+                "type": "String",
+                "example": "/path/to/image.jpg"
+            }
+        }
+    },
+    "addDescription": "Beschreibung hinzufügen",
+    "@addDescription": {
+        "description": "Dialog title to add description"
+    },
+    "cancel": "Abbrechen",
+    "@cancel": {
+        "description": "Cancel button label"
+    },
+    "save": "Speichern",
+    "@save": {
+        "description": "Save button label"
+    },
+    "errorAddingReport": "Fehler beim Hinzufügen des Berichts: {error}",
+    "@errorAddingReport": {
+        "description": "Error message when adding report fails",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "example": "Network error"
+            }
+        }
+    },
+    "newPictologCreated": "Neuer Pictolog erstellt!",
+    "@newPictologCreated": {
+        "description": "Success message when pictolog is created"
+    },
+    "errorSaving": "Fehler beim Speichern: {error}",
+    "@errorSaving": {
+        "description": "Error message when saving fails",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "example": "Database error"
+            }
+        }
+    },
+    "createPdf": "PDF Erstellen",
+    "@createPdf": {
+        "description": "Button label to create PDF"
+    },
+    "changeOrder": "Reihenfolge ändern",
+    "@changeOrder": {
+        "description": "Button label to change order"
+    },
+    "addReport": "Bericht hinzufügen",
+    "@addReport": {
+        "description": "Button label to add report"
+    },
+    "noReportsYet": "Noch keine Berichte",
+    "@noReportsYet": {
+        "description": "Message when there are no reports"
+    },
+    "editReport": "Bericht bearbeiten",
+    "@editReport": {
+        "description": "Dialog title to edit report"
+    },
+    "editEntry": "Eintrag bearbeiten",
+    "@editEntry": {
+        "description": "Dialog title to edit entry"
+    },
+    "projectTitle": "Projekttitel",
+    "@projectTitle": {
+        "description": "Label for project title field"
+    },
+    "pageNotFound": "Seite nicht gefunden!",
+    "@pageNotFound": {
+        "description": "Error message for 404 page"
+    },
+    "selectedItems": "{count} Ausgewählt",
+    "@selectedItems": {
+        "description": "Shows count of selected items",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "pdfPreview": "PDF Vorschau",
+    "@pdfPreview": {
+        "description": "Title for PDF preview screen"
+    },
+    "report": "Bericht",
+    "@report": {
+        "description": "Generic report label"
+    },
+    "titlePage": "Titelseite",
+    "@titlePage": {
+        "description": "PDF title page label"
+    },
+    "contentPage": "Inhaltsseite",
+    "@contentPage": {
+        "description": "PDF content page label"
+    },
+    "page": "Seite",
+    "@page": {
+        "description": "Generic page label"
+    }
+}

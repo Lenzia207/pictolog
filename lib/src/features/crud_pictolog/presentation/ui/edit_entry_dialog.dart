@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pictolog/src/widgets/app_text_fields.dart';
 import 'package:pictolog/src/widgets/primary_button.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
@@ -30,7 +31,7 @@ class EditEntryDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(p12),
       ),
       title: Text(
-        'Pictolog bearbeiten',
+        context.appLanguage.editEntry,
         style: AppTextStyle.headlineSmall,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
@@ -43,23 +44,23 @@ class EditEntryDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Name",
+                context.appLanguage.title,
                 style: AppTextStyle.titleMedium,
               ),
               Space.h8,
               AppTextField(
-                labelText: 'Titel deines Eintrags',
+                labelText: context.appLanguage.projectName,
                 type: AppTextFieldType.oneLiner,
                 controller: nameController,
               ),
               Space.h16,
               Text(
-                "Beschreibung",
+                context.appLanguage.description,
                 style: AppTextStyle.titleMedium,
               ),
               Space.h8,
               AppTextField(
-                labelText: 'Beschreibung...',
+                labelText: context.appLanguage.generalProjectDescription,
                 type: AppTextFieldType.multiLines,
                 controller: descriptionController,
               ),
@@ -81,13 +82,13 @@ class EditEntryDialog extends StatelessWidget {
                 style: TextButton.styleFrom(
                   foregroundColor: context.colors.textSecondary,
                 ),
-                child: const Text('Abbrechen'),
+                child: Text(context.appLanguage.cancel),
               ),
             ),
             Space.w8,
             Expanded(
               child: PrimaryButton(
-                label: 'Speichern',
+                label: context.appLanguage.save,
                 onPressed: onSave,
               ),
             ),

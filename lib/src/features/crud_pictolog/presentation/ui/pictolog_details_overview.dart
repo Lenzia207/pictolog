@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pictolog/src/widgets/app_date_format.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
 import '../../../../widgets/chips_button.dart';
@@ -62,12 +63,12 @@ class PictologDetailsOverview extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Seiten (${pictolog.reports.length})',
+                '${context.appLanguage.pages} (${pictolog.reports.length})',
                 style: AppTextStyle.headlineMedium,
               ),
               ChipsButton(
                 onPressed: onPressedIcon,
-                label: "Reihenfolge ändern",
+                label: context.appLanguage.changeOrder,
                 icon: icon,
               ),
             ],

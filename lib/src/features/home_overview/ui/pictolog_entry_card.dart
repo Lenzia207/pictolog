@@ -3,6 +3,7 @@ import 'package:pictolog/src/constants/app_color.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 import 'package:pictolog/src/constants/app_text_style.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import '../../../widgets/selection_checkbox.dart';
 
 class PictologEntryCard extends StatelessWidget {
@@ -86,7 +87,9 @@ class PictologEntryCard extends StatelessWidget {
                           ),
                           Space.w4,
                           Text(
-                            '$projectLength Seiten',
+                            AppLocalizations.of(
+                              context,
+                            )!.pagesCount(projectLength),
                             style: AppTextStyle.bodySmall,
                           ),
                           const Spacer(),
@@ -94,7 +97,6 @@ class PictologEntryCard extends StatelessWidget {
                             // Simple date formatting
                             projectCreatedAt,
                             style: AppTextStyle.bodyLarge,
-                            // style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),

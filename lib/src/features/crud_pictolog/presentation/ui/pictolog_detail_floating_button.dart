@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 
@@ -21,7 +22,7 @@ class PictologDetailFloatingButton extends StatelessWidget {
         backgroundColor: context.colors.accentGreen,
         onPressed: onButtonPressed,
         label: Text(
-          'Seiten hinzufügen',
+          context.appLanguage.addReport,
           style: TextStyle(
             color: context.colors.textPrimary,
           ),

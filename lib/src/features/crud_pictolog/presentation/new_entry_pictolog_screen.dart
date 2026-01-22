@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/ui/new_entry_pictolog_ui.dart';
 
+import '../../../../l10n/localization_extension.dart';
 import '../data/pictolog_repository.dart';
 import '../model/pictolog.dart';
 import '../model/report.dart';
@@ -31,9 +32,9 @@ class NewEntryPictologScreen extends HookConsumerWidget {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
-              'Please enter a name',
+              context.appLanguage.projectName,
             ),
           ),
         );
@@ -59,7 +60,7 @@ class NewEntryPictologScreen extends HookConsumerWidget {
             context,
           ).showSnackBar(
             SnackBar(
-              content: Text('New Pictolog Created!'),
+              content: Text(context.appLanguage.newPictologCreated),
             ),
           );
           context.pop();
@@ -70,7 +71,7 @@ class NewEntryPictologScreen extends HookConsumerWidget {
             context,
           ).showSnackBar(
             SnackBar(
-              content: Text('Error saving: $e'),
+              content: Text(context.appLanguage.errorSaving(e.toString())),
             ),
           );
         }

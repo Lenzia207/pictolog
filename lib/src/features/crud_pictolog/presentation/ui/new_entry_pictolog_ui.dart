@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pictolog/src/constants/app_style.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_text_style.dart';
 import '../../../../widgets/app_text_fields.dart';
@@ -29,7 +30,7 @@ class NewEntryPictologUi extends StatelessWidget {
         scrolledUnderElevation: 2,
         centerTitle: true,
         title: Text(
-          'Neuer Pictolog Eintrag',
+          context.appLanguage.newPictologEntry,
           style: AppTextStyle.headlineLarge,
         ),
       ),
@@ -48,7 +49,7 @@ class NewEntryPictologUi extends StatelessWidget {
                 bottom: p10,
               ),
               child: Text(
-                "Titel",
+                context.appLanguage.title,
                 style: AppTextStyle.titleLarge,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -57,7 +58,7 @@ class NewEntryPictologUi extends StatelessWidget {
             AppTextField(
               type: AppTextFieldType.oneLiner,
               controller: nameController,
-              labelText: 'Name des Projekts',
+              labelText: context.appLanguage.projectName,
             ),
 
             Space.h30,
@@ -69,14 +70,14 @@ class NewEntryPictologUi extends StatelessWidget {
                 bottom: p10,
               ),
               child: Text(
-                "Beschreibung (Optional)",
+                context.appLanguage.descriptionOptional,
                 style: AppTextStyle.titleLarge,
               ),
             ),
 
             AppTextField(
               controller: overviewController,
-              labelText: 'Allgemeine Beschreibung des Projekts...',
+              labelText: context.appLanguage.generalProjectDescription,
               type: AppTextFieldType.multiLines,
             ),
             Padding(
@@ -84,7 +85,7 @@ class NewEntryPictologUi extends StatelessWidget {
                 vertical: p30,
               ),
               child: PrimaryButton(
-                label: 'Eintrag speichern',
+                label: context.appLanguage.saveEntry,
                 onPressed: savePictolog,
               ),
             ),

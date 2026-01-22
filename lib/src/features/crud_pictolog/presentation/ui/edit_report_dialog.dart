@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pictolog/src/widgets/app_text_fields.dart';
 import 'package:pictolog/src/widgets/primary_button.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_style.dart';
 import '../../../../constants/app_text_style.dart';
@@ -34,7 +35,7 @@ class EditReportDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(p12),
       ),
       title: Text(
-        'Seite bearbeiten',
+        context.appLanguage.editReport,
         style: AppTextStyle.headlineLarge,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
@@ -79,13 +80,13 @@ class EditReportDialog extends StatelessWidget {
                   bottom: p10,
                 ),
                 child: Text(
-                  "Beschreibung ändern:",
+                  context.appLanguage.description,
                   style: AppTextStyle.titleMedium,
                 ),
               ),
 
               AppTextField(
-                labelText: 'Beschreibung...',
+                labelText: context.appLanguage.generalProjectDescription,
                 type: AppTextFieldType.multiLines,
                 controller: descriptionController,
               ),
@@ -107,13 +108,13 @@ class EditReportDialog extends StatelessWidget {
                 style: TextButton.styleFrom(
                   foregroundColor: context.colors.textSecondary,
                 ),
-                child: const Text('Abbrechen'),
+                child: Text(context.appLanguage.cancel),
               ),
             ),
             Space.w8,
             Expanded(
               child: PrimaryButton(
-                label: 'Speichern',
+                label: context.appLanguage.save,
                 onPressed: onSave,
               ),
             ),

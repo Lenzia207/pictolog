@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/features/crud_pictolog/model/report.dart';
 
+import '../../../../l10n/localization_extension.dart';
 import '../../../constants/app_style.dart';
 import '../model/pictolog.dart';
 import 'pictolog_repository.dart';
@@ -14,7 +15,6 @@ final reportRepositoryProvider = Provider<ReportRepository>((ref) {
   // We assume the box is already opened in main.dart or we handle opening it here.
   // For simplicity with synchronous access in ValueListenableBuilder, keeping the box open globally is preferred,
   // but here we can open it lazily if needed.
-  // Note: Hive.box() only works if the box is already opened.
   return ReportRepository(
     Hive.box<Report>('reports'),
   );
@@ -46,7 +46,7 @@ class ReportRepository {
       final shouldSave = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Add Description'),
+          title: Text(context.appLanguage.addDescription),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -59,9 +59,9 @@ class ReportRepository {
               Space.h12,
               TextField(
                 controller: descriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                  hintText: 'Enter report details...',
+                decoration: InputDecoration(
+                  labelText: context.appLanguage.description,
+                  hintText: context.appLanguage.generalProjectDescription,
                 ),
                 maxLines: 3,
               ),
@@ -70,11 +70,11 @@ class ReportRepository {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
+              child: Text(context.appLanguage.cancel),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Save'),
+              child: Text(context.appLanguage.save),
             ),
           ],
         ),
@@ -96,7 +96,11 @@ class ReportRepository {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error adding report: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(context.appLanguage.errorAddingReport(e.toString())),
+          ),
+        );
       }
     }
   }

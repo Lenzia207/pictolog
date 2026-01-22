@@ -36,10 +36,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ...NavigationConfig.items.map(
+            ...NavigationConfig.items(context).map(
               (item) => TabItem(
                 icon: item.icon,
-                label: item.label,
+                label: item.getLabel(context),
                 index: item.index,
                 currentIndex: controller.currentIndex,
                 onTap: controller.goBranch,

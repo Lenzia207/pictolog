@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/localization_extension.dart';
 import '../../../constants/app_color.dart';
 import '../../../constants/app_style.dart';
 import '../../bottom_navigation/config/navigation_config.dart';
@@ -22,8 +23,9 @@ class NoPictologsMessage extends StatelessWidget {
           Text.rich(
             TextSpan(
               children: [
-                const TextSpan(
-                  text: 'Noch keine Pictologs.\nErstelle einen mit dem ',
+                TextSpan(
+                  text: context.appLanguage.noPictologsMessage,
+                  // text: 'Noch keine Pictologs.\nErstelle einen mit dem ',
                 ),
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,

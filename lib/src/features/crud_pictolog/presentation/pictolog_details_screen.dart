@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
 
 import 'package:pictolog/src/widgets/primary_button.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../constants/app_style.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../controller/pictolog_controller.dart';
@@ -56,10 +57,10 @@ class PictologDetailsScreen extends HookConsumerWidget {
         final pictolog = box.get(pictologKey);
 
         if (pictolog == null) {
-          return const Scaffold(
+          return Scaffold(
             body: Center(
               child: Text(
-                'Pictolog not found',
+                AppLocalizations.of(context)!.pageNotFound,
               ),
             ),
           );
@@ -69,7 +70,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
           appBar: PictologDetailsAppBar(
             isSelectionMode: isSelectionMode,
             selectedKeys: selectedKeys,
-            title: "Überblick",
+            title: AppLocalizations.of(context)!.myPictologs,
             onClose: () {
               isSelectionMode.value = false;
               selectedKeys.value = {};
@@ -113,7 +114,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
                     horizontal: p10,
                   ),
                   child: PrimaryButton(
-                    label: 'PDF Erstellen',
+                    label: AppLocalizations.of(context)!.createPdf,
                     onPressed: () {
                       context.pushNamed(
                         PictologPdfPreviewScreen.name,
