@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import '../../../../constants/app_style.dart';
-import '../../../../theme/theme.dart';
-import '../../../../widgets/selection_checkbox.dart';
+import 'package:pictolog/src/widgets/shiny_card.dart';
+import '../../../../constants/constants.dart';
 import '../../model/report.dart';
 
 class PictologReportCard extends StatelessWidget {
@@ -11,66 +10,53 @@ class PictologReportCard extends StatelessWidget {
     super.key,
     required this.report,
     required this.isSelectedItem,
-    required this.isSelectionMode,
   });
 
   final Report report;
   final bool isSelectedItem;
-  final bool isSelectionMode;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      borderOnForeground: false,
-      color: Colors.transparent,
-      elevation: isSelectedItem ? 4 : 0,
-      shadowColor: context.colors.surface,
-      surfaceTintColor: context.colors.surface,
-      shape: RoundedRectangleBorder(
-        side: BorderSide.none,
-        borderRadius: BorderRadius.circular(
-          p10,
-        ),
-      ),
+    return ShinyCard(
+      isSelected: isSelectedItem,
+      padding: EdgeInsets.zero,
       margin: EdgeInsets.zero,
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Image.file(
-                    File(report.imagePath),
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, _, _) => const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                      ),
-                    ),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(
+                  report.description?.isNotEmpty ?? false ? 0 : 20,
+                ),
+                bottomRight: Radius.circular(
+                  report.description?.isNotEmpty ?? false ? 0 : 20,
+                ),
+              ),
+              child: Image.file(
+                File(report.imagePath),
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => const Center(
+                  child: Icon(
+                    Icons.broken_image,
+                    color: Colors.grey,
                   ),
                 ),
               ),
-              if (report.description?.isNotEmpty ?? false)
-                Container(
-                  width: double.infinity,
-                  color: context.colors.surface,
-                  padding: const EdgeInsets.all(
-                    p16,
-                  ),
-                  child: Text(
-                    report.description!,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                  ),
-                ),
-            ],
+            ),
           ),
-          if (isSelectionMode)
-            SelectionCheckbox(
-              isSelectedItem: isSelectedItem,
+          if (report.description?.isNotEmpty ?? false)
+            Container(
+              padding: const EdgeInsets.all(p12),
+              child: Text(
+                report.description!,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: AppTextStyle.bodySmall,
+              ),
             ),
         ],
       ),

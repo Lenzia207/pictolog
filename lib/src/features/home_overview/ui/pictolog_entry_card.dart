@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pictolog/src/widgets/shiny_card.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../constants/constants.dart';
 import '../../../theme/theme.dart';
-import '../../../widgets/selection_checkbox.dart';
 
 class PictologEntryCard extends StatelessWidget {
   const PictologEntryCard({
@@ -29,89 +30,143 @@ class PictologEntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.only(
-        bottom: 16,
-      ),
-      elevation: isSelectedItem ? 4 : 2,
-      color: context.colors.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isSelectedItem
-            ? BorderSide(
-                color: context.colors.primary,
-                width: 2,
-              )
-            : BorderSide.none,
-      ),
-      child: InkWell(
-        onTap: onTapItem,
-        onLongPress: onLongPressed,
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Content
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
+    final colors = context.colors;
+
+    return ShinyCard(
+          isSelected: isSelectedItem,
+          onTap: onTapItem,
+          onLongPress: onLongPressed,
+          padding: const EdgeInsets.all(20.0), // Generous padding
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Header
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        projectName,
-                        style: AppTextStyle.headlineSmall.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Space.h8,
-                      if (overviewDescription.isNotEmpty)
-                        Text(
-                          overviewDescription,
+                      Expanded(
+                        child: Text(
+                          projectName,
+                          style: AppTextStyle.headlineSmall.copyWith(
+                            fontWeight: FontWeight.w700,
+                            height: 1.2,
+                            fontSize: 18,
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.bodyMedium,
                         ),
+                      ),
+                      if (isSelectionMode) const SizedBox(width: 32),
+                    ],
+                  ),
 
-                      Space.h12,
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.photo_library,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
-                          Space.w4,
-                          Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.pagesCount(projectLength),
-                            style: AppTextStyle.bodySmall,
-                          ),
-                          const Spacer(),
-                          Text(
-                            // Simple date formatting
-                            projectCreatedAt,
-                            style: AppTextStyle.bodyLarge,
-                          ),
-                        ],
+                  if (overviewDescription.isNotEmpty) ...[
+                    Space.h8,
+                    Text(
+                      overviewDescription,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.bodyMedium.copyWith(
+                        color: colors.textSecondary,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+
+                  Space.h20,
+
+                  // Footer Meta Info
+                  Row(
+                    children: [
+                      // Page Count Badge
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colors.background,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.filter_none_outlined, // More modern icon
+                              size: 14,
+                              color: colors.textSecondary,
+                            ),
+                            Space.w6,
+                            Text(
+                              AppLocalizations.of(
+                                context,
+                              )!.pagesCount(projectLength),
+                              style: AppTextStyle.bodySmall.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: colors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      // Date
+                      Text(
+                        projectCreatedAt,
+                        style: AppTextStyle.bodySmall.copyWith(
+                          color: colors.textSecondary.withValues(alpha: 0.8),
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            // Selection Checkbox Overlay
-            if (isSelectionMode)
-              SelectionCheckbox(
-                isSelectedItem: isSelectedItem,
+                ],
               ),
-          ],
-        ),
-      ),
-    );
+
+              // Selection Indicator
+              if (isSelectionMode)
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: AnimatedContainer(
+                    duration: 200.ms,
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isSelectedItem
+                          ? colors.primary
+                          : Colors.transparent,
+                      border: Border.all(
+                        color: isSelectedItem
+                            ? colors.primary
+                            : colors.textSecondary.withValues(alpha: 0.3),
+                        width: 2,
+                      ),
+                    ),
+                    child: isSelectedItem
+                        ? Icon(
+                            Icons.check,
+                            size: 16,
+                            color: colors.background,
+                          ).animate().scale(
+                            duration: 200.ms,
+                            curve: Curves.easeOutBack,
+                          )
+                        : null,
+                  ),
+                ),
+            ],
+          ),
+        )
+        .animate()
+        .fadeIn(duration: 400.ms)
+        .slideY(
+          begin: 0.1,
+          duration: 400.ms,
+          curve: Curves.easeInBack,
+        );
   }
 }

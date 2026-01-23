@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../constants/constants.dart';
@@ -8,6 +9,7 @@ import '../../model/pictolog.dart';
 import '../../model/report.dart';
 import '../report/report_fullscreen_gallery.dart';
 import '../widgets/pictolog_report_card.dart';
+import '../widgets/selcetion_indicator.dart';
 
 class ReportItem extends StatelessWidget {
   const ReportItem({
@@ -63,27 +65,66 @@ class ReportItem extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Container(
-            width: p300,
-            margin: const EdgeInsets.only(right: p20),
-            child: PictologReportCard(
-              isSelectedItem: isSelected,
-              isSelectionMode: isSelectionMode.value,
-              report: report,
+          // Main Card
+          Animate(
+            effects: isReorderMode.value
+                ? [
+                    ShakeEffect(
+                      duration: 1000.ms,
+                      hz: 2,
+                      rotation: 0.01,
+                      offset: const Offset(0, 0),
+                    ),
+                  ]
+                : [],
+            onComplete: (controller) {
+              if (isReorderMode.value) {
+                controller.repeat(reverse: true);
+              }
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: p20),
+              width: p300,
+              child: PictologReportCard(
+                isSelectedItem: isSelected,
+                report: report,
+              ),
             ),
           ),
+
+          // Selection Overlay
+          if (isSelectionMode.value)
+            Positioned(
+              top: 8,
+              right: 28, // Adjust based on margin
+              child: SelectionIndicator(isSelected: isSelected),
+            ),
+
+          // Reorder Overlay / Handle
           if (isReorderMode.value)
-            Container(
-              decoration: BoxDecoration(
-                color: context.colors.accentGreen,
-                shape: BoxShape.circle,
-              ),
-              padding: const EdgeInsets.all(12),
-              child: const Icon(
-                Icons.drag_indicator,
-                color: Colors.black,
-                size: 32,
-              ),
+            Center(
+              child:
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: context.colors.surface.withValues(alpha: 0.8),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      Icons.drag_indicator,
+                      color: context.colors.primary,
+                      size: 20,
+                    ),
+                  ).animate().scale(
+                    duration: 200.ms,
+                    curve: Curves.easeOutBack,
+                  ),
             ),
         ],
       ),

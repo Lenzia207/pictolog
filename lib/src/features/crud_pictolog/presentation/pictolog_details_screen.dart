@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pictolog/l10n/localization_extension.dart';
 import 'package:pictolog/src/features/crud_pictolog/data/pictolog_repository.dart';
 
 import 'package:pictolog/src/widgets/primary_button.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../constants/constants.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../controller/pictolog_controller.dart';
@@ -60,7 +60,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
           return Scaffold(
             body: Center(
               child: Text(
-                AppLocalizations.of(context)!.pageNotFound,
+                context.appLanguage.pageNotFound,
               ),
             ),
           );
@@ -70,7 +70,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
           appBar: PictologDetailsAppBar(
             isSelectionMode: isSelectionMode,
             selectedKeys: selectedKeys,
-            title: AppLocalizations.of(context)!.myPictologs,
+            title: context.appLanguage.overview,
             onClose: () {
               isSelectionMode.value = false;
               selectedKeys.value = {};
@@ -114,7 +114,7 @@ class PictologDetailsScreen extends HookConsumerWidget {
                     horizontal: p10,
                   ),
                   child: PrimaryButton(
-                    label: AppLocalizations.of(context)!.createPdf,
+                    label: context.appLanguage.createPdf,
                     onPressed: () {
                       context.pushNamed(
                         PictologPdfPreviewScreen.name,

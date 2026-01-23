@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/localization_extension.dart';
 
 class NavigationItem {
   final IconData icon;
@@ -21,12 +21,12 @@ class NavigationConfig {
     return [
       NavigationItem(
         icon: Icons.home,
-        labelBuilder: (context) => AppLocalizations.of(context)!.myPictologs,
+        labelBuilder: (context) => context.appLanguage.myPictologs,
         index: 0,
       ),
       NavigationItem(
         icon: Icons.settings,
-        labelBuilder: (context) => AppLocalizations.of(context)!.settings,
+        labelBuilder: (context) => context.appLanguage.settings,
         index: 1,
       ),
     ];

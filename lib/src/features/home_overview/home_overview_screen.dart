@@ -45,6 +45,7 @@ class HomeOverviewScreen extends HookConsumerWidget {
     }
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: context.colors.surface.withAlpha(0),
         title: Text(
