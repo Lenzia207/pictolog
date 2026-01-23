@@ -15,12 +15,14 @@ class EditReportDialog extends StatelessWidget {
     required this.descriptionController,
     required this.imagePath,
     required this.onSave,
+    this.onRotate,
   });
 
   final VoidCallback onImageChange;
   final TextEditingController descriptionController;
   final String imagePath;
   final VoidCallback onSave;
+  final VoidCallback? onRotate;
 
   @override
   Widget build(BuildContext context) {
@@ -48,29 +50,58 @@ class EditReportDialog extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: onImageChange,
-                child: Container(
-                  height: 200,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: context.colors.surface,
-                    borderRadius: BorderRadius.circular(p20),
-                    image: DecorationImage(
-                      opacity: 0.6,
-                      image: FileImage(
-                        File(
-                          imagePath,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: context.colors.surface,
+                        borderRadius: BorderRadius.circular(p20),
+                        image: DecorationImage(
+                          opacity: 0.6,
+                          image: FileImage(
+                            File(
+                              imagePath,
+                            ),
+                          ),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      fit: BoxFit.cover,
+                      child: const Center(
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: AppColor.black,
+                          size: 40,
+                        ),
+                      ),
                     ),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: AppColor.black,
-                      size: 40,
-                    ),
-                  ),
+                    if (onRotate != null)
+                      Positioned(
+                        bottom: 8,
+                        right: 8,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: context.colors.surface.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                              ),
+                            ],
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.rotate_right,
+                              color: context.colors.primary,
+                            ),
+                            onPressed: onRotate,
+                            tooltip: 'Rotate',
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               Padding(

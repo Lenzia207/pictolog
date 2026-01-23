@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image/image.dart' as img;
 import 'package:pictolog/src/features/crud_pictolog/presentation/ui/edit_entry_dialog.dart';
 import 'package:pictolog/src/features/crud_pictolog/presentation/ui/edit_report_dialog.dart';
 
@@ -72,6 +75,10 @@ class PictologController {
             },
             imagePath: newImagePath ?? report.imagePath,
             descriptionController: descriptionController,
+            onRotate: () async {
+              await rotateImage(report, rebuildToken);
+              setState(() {});
+            },
             onSave: () async {
               // Update Description
               report.description = descriptionController.text.trim();
@@ -99,5 +106,37 @@ class PictologController {
     final item = pictolog.reports.removeAt(oldIndex);
     pictolog.reports.insert(newIndex, item);
     await pictolog.save();
+  }
+
+  Future<void> rotateImage(
+    Report report,
+    ValueNotifier<int> rebuildToken,
+  ) async {
+    final imageFile = File(report.imagePath);
+    if (!await imageFile.exists()) return;
+
+    final bytes = await imageFile.readAsBytes();
+    final image = img.decodeImage(bytes);
+
+    if (image == null) return;
+
+    // Rotate 90 degrees clockwise
+    final rotatedImage = img.copyRotate(image, angle: 90);
+
+    // Encode as JPG (preserving quality as much as possible, here using default)
+    final encodedBytes = img.encodeJpg(rotatedImage);
+
+    await imageFile.writeAsBytes(encodedBytes);
+
+    // Evict from cache
+    // We clear the whole cache to be safe as sometimes keys can vary
+    PaintingBinding.instance.imageCache.clear();
+    PaintingBinding.instance.imageCache.clearLiveImages();
+
+    // Trigger UI Rebuild
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    rebuildToken.notifyListeners();
+    // Or just value++ if it's ValueNotifier<int>
+    rebuildToken.value++;
   }
 }

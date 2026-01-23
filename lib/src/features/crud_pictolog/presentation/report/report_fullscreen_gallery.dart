@@ -72,6 +72,21 @@ class ReportFullscreenGallery extends HookConsumerWidget {
               actions: [
                 IconButton(
                   icon: Icon(
+                    Icons.rotate_right,
+                    color: context.colors.primary,
+                  ),
+                  onPressed: () async {
+                    final currentReport = pictolog.reports[selectedIndex.value];
+                    await ref
+                        .read(pictologControllerProvider)
+                        .rotateImage(
+                          currentReport,
+                          rebuildToken,
+                        );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
                     Icons.edit,
                     color: context.colors.primary,
                   ),
