@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pictolog/l10n/localization_extension.dart';
 import 'package:printing/printing.dart';
-import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
-import 'package:pictolog/src/features/pdf_reader/data/pdf_generator_repository.dart';
+import 'package:pictolog/src/features/projects/domain/project_model.dart';
+import 'package:pictolog/src/features/pdf_reader/domain/pdf_service.dart';
 
 import '../../../constants/constants.dart';
 import '../../../theme/theme.dart';
@@ -12,7 +12,7 @@ class PictologPdfPreviewScreen extends ConsumerWidget {
   static const String path = 'pdf_preview';
   static const String name = 'pictolog_pdf_preview';
 
-  final Pictolog pictolog;
+  final ProjectModel pictolog;
 
   const PictologPdfPreviewScreen({
     super.key,

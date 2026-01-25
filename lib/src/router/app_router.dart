@@ -2,13 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pictolog/src/features/home_overview/home_overview_screen.dart';
-import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
+import 'package:pictolog/src/features/projects/domain/project_model.dart';
 import '../features/account_settings/account_settings_screen.dart';
-import '../features/camera/camera_screen.dart';
-import '../features/crud_pictolog/presentation/new_entry_pictolog_screen.dart';
-import '../features/crud_pictolog/presentation/pictolog_details_screen.dart';
+import '../features/camera/presentation/camera_screen.dart';
+import '../features/projects/presentation/new_entry_pictolog_screen.dart';
+import '../features/projects/presentation/project_detail_screen.dart';
 import '../features/pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
-import '../features/crud_pictolog/presentation/report/report_fullscreen_gallery.dart';
+import '../features/reports/presentations/report_fullscreen_gallery.dart';
 import '../features/bottom_navigation/presentation/bottom_navigation.dart';
 import 'not_found_screen.dart';
 
@@ -74,7 +74,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                         name: PictologPdfPreviewScreen.name,
                         parentNavigatorKey: _rootNavigatorKey,
                         builder: (context, state) {
-                          final pictolog = state.extra as Pictolog;
+                          final pictolog = state.extra as ProjectModel;
                           return PictologPdfPreviewScreen(
                             pictolog: pictolog,
                           );
@@ -87,7 +87,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                         builder: (context, state) {
                           final args = state.extra as Map<String, dynamic>;
                           return ReportFullscreenGallery(
-                            pictolog: args['pictolog'] as Pictolog,
+                            pictolog: args['pictolog'] as ProjectModel,
                             initialIndex: args['index'] as int,
                           );
                         },

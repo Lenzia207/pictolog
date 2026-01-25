@@ -4,7 +4,7 @@ import 'package:pictolog/l10n/localization_extension.dart';
 
 import '../../../constants/constants.dart';
 import '../../../theme/theme.dart';
-import '../service/app_theme_service.dart';
+import '../controller/app_theme_controller.dart';
 
 /// Theme mode selection tile widget
 class ThemeModeSelectionTile extends ConsumerWidget {
@@ -25,7 +25,10 @@ class ThemeModeSelectionTile extends ConsumerWidget {
         style: AppTextStyle.bodyLarge,
       ),
       subtitle: Text(
-        AppThemeService.getThemeModeName(context, currentThemeMode),
+        AppThemeController.getThemeModeName(
+          context,
+          currentThemeMode,
+        ),
         style: AppTextStyle.bodyMedium.copyWith(
           color: context.colors.primary,
         ),
@@ -34,8 +37,11 @@ class ThemeModeSelectionTile extends ConsumerWidget {
         Icons.chevron_right,
         color: context.colors.textSecondary,
       ),
-      onTap: () =>
-          AppThemeService.showThemeModeDialog(context, ref, appLanguage),
+      onTap: () => AppThemeController.showThemeModeDialog(
+        context,
+        ref,
+        appLanguage,
+      ),
     );
   }
 }

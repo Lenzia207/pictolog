@@ -2,14 +2,14 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pictolog/src/widgets/app_date_format.dart';
 
-import '../../crud_pictolog/model/pictolog.dart';
+import '../../projects/domain/project_model.dart';
 
 class PdfContentPage extends pw.StatelessWidget {
   PdfContentPage({
     required this.pictolog,
     required this.createdLabel,
   });
-  final Pictolog pictolog;
+  final ProjectModel pictolog;
   final String createdLabel;
 
   @override

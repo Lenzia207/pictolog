@@ -1,5 +1,5 @@
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
+import 'package:pictolog/src/features/projects/domain/project_model.dart';
 
 import '../../../constants/constants.dart';
 
@@ -10,7 +10,7 @@ class PdfImageDescriptionSection extends pw.StatelessWidget {
     required this.reportDescription,
   });
 
-  final Pictolog pictolog;
+  final ProjectModel pictolog;
   final pw.MemoryImage image;
   final String reportDescription;
 

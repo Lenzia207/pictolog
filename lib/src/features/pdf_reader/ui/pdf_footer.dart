@@ -1,13 +1,13 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import '../../crud_pictolog/model/pictolog.dart';
+import '../../projects/domain/project_model.dart';
 
 class PdfFooter extends pw.StatelessWidget {
   PdfFooter({
     required this.pictolog,
   });
 
-  final Pictolog pictolog;
+  final ProjectModel pictolog;
 
   @override
   pw.Widget build(pw.Context context) {

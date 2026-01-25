@@ -1,10 +1,10 @@
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pictolog/src/features/crud_pictolog/model/pictolog.dart';
+import 'package:pictolog/src/features/projects/domain/project_model.dart';
 import 'package:pictolog/src/widgets/app_date_format.dart';
 
 class PdfTitlePage extends pw.StatelessWidget {
   PdfTitlePage({required this.pictolog});
-  final Pictolog pictolog;
+  final ProjectModel pictolog;
 
   @override
   pw.Widget build(pw.Context context) {
