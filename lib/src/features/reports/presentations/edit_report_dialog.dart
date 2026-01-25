@@ -82,11 +82,11 @@ class EditReportDialog extends StatelessWidget {
                         right: 8,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: context.colors.surface.withOpacity(0.9),
+                            color: context.colors.surface.withValues(alpha: .9),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
+                                color: Colors.black.withValues(alpha: 0.1),
                                 blurRadius: 4,
                               ),
                             ],
