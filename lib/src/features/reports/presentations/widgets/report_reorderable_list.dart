@@ -13,12 +13,16 @@ class ReportReorderableList extends HookConsumerWidget {
     required this.isSelectionMode,
     required this.isReorderMode,
     required this.selectedKeys,
+    required this.onLongPressSelection,
+    required this.onTap,
   });
 
   final ProjectModel pictolog;
-  final ValueNotifier<bool> isSelectionMode;
-  final ValueNotifier<bool> isReorderMode;
-  final ValueNotifier<Set<ReportModel>> selectedKeys;
+  final bool isSelectionMode;
+  final bool isReorderMode;
+  final Set<ReportModel> selectedKeys;
+  final ValueChanged<ReportModel> onLongPressSelection;
+  final ValueChanged<ReportModel>? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,10 +36,10 @@ class ReportReorderableList extends HookConsumerWidget {
           );
         },
         scrollDirection: Axis.horizontal,
-        buildDefaultDragHandles: isReorderMode.value,
+        buildDefaultDragHandles: isReorderMode,
         itemCount: pictolog.reports.length,
         padding: EdgeInsets.symmetric(
-          horizontal: isReorderMode.value ? 16 : 10,
+          horizontal: isReorderMode ? 16 : 10,
         ),
         onReorder: (oldIndex, newIndex) async {
           final onReorder = ref.read(pictologControllerProvider).onReorder;
@@ -43,17 +47,18 @@ class ReportReorderableList extends HookConsumerWidget {
         },
         itemBuilder: (context, index) {
           final report = pictolog.reports[index];
-          final isSelected = selectedKeys.value.contains(report);
+          final isSelected = selectedKeys.contains(report);
 
           return ReportItem(
             key: ValueKey(report),
             report: report,
             index: index,
-            pictolog: pictolog,
             isSelected: isSelected,
             isSelectionMode: isSelectionMode,
             isReorderMode: isReorderMode,
             selectedKeys: selectedKeys,
+            onLongPressSelection: onLongPressSelection,
+            onTap: onTap,
           );
         },
       ),

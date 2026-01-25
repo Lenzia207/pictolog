@@ -118,7 +118,10 @@ class HomeOverviewScreen extends HookConsumerWidget {
                 projectCreatedAt: log.createdAt.toFormatDMY,
                 onTapItem: () {
                   if (isSelectionMode.value) {
-                    Helper.toggleSelection(selectedKeys, log);
+                    selectedKeys.value = Helper.toggleSelection(
+                      selectedKeys.value,
+                      log,
+                    );
                   } else {
                     context.goNamed(
                       PictologDetailsScreen.name,
@@ -132,7 +135,10 @@ class HomeOverviewScreen extends HookConsumerWidget {
                   if (!isSelectionMode.value) {
                     isSelectionMode.value = true;
                   }
-                  Helper.toggleSelection(selectedKeys, log);
+                  selectedKeys.value = Helper.toggleSelection(
+                    selectedKeys.value,
+                    log,
+                  );
                 },
               );
             },

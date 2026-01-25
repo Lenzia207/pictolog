@@ -1,17 +1,16 @@
- import 'package:flutter/foundation.dart';
-
 class Helper {
-  static void toggleSelection<T>(
-    ValueNotifier<Set<T>> selectedKeys,
+  static Set<T> toggleSelection<T>(
+    Set<T> currentSelection,
     T key,
   ) {
-    final newSet = Set<T>.from(selectedKeys.value);
+    final newSet = Set<T>.from(currentSelection);
 
     if (newSet.contains(key)) {
       newSet.remove(key);
     } else {
       newSet.add(key);
     }
-    selectedKeys.value = newSet;
+
+    return newSet;
   }
 }

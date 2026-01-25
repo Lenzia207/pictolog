@@ -5,9 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/l10n/localization_extension.dart';
 import 'package:pictolog/src/features/projects/presentation/controllers/project_controller.dart';
+import 'package:pictolog/src/features/projects/presentation/controllers/project_detail_controller.dart';
 
 import 'package:pictolog/src/widgets/primary_button.dart';
 import '../../../constants/constants.dart';
+import '../../../router/not_found_screen.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
 import '../controller/pictolog_controller.dart';
 import '../../reports/presentations/controller/report_controller.dart';
@@ -33,19 +35,10 @@ class PictologDetailsScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final repository = ref.watch(projectRepositoryProvider);
+    final controller = ref.watch(projectDetailControllerProvider);
     final isSelectionMode = useState(false);
     final isReorderMode = useState(false);
     final selectedKeys = useState<Set<ReportModel>>({});
-
-    Future<void> deleteSelectedReport() async {
-      final pictolog = repository.box.get(pictologKey);
-
-      if (pictolog != null && selectedKeys.value.isNotEmpty) {
-        await repository.deleteReports(pictolog, selectedKeys.value);
-        selectedKeys.value = {};
-        isSelectionMode.value = false;
-      }
-    }
 
     return ValueListenableBuilder(
       valueListenable: repository.box.listenable(
@@ -57,12 +50,8 @@ class PictologDetailsScreen extends HookConsumerWidget {
         final pictolog = box.get(pictologKey);
 
         if (pictolog == null) {
-          return Scaffold(
-            body: Center(
-              child: Text(
-                context.appLanguage.pageNotFound,
-              ),
-            ),
+          return NotFoundScreen(
+            errorMessage: context.appLanguage.pageNotFound,
           );
         }
 
@@ -75,7 +64,12 @@ class PictologDetailsScreen extends HookConsumerWidget {
               isSelectionMode.value = false;
               selectedKeys.value = {};
             },
-            onDelete: deleteSelectedReport,
+            onDelete: () => controller.deleteSelectedReports(
+              pictologKey: pictologKey,
+              selectedReports: selectedKeys.value,
+              selectedKeys: selectedKeys,
+              isSelectionMode: isSelectionMode,
+            ),
             onSettingsPressed: () {
               final editDialog = ref
                   .read(pictologControllerProvider)
@@ -103,11 +97,25 @@ class PictologDetailsScreen extends HookConsumerWidget {
                 else ...[
                   ReportReorderableList(
                     pictolog: pictolog,
-                    isReorderMode: isReorderMode,
-                    isSelectionMode: isSelectionMode,
-                    selectedKeys: selectedKeys,
+                    isReorderMode: isReorderMode.value,
+                    isSelectionMode: isSelectionMode.value,
+                    selectedKeys: selectedKeys.value,
+                    onLongPressSelection: (report) =>
+                        controller.handleLongPress(
+                          report: report,
+                          isSelectionMode: isSelectionMode,
+                          selectedKeys: selectedKeys,
+                        ),
+                    onTap: (report) => controller.handleTap(
+                      context: context,
+                      report: report,
+                      index: pictolog.reports.indexOf(report),
+                      pictologKey: pictologKey,
+                      isSelectionMode: isSelectionMode,
+                      selectedKeys: selectedKeys,
+                    ),
                   ),
-                  Space.h50,
+                  Space.h40,
                 ],
                 Padding(
                   padding: const EdgeInsets.symmetric(
