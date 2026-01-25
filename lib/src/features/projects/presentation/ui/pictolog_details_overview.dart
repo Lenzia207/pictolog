@@ -8,6 +8,7 @@ import '../../../../../l10n/localization_extension.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
+import '../../../../widgets/badge_icon.dart';
 import '../../../../widgets/chips_button.dart';
 import '../../domain/project_model.dart';
 
@@ -61,16 +62,20 @@ class PictologDetailsOverview extends ConsumerWidget {
                       spacing: 16,
                       runSpacing: 8,
                       children: [
-                        _DateBadge(
-                          label: context.appLanguage.created,
-                          date: pictolog.createdAt.toFormatDMY,
+                        // shows the date when this project was created
+                        DateBadge(
+                          label:
+                              '${context.appLanguage.created}: ${pictolog.createdAt.toFormatDMY}',
+
                           icon: Icons.calendar_today_outlined,
                           colors: colors,
                         ),
+
+                        // Show the edited date only if available
                         if (pictolog.updatedAt != null)
-                          _DateBadge(
-                            label: context.appLanguage.edited,
-                            date: pictolog.updatedAt!.toFormatDMY,
+                          DateBadge(
+                            label:
+                                '${context.appLanguage.edited}: ${pictolog.updatedAt!.toFormatDMY}',
                             icon: Icons.edit_calendar_outlined,
                             colors: colors,
                           ),
@@ -131,49 +136,6 @@ class PictologDetailsOverview extends ConsumerWidget {
           Space.h8,
         ],
       ),
-    );
-  }
-}
-
-// TODO make this a reusable widget
-class _DateBadge extends StatelessWidget {
-  const _DateBadge({
-    required this.label,
-    required this.date,
-    required this.icon,
-    required this.colors,
-  });
-
-  final String label;
-  final String date;
-  final IconData icon;
-  final AppThemeColors colors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          size: 14,
-          color: colors.textSecondary,
-        ),
-        Space.w6,
-        Text(
-          '$label: ',
-          style: AppTextStyle.bodySmall.copyWith(
-            color: colors.textSecondary,
-          ),
-        ),
-        Text(
-          date,
-          style: AppTextStyle.bodySmall.copyWith(
-            fontWeight: FontWeight.w600,
-            color: colors.textSecondary,
-          ),
-        ),
-      ],
     );
   }
 }
