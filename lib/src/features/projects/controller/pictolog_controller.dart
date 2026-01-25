@@ -8,7 +8,7 @@ import 'package:pictolog/src/features/projects/presentation/widgets/edit_entry_d
 import 'package:pictolog/src/features/reports/presentations/edit_report_dialog.dart';
 
 import '../presentation/controllers/project_controller.dart';
-import '../../reports/data/report_repository.dart';
+import '../../reports/presentations/controller/report_controller.dart';
 import '../domain/project_model.dart';
 import '../../reports/domain/report_model.dart';
 
@@ -65,7 +65,7 @@ class PictologController {
         builder: (context, setState) {
           return EditReportDialog(
             onImageChange: () async {
-              final report = ref.read(reportRepositoryProvider);
+              final report = ref.read(reportControllerProvider);
 
               report.addReport(
                 context: context,

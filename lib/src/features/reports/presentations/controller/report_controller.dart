@@ -7,23 +7,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pictolog/src/features/reports/domain/report_model.dart';
 
-import '../../../../l10n/localization_extension.dart';
-import '../../camera/presentation/camera_screen.dart';
-import '../../camera/presentation/controller/camera_controller.dart';
-import '../../projects/domain/project_model.dart';
-import '../presentations/edit_report_dialog.dart';
-import '../../projects/presentation/controllers/project_controller.dart';
+import '../../../../../l10n/localization_extension.dart';
+import '../../../camera/presentation/camera_screen.dart';
+import '../../../camera/presentation/controller/camera_controller.dart';
+import '../../../projects/domain/project_model.dart';
+import '../edit_report_dialog.dart';
+import '../../../projects/presentation/controllers/project_controller.dart';
 
-final reportRepositoryProvider = Provider<ReportRepository>((ref) {
+final reportControllerProvider = Provider<ReportController>((ref) {
   // For simplicity with synchronous access in ValueListenableBuilder, keeping the box open globally is preferred,
   // but here we can open it lazily if needed.
-  return ReportRepository(
+  return ReportController(
     Hive.box<ReportModel>('reports'),
   );
 });
 
-class ReportRepository {
-  ReportRepository(this.box);
+class ReportController {
+  ReportController(this.box);
   final Box<ReportModel> box;
 
   static Future<bool?> saveReportDialog({

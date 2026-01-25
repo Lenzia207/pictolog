@@ -4,8 +4,8 @@ import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
 
-class PictologDetailFloatingButton extends StatelessWidget {
-  const PictologDetailFloatingButton({
+class AddReportFloatingButton extends StatelessWidget {
+  const AddReportFloatingButton({
     super.key,
     required this.onButtonPressed,
   });

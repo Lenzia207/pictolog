@@ -1,0 +1,148 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pictolog/l10n/localization_extension.dart';
+import 'package:pictolog/src/features/projects/presentation/controllers/project_controller.dart';
+
+import 'package:pictolog/src/widgets/primary_button.dart';
+import '../../../constants/constants.dart';
+import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
+import '../controller/pictolog_controller.dart';
+import '../../reports/presentations/controller/report_controller.dart';
+import '../../reports/domain/report_model.dart';
+import 'widgets/empty_entries_message.dart';
+import 'ui/add_report_floating_button.dart';
+import 'ui/pictolog_details_overview.dart';
+import 'widgets/pictolog_details_app_bar.dart';
+import '../../reports/presentations/widgets/report_reorderable_list.dart';
+
+class PictologDetailsScreen extends HookConsumerWidget {
+  const PictologDetailsScreen({
+    super.key,
+    required this.pictologKey,
+  });
+
+  static const String path = 'details';
+  static const String name = 'PictologDetails';
+  static const String paramId = 'id';
+
+  final Object pictologKey;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final repository = ref.watch(projectRepositoryProvider);
+    final isSelectionMode = useState(false);
+    final isReorderMode = useState(false);
+    final selectedKeys = useState<Set<ReportModel>>({});
+
+    Future<void> deleteSelectedReport() async {
+      final pictolog = repository.box.get(pictologKey);
+
+      if (pictolog != null && selectedKeys.value.isNotEmpty) {
+        await repository.deleteReports(pictolog, selectedKeys.value);
+        selectedKeys.value = {};
+        isSelectionMode.value = false;
+      }
+    }
+
+    return ValueListenableBuilder(
+      valueListenable: repository.box.listenable(
+        keys: [
+          pictologKey,
+        ],
+      ),
+      builder: (context, box, _) {
+        final pictolog = box.get(pictologKey);
+
+        if (pictolog == null) {
+          return Scaffold(
+            body: Center(
+              child: Text(
+                context.appLanguage.pageNotFound,
+              ),
+            ),
+          );
+        }
+
+        return Scaffold(
+          appBar: PictologDetailsAppBar(
+            isSelectionMode: isSelectionMode,
+            selectedKeys: selectedKeys,
+            title: context.appLanguage.overview,
+            onClose: () {
+              isSelectionMode.value = false;
+              selectedKeys.value = {};
+            },
+            onDelete: deleteSelectedReport,
+            onSettingsPressed: () {
+              final editDialog = ref
+                  .read(pictologControllerProvider)
+                  .showEditDialog;
+
+              editDialog(context, ref, pictolog);
+            },
+          ),
+
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                PictologDetailsOverview(
+                  pictolog: pictolog,
+                  title: pictolog.name,
+                  icon: isReorderMode.value ? Icons.check : Icons.sort,
+                  onPressedIcon: () =>
+                      isReorderMode.value = !isReorderMode.value,
+                ),
+
+                // Pages List
+                if (pictolog.reports.isEmpty)
+                  const EmptyEntriesMessage()
+                else ...[
+                  ReportReorderableList(
+                    pictolog: pictolog,
+                    isReorderMode: isReorderMode,
+                    isSelectionMode: isSelectionMode,
+                    selectedKeys: selectedKeys,
+                  ),
+                  Space.h50,
+                ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: p10,
+                  ),
+                  child: PrimaryButton(
+                    label: context.appLanguage.createPdf,
+                    onPressed: () {
+                      context.pushNamed(
+                        PictologPdfPreviewScreen.name,
+                        pathParameters: {
+                          PictologDetailsScreen.paramId: pictologKey.toString(),
+                        },
+                        extra: pictolog,
+                      );
+                    },
+                  ),
+                ),
+                Space.h300,
+              ],
+            ),
+          ),
+          floatingActionButton: AddReportFloatingButton(
+            onButtonPressed: () {
+              final report = ref.read(reportControllerProvider);
+
+              report.addReport(
+                context: context,
+                repository: repository,
+                pictolog: pictolog,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}

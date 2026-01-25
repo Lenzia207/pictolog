@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pictolog/src/features/crud_pictolog/presentation/pictolog_details_screen.dart';
+import 'package:pictolog/src/features/projects/presentation/project_detail_screen.dart';
 import 'package:pictolog/src/features/home_overview/ui/no_pictologs_message.dart';
 import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart';
 import 'package:pictolog/src/widgets/app_date_format.dart';
@@ -12,8 +12,8 @@ import '../../../l10n/localization_extension.dart';
 import '../../constants/constants.dart';
 import '../../helper/helper.dart';
 import '../../theme/theme.dart';
-import '../crud_pictolog/data/pictolog_repository.dart';
-import '../crud_pictolog/model/pictolog.dart';
+import '../projects/presentation/controllers/project_controller.dart';
+import '../projects/domain/project_model.dart';
 
 /// The Overview screen for the home feature.
 /// Shows List of created pictologs.
@@ -25,11 +25,11 @@ class HomeOverviewScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the repository provider to get access to the Hive box
-    final repository = ref.watch(pictologRepositoryProvider);
+    final repository = ref.watch(projectRepositoryProvider);
 
     // Selection state
     final isSelectionMode = useState(false);
-    final selectedKeys = useState<Set<Pictolog>>({});
+    final selectedKeys = useState<Set<ProjectModel>>({});
 
     // Deletes all selected pictologs from the repository.
     Future<void> deleteSelected() async {
@@ -90,11 +90,11 @@ class HomeOverviewScreen extends HookConsumerWidget {
         ],
       ),
       // ValueListenableBuilder automatically rebuilds when the box changes (add/delete/update)
-      body: ValueListenableBuilder<Box<Pictolog>>(
+      body: ValueListenableBuilder<Box<ProjectModel>>(
         valueListenable: repository.box.listenable(),
         builder: (context, box, _) {
           // values is an Iterable, convert to List for easy indexing
-          final logs = box.values.toList().cast<Pictolog>();
+          final logs = box.values.toList().cast<ProjectModel>();
 
           if (logs.isEmpty) {
             return NoPictologsMessage();
