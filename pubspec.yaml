@@ -1,5 +1,5 @@
 name: pictolog
-description: "Pictolog – photo documentation as clean PDF reports."
+description: "Pictolog — photo project journals and PDF export."
 publish_to: 'none'
 version: 0.1.0+1
 
