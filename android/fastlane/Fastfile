@@ -1,55 +1,25 @@
 # This file contains the fastlane.tools configuration
 # You can find the documentation at https://docs.fastlane.tools
 #
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
 # To deploy your app using fastlane, run the following command from the android folder
 # cd android
 # fastlane deploy
 
 default_platform(:android)
 
+# Root of the Flutter project (two levels above this file).
+FLUTTER_ROOT_DIR = File.expand_path("../..", __dir__)
+
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
+  desc "Build the release app bundle and upload it to the Google Play internal track"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  
-  desc "Build and upload to Play Store"
-  lane :deploy do
-    gradle(
-      task: "bundle",
-      build_type: "Release"
-    )
+    Dir.chdir(FLUTTER_ROOT_DIR) do
+      sh("flutter", "build", "appbundle", "--release")
+    end
 
-     upload_to_play_store(
-      track: 'internal', # internal, alpha, beta, production
-      json_key: 'fastlane/play-store-key.json', # nur, wenn API-Key verfügbar
-      package_name: 'com.pictolog.deineapp',
-      aab: '../build/app/outputs/bundle/release/app-release.aab'
+    upload_to_play_store(
+      track: "internal", # internal, alpha, beta, production
+      aab: "#{FLUTTER_ROOT_DIR}/build/app/outputs/bundle/release/app-release.aab"
     )
   end
 end

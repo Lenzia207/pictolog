@@ -46,3 +46,7 @@ app.*.map.json
 /android/key.properties
 /android/upload-keystore.jks
 
+
+# fastlane
+/android/fastlane/report.xml
+/android/fastlane/*.json

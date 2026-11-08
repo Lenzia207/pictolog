@@ -1,4 +1,4 @@
-package com.example.pictolog
+package at.visionit.pictolog
 
 import io.flutter.embedding.android.FlutterActivity
 

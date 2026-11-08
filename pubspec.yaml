@@ -1,7 +1,7 @@
 name: pictolog
-description: "A new Flutter project."
+description: "Pictolog – photo documentation as clean PDF reports."
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.0+1
 
 environment:
   sdk: ^3.10.4
@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
   intl: any
   camera: ^0.11.3
-  image_cropper: ^8.0.2
   path_provider: ^2.1.5
   path: ^1.9.1
   flutter_hooks: ^0.21.3+1
