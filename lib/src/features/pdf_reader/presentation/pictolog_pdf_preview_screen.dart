@@ -113,33 +113,37 @@ class _PdfPreview extends HookConsumerWidget {
         ),
       ),
       bottomNavigationBar: BottomActionBar(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 10,
-              child: PrimaryButton(
-                label: appLanguage.share,
-                icon: Icons.ios_share,
-                variant: PrimaryButtonVariant.secondary,
-                onPressed: () async => Printing.sharePdf(
-                  bytes: await pdfBytes,
-                  filename: fileName,
+        child: Padding(padding: const EdgeInsets.only(
+              bottom: p10,
+            ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 10,
+                child: PrimaryButton(
+                  label: appLanguage.share,
+                  icon: Icons.ios_share,
+                  variant: PrimaryButtonVariant.secondary,
+                  onPressed: () async => Printing.sharePdf(
+                    bytes: await pdfBytes,
+                    filename: fileName,
+                  ),
                 ),
               ),
-            ),
-            Space.w10,
-            Expanded(
-              flex: 14,
-              child: PrimaryButton(
-                label: appLanguage.savePdf,
-                icon: Icons.download,
-                onPressed: () => Printing.layoutPdf(
-                  onLayout: buildPdf,
-                  name: fileName,
+              Space.w10,
+              Expanded(
+                flex: 14,
+                child: PrimaryButton(
+                  label: appLanguage.savePdf,
+                  icon: Icons.download,
+                  onPressed: () => Printing.layoutPdf(
+                    onLayout: buildPdf,
+                    name: fileName,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

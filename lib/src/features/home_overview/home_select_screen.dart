@@ -128,6 +128,7 @@ class HomeSelectScreen extends HookConsumerWidget {
                   isLoading: isDeleting.value,
                   onPressed: selectedLogs.isEmpty ? null : deleteSelected,
                 ),
+                Space.h10
               ],
             ),
           ),

@@ -121,32 +121,37 @@ class PictologDetailsScreen extends ConsumerWidget {
           ),
         ),
         bottomNavigationBar: BottomActionBar(
-          child: Row(
-            children: [
-              Expanded(
-                flex: 10,
-                child: PrimaryButton(
-                  label: appLanguage.page,
-                  icon: Icons.photo_camera_outlined,
-                  variant: PrimaryButtonVariant.secondary,
-                  onPressed: () => ref
-                      .read(reportControllerProvider)
-                      .addPages(context: context, pictolog: pictolog),
-                ),
-              ),
-              Space.w10,
-              Expanded(
-                flex: 16,
-                child: PrimaryButton(
-                  label: appLanguage.createPdf,
-                  icon: Icons.description_outlined,
-                  onPressed: () => context.pushNamed(
-                    PictologPdfPreviewScreen.name,
-                    pathParameters: pathParameters,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              bottom: p10,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: PrimaryButton(
+                    label: appLanguage.page,
+                    icon: Icons.photo_camera_outlined,
+                    variant: PrimaryButtonVariant.secondary,
+                    onPressed: () => ref
+                        .read(reportControllerProvider)
+                        .addPages(context: context, pictolog: pictolog),
                   ),
                 ),
-              ),
-            ],
+                Space.w10,
+                Expanded(
+                  flex: 16,
+                  child: PrimaryButton(
+                    label: appLanguage.createPdf,
+                    icon: Icons.description_outlined,
+                    onPressed: () => context.pushNamed(
+                      PictologPdfPreviewScreen.name,
+                      pathParameters: pathParameters,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

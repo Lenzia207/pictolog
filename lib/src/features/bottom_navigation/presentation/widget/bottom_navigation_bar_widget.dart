@@ -21,14 +21,20 @@ class BottomNavigationBarWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.colors.surface,
         border: Border(
-          top: BorderSide(color: context.colors.outline),
+          top: BorderSide(
+            color: context.colors.outline,
+          ),
         ),
       ),
       child: SafeArea(
         top: false,
-        minimum: const EdgeInsets.only(bottom: p8),
+        minimum: const EdgeInsets.only(
+          bottom: p8,
+        ),
         child: Padding(
-          padding: const EdgeInsets.only(top: p10),
+          padding: const EdgeInsets.symmetric(
+            vertical: p10,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
