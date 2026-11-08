@@ -44,6 +44,7 @@ class PictologReportCard extends StatelessWidget {
                 ImageThumbnail(
                   imagePath: report.imagePath,
                   borderRadius: 0,
+                  width: double.infinity,
                   height: _imageHeight,
                   iconSize: 24,
                 ),

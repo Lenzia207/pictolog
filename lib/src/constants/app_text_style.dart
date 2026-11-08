@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+/// The app's typeface, bundled in assets/fonts.
+const String appFontFamily = 'IstokWeb';
 
 /// Font weight constants for consistency.
 /// Istok Web ships in regular and bold only.
@@ -35,7 +37,8 @@ class AppFontSize {
 /// Use context.colors to get theme-aware colors.
 class AppTextStyle {
   // Screen title on top-level tabs ("Pictologs", "Settings")
-  static TextStyle get display => GoogleFonts.istokWeb(
+  static TextStyle get display => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.display,
     height: 36 / AppFontSize.display,
     fontWeight: AppFontWeight.bold,
@@ -43,7 +46,8 @@ class AppTextStyle {
   );
 
   // Title of a pictolog or a form
-  static TextStyle get title => GoogleFonts.istokWeb(
+  static TextStyle get title => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.title,
     height: 32 / AppFontSize.title,
     fontWeight: AppFontWeight.bold,
@@ -51,67 +55,77 @@ class AppTextStyle {
   );
 
   // Title inside bottom sheets
-  static TextStyle get sheetTitle => GoogleFonts.istokWeb(
+  static TextStyle get sheetTitle => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.sheetTitle,
     height: 28 / AppFontSize.sheetTitle,
     fontWeight: AppFontWeight.bold,
   );
 
   // Title of an empty state card
-  static TextStyle get emptyTitle => GoogleFonts.istokWeb(
+  static TextStyle get emptyTitle => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.emptyTitle,
     height: 26 / AppFontSize.emptyTitle,
     fontWeight: AppFontWeight.bold,
   );
 
   // Section heading ("Pages")
-  static TextStyle get section => GoogleFonts.istokWeb(
+  static TextStyle get section => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.section,
     height: 24 / AppFontSize.section,
     fontWeight: AppFontWeight.bold,
   );
 
   // Centered title in a screen header
-  static TextStyle get navTitle => GoogleFonts.istokWeb(
+  static TextStyle get navTitle => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.navTitle,
     height: 22 / AppFontSize.navTitle,
     fontWeight: AppFontWeight.bold,
   );
 
-  static TextStyle get bodyLarge => GoogleFonts.istokWeb(
+  static TextStyle get bodyLarge => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.lg,
     height: 22 / AppFontSize.lg,
     fontWeight: AppFontWeight.regular,
   );
 
-  static TextStyle get bodyMedium => GoogleFonts.istokWeb(
+  static TextStyle get bodyMedium => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.button,
     height: 22 / AppFontSize.button,
     fontWeight: AppFontWeight.regular,
   );
 
-  static TextStyle get bodySmall => GoogleFonts.istokWeb(
+  static TextStyle get bodySmall => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.md,
     height: 20 / AppFontSize.md,
     fontWeight: AppFontWeight.regular,
   );
 
   // Field labels, tile captions and hints
-  static TextStyle get caption => GoogleFonts.istokWeb(
+  static TextStyle get caption => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.caption,
     height: 18 / AppFontSize.caption,
     fontWeight: AppFontWeight.regular,
   );
 
   // Meta info such as dates
-  static TextStyle get meta => GoogleFonts.istokWeb(
+  static TextStyle get meta => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.sm,
     height: 16 / AppFontSize.sm,
     fontWeight: AppFontWeight.regular,
   );
 
   // Uppercase section label ("RECENTLY EDITED")
-  static TextStyle get overline => GoogleFonts.istokWeb(
+  static TextStyle get overline => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.sm,
     height: 16 / AppFontSize.sm,
     fontWeight: AppFontWeight.bold,
@@ -119,12 +133,14 @@ class AppTextStyle {
   );
 
   // Small badge text ("01")
-  static TextStyle get badge => GoogleFonts.istokWeb(
+  static TextStyle get badge => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.xs,
     fontWeight: AppFontWeight.bold,
   );
 
-  static TextStyle get button => GoogleFonts.istokWeb(
+  static TextStyle get button => TextStyle(
+    fontFamily: appFontFamily,
     fontSize: AppFontSize.button,
     fontWeight: AppFontWeight.bold,
   );
@@ -138,17 +154,15 @@ TextTheme createTextTheme({
   required Color textColor,
   required Color secondaryTextColor,
 }) {
-  return GoogleFonts.istokWebTextTheme(
-    TextTheme(
-      displaySmall: AppTextStyle.display.copyWith(color: textColor),
-      headlineMedium: AppTextStyle.title.copyWith(color: textColor),
-      headlineSmall: AppTextStyle.sheetTitle.copyWith(color: textColor),
-      titleLarge: AppTextStyle.section.copyWith(color: textColor),
-      titleMedium: AppTextStyle.navTitle.copyWith(color: textColor),
-      bodyLarge: AppTextStyle.bodyLarge.copyWith(color: textColor),
-      bodyMedium: AppTextStyle.bodySmall.copyWith(color: textColor),
-      bodySmall: AppTextStyle.meta.copyWith(color: secondaryTextColor),
-      labelLarge: AppTextStyle.button.copyWith(color: textColor),
-    ),
+  return TextTheme(
+    displaySmall: AppTextStyle.display.copyWith(color: textColor),
+    headlineMedium: AppTextStyle.title.copyWith(color: textColor),
+    headlineSmall: AppTextStyle.sheetTitle.copyWith(color: textColor),
+    titleLarge: AppTextStyle.section.copyWith(color: textColor),
+    titleMedium: AppTextStyle.navTitle.copyWith(color: textColor),
+    bodyLarge: AppTextStyle.bodyLarge.copyWith(color: textColor),
+    bodyMedium: AppTextStyle.bodySmall.copyWith(color: textColor),
+    bodySmall: AppTextStyle.meta.copyWith(color: secondaryTextColor),
+    labelLarge: AppTextStyle.button.copyWith(color: textColor),
   );
 }

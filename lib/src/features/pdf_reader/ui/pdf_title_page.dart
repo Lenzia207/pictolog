@@ -69,7 +69,7 @@ class PdfTitlePage extends pw.StatelessWidget {
           child: pw.Row(
             children: [
               _meta(labels.created, pictolog.createdAt.toFormatDMY),
-              _meta(labels.edited, pictolog.updatedAt?.toFormatDMY ?? '–'),
+              _meta(labels.edited, pictolog.updatedAt?.toFormatDMY ?? '-'),
               _meta(labels.pages, '${pictolog.reports.length}'),
             ],
           ),

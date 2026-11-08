@@ -24,7 +24,6 @@ dependencies:
   flutter_riverpod: ^3.1.0
   pdf: ^3.11.3
   printing: ^5.14.2
-  google_fonts: ^6.1.0
   shared_preferences: ^2.3.3
   image: ^4.5.4
   flutter_animate: ^4.5.2
@@ -49,3 +48,18 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/fonts/OFL.txt
+
+  fonts:
+    - family: IstokWeb
+      fonts:
+        - asset: assets/fonts/IstokWeb-Regular.ttf
+        - asset: assets/fonts/IstokWeb-Italic.ttf
+          style: italic
+        - asset: assets/fonts/IstokWeb-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/IstokWeb-BoldItalic.ttf
+          weight: 700
+          style: italic

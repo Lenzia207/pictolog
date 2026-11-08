@@ -96,8 +96,9 @@ class PictologDetailsScreen extends ConsumerWidget {
                         padding: const EdgeInsets.fromLTRB(p20, 0, p20, p24),
                         sliver: SliverGrid.builder(
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
+                              // Two columns on phones, more on tablets.
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 240,
                                 mainAxisSpacing: p12,
                                 crossAxisSpacing: p12,
                                 mainAxisExtent: PictologReportCard.height,

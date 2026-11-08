@@ -42,6 +42,7 @@ class PictologApp extends HookConsumerWidget {
   ThemeData _buildTheme(Brightness brightness, AppThemeColors colors) {
     return ThemeData(
       brightness: brightness,
+      fontFamily: appFontFamily,
       scaffoldBackgroundColor: colors.background,
       colorScheme: ColorScheme.fromSeed(
         seedColor: colors.primary,
