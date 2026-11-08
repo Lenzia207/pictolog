@@ -19,6 +19,4 @@ class BottomNavigationController {
       initialLocation: index == navigationShell.currentIndex,
     );
   }
-
-  bool isSelected(int index) => index == currentIndex;
 }

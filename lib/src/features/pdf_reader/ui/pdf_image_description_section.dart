@@ -1,16 +1,13 @@
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pictolog/src/features/projects/domain/project_model.dart';
 
 import '../../../constants/constants.dart';
 
 class PdfImageDescriptionSection extends pw.StatelessWidget {
   PdfImageDescriptionSection({
-    required this.pictolog,
     required this.image,
     required this.reportDescription,
   });
 
-  final ProjectModel pictolog;
   final pw.MemoryImage image;
   final String reportDescription;
 

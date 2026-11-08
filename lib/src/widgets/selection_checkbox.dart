@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../theme/theme.dart';
 
@@ -13,26 +14,29 @@ class SelectionCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 8,
-      right: 8,
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: isSelectedItem
-              ? context.colors.accentRed
-              : context.colors.surface,
-        ),
-        child: isSelectedItem
-            ? Icon(
-                Icons.check_circle,
-                color: context.colors.surface,
-              )
-            : Icon(
-                Icons.radio_button_unchecked,
-                color: context.colors.primary,
-              ),
+    final colors = context.colors;
+
+    return AnimatedContainer(
+      duration: 200.ms,
+      width: 26,
+      height: 26,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isSelectedItem ? colors.primary : Colors.transparent,
+        border: isSelectedItem
+            ? null
+            : Border.all(color: colors.outlineStrong, width: 2),
       ),
+      child: isSelectedItem
+          ? Icon(
+              Icons.check,
+              size: 16,
+              color: colors.accentGreen,
+            ).animate().scale(
+              duration: 200.ms,
+              curve: Curves.easeOutBack,
+            )
+          : null,
     );
   }
 }

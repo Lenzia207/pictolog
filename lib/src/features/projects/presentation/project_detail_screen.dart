@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pictolog/l10n/localization_extension.dart';
 import 'package:pictolog/src/features/projects/presentation/controllers/project_controller.dart';
-import 'package:pictolog/src/features/projects/presentation/controllers/project_detail_controller.dart';
 
-import 'package:pictolog/src/widgets/primary_button.dart';
 import '../../../constants/constants.dart';
-import '../../../router/not_found_screen.dart';
+import '../../../widgets/bottom_action_bar.dart';
+import '../../../widgets/circle_icon_button.dart';
+import '../../../widgets/confirm_dialog.dart';
+import '../../../widgets/primary_button.dart';
 import '../../pdf_reader/presentation/pictolog_pdf_preview_screen.dart';
-import '../controller/pictolog_controller.dart';
 import '../../reports/presentations/controller/report_controller.dart';
-import '../../reports/domain/report_model.dart';
-import 'widgets/empty_entries_message.dart';
-import 'ui/add_report_floating_button.dart';
+import '../../reports/presentations/edit_page_sheet.dart';
+import '../../reports/presentations/reorder_pages_screen.dart';
+import '../domain/project_model.dart';
+import 'new_entry_pictolog_screen.dart';
 import 'ui/pictolog_details_overview.dart';
-import 'widgets/pictolog_details_app_bar.dart';
-import '../../reports/presentations/widgets/report_reorderable_list.dart';
+import 'widgets/empty_entries_message.dart';
+import 'widgets/pictolog_builder.dart';
+import 'widgets/pictolog_report_card.dart';
 
-class PictologDetailsScreen extends HookConsumerWidget {
+class PictologDetailsScreen extends ConsumerWidget {
   const PictologDetailsScreen({
     super.key,
     required this.pictologKey,
@@ -30,127 +30,162 @@ class PictologDetailsScreen extends HookConsumerWidget {
   static const String name = 'PictologDetails';
   static const String paramId = 'id';
 
-  final Object pictologKey;
+  final int pictologKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final repository = ref.watch(projectRepositoryProvider);
-    final controller = ref.watch(projectDetailControllerProvider);
-    final isSelectionMode = useState(false);
-    final isReorderMode = useState(false);
-    final selectedKeys = useState<Set<ReportModel>>({});
+    final pathParameters = {paramId: pictologKey.toString()};
+    final appLanguage = context.appLanguage;
 
-    return ValueListenableBuilder(
-      valueListenable: repository.box.listenable(
-        keys: [
-          pictologKey,
-        ],
-      ),
-      builder: (context, box, _) {
-        final pictolog = box.get(pictologKey);
-
-        if (pictolog == null) {
-          return NotFoundScreen(
-            errorMessage: context.appLanguage.pageNotFound,
-          );
-        }
-
-        return Scaffold(
-          appBar: PictologDetailsAppBar(
-            isSelectionMode: isSelectionMode,
-            selectedKeys: selectedKeys,
-            title: context.appLanguage.overview,
-            onClose: () {
-              isSelectionMode.value = false;
-              selectedKeys.value = {};
-            },
-            onDelete: () => controller.deleteSelectedReports(
-              pictologKey: pictologKey,
-              selectedReports: selectedKeys.value,
-              selectedKeys: selectedKeys,
-              isSelectionMode: isSelectionMode,
-            ),
-            onSettingsPressed: () {
-              final editDialog = ref
-                  .read(pictologControllerProvider)
-                  .showEditDialog;
-
-              editDialog(context, ref, pictolog);
-            },
-          ),
-
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                PictologDetailsOverview(
-                  pictolog: pictolog,
-                  title: pictolog.name,
-                  icon: isReorderMode.value ? Icons.check : Icons.sort,
-                  onPressedIcon: () =>
-                      isReorderMode.value = !isReorderMode.value,
-                ),
-
-                // Pages List
-                if (pictolog.reports.isEmpty)
-                  const EmptyEntriesMessage()
-                else ...[
-                  ReportReorderableList(
-                    pictolog: pictolog,
-                    isReorderMode: isReorderMode.value,
-                    isSelectionMode: isSelectionMode.value,
-                    selectedKeys: selectedKeys.value,
-                    onLongPressSelection: (report) =>
-                        controller.handleLongPress(
-                          report: report,
-                          isSelectionMode: isSelectionMode,
-                          selectedKeys: selectedKeys,
-                        ),
-                    onTap: (report) => controller.handleTap(
-                      context: context,
-                      report: report,
-                      index: pictolog.reports.indexOf(report),
-                      pictologKey: pictologKey,
-                      isSelectionMode: isSelectionMode,
-                      selectedKeys: selectedKeys,
+    return PictologBuilder(
+      pictologKey: pictologKey,
+      builder: (context, pictolog) => Scaffold(
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              // Header
+              Padding(
+                padding: const EdgeInsets.fromLTRB(p12, p8, p12, 0),
+                child: Row(
+                  children: [
+                    CircleIconButton(
+                      icon: Icons.chevron_left,
+                      iconSize: 26,
+                      tooltip: appLanguage.back,
+                      onPressed: () => context.pop(),
                     ),
-                  ),
-                  Space.h40,
-                ],
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: p10,
-                  ),
-                  child: PrimaryButton(
-                    label: context.appLanguage.createPdf,
-                    onPressed: () {
-                      context.pushNamed(
-                        PictologPdfPreviewScreen.name,
-                        pathParameters: {
-                          PictologDetailsScreen.paramId: pictologKey.toString(),
-                        },
-                        extra: pictolog,
-                      );
-                    },
+                    const Spacer(),
+                    CircleIconButton(
+                      icon: Icons.edit_outlined,
+                      tooltip: appLanguage.editPictolog,
+                      onPressed: () => context.pushNamed(
+                        NewEntryPictologScreen.editName,
+                        pathParameters: pathParameters,
+                      ),
+                    ),
+                    Space.w4,
+                    CircleIconButton(
+                      icon: Icons.more_vert,
+                      tooltip: appLanguage.moreActions,
+                      onPressed: () => _showMoreActions(context, ref, pictolog),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: PictologDetailsOverview(
+                        pictolog: pictolog,
+                        onSortPressed: pictolog.reports.length < 2
+                            ? null
+                            : () => context.pushNamed(
+                                ReorderPagesScreen.name,
+                                pathParameters: pathParameters,
+                              ),
+                      ),
+                    ),
+                    if (pictolog.reports.isEmpty)
+                      const SliverToBoxAdapter(
+                        child: EmptyEntriesMessage(),
+                      )
+                    else
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(p20, 0, p20, p24),
+                        sliver: SliverGrid.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: p12,
+                                crossAxisSpacing: p12,
+                                mainAxisExtent: PictologReportCard.height,
+                              ),
+                          itemCount: pictolog.reports.length,
+                          itemBuilder: (context, index) => PictologReportCard(
+                            report: pictolog.reports[index],
+                            index: index,
+                            onTap: () => showEditPageSheet(
+                              context: context,
+                              pictolog: pictolog,
+                              report: pictolog.reports[index],
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomActionBar(
+          child: Row(
+            children: [
+              Expanded(
+                flex: 10,
+                child: PrimaryButton(
+                  label: appLanguage.page,
+                  icon: Icons.photo_camera_outlined,
+                  variant: PrimaryButtonVariant.secondary,
+                  onPressed: () => ref
+                      .read(reportControllerProvider)
+                      .addPages(context: context, pictolog: pictolog),
+                ),
+              ),
+              Space.w10,
+              Expanded(
+                flex: 16,
+                child: PrimaryButton(
+                  label: appLanguage.createPdf,
+                  icon: Icons.description_outlined,
+                  onPressed: () => context.pushNamed(
+                    PictologPdfPreviewScreen.name,
+                    pathParameters: pathParameters,
                   ),
                 ),
-                Space.h300,
-              ],
-            ),
+              ),
+            ],
           ),
-          floatingActionButton: AddReportFloatingButton(
-            onButtonPressed: () {
-              final report = ref.read(reportControllerProvider);
-
-              report.addReport(
-                context: context,
-                repository: repository,
-                pictolog: pictolog,
-              );
-            },
-          ),
-        );
-      },
+        ),
+      ),
     );
+  }
+
+  Future<void> _showMoreActions(
+    BuildContext context,
+    WidgetRef ref,
+    ProjectModel pictolog,
+  ) async {
+    final appLanguage = context.appLanguage;
+    final shouldDelete = await showModalBottomSheet<bool>(
+      context: context,
+      useSafeArea: true,
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(p20),
+          child: PrimaryButton(
+            label: appLanguage.deletePictolog,
+            icon: Icons.delete_outline,
+            variant: PrimaryButtonVariant.danger,
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ),
+      ),
+    );
+    if (shouldDelete != true || !context.mounted) return;
+
+    final confirmed = await showConfirmDialog(
+      context: context,
+      title: appLanguage.deletePictolog,
+      message: appLanguage.deletePictologConfirm,
+      confirmLabel: appLanguage.delete,
+    );
+    if (!confirmed || !context.mounted) return;
+
+    // Leave the screen first so it doesn't rebuild without its Pictolog.
+    context.pop();
+    await ref.read(projectRepositoryProvider).deletePictolog(pictolog);
   }
 }

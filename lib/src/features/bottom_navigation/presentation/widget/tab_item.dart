@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
 
 /// Widget: Representing a single tab item in the bottom navigation bar.
@@ -20,34 +22,47 @@ class TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = index == currentIndex
-        ? context.colors.textPrimary
-        : context.colors.textSecondary;
+    final colors = context.colors;
+    final isSelected = index == currentIndex;
 
-    return GestureDetector(
-      onTap: () => onTap(index),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: color,
-            size: 24,
+    return Semantics(
+      selected: isSelected,
+      button: true,
+      child: InkResponse(
+        onTap: () => onTap(index),
+        radius: 40,
+        child: SizedBox(
+          width: 112,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedContainer(
+                duration: 200.ms,
+                width: 56,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: isSelected ? colors.primary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                ),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: isSelected ? colors.contrast : colors.textSecondary,
+                ),
+              ),
+              Space.h4,
+              Text(
+                label,
+                style: AppTextStyle.meta.copyWith(
+                  color: isSelected ? colors.textPrimary : colors.textSecondary,
+                  fontWeight: isSelected
+                      ? AppFontWeight.bold
+                      : AppFontWeight.regular,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              color: color,
-              fontSize: 12,
-              fontWeight: index == currentIndex
-                  ? FontWeight.w600
-                  : FontWeight.w400,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -20,18 +20,15 @@ class NavigationConfig {
   static List<NavigationItem> items(BuildContext context) {
     return [
       NavigationItem(
-        icon: Icons.home,
-        labelBuilder: (context) => context.appLanguage.myPictologs,
+        icon: Icons.content_copy_outlined,
+        labelBuilder: (context) => context.appLanguage.projects,
         index: 0,
       ),
       NavigationItem(
-        icon: Icons.settings,
+        icon: Icons.tune,
         labelBuilder: (context) => context.appLanguage.settings,
         index: 1,
       ),
     ];
   }
-
-  static const int fabIndex = 2;
-  static const IconData fabIcon = Icons.note_add_outlined;
 }

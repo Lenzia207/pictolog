@@ -1,198 +1,383 @@
 {
     "@@locale": "en",
-    "appTitle": "Pictolog",
-    "@appTitle": {
-        "description": "The application title"
+    "projects": "Projects",
+    "@projects": {
+        "description": "Navigation label for the projects overview"
     },
-    "myPictologs": "My Pictologs",
-    "@myPictologs": {
-        "description": "Navigation label for overview screen"
-    },
-      "noPictologsMessage": "No pictologs yet.\nCreate one with the ",
-    "@noPictologsMessage": {
-        "description": "Message shown when there are no pictologs"
+    "pictologs": "Pictologs",
+    "@pictologs": {
+        "description": "Title of the home screen"
     },
     "settings": "Settings",
     "@settings": {
-        "description": "Navigation label for settings screen"
+        "description": "Navigation label and title of the settings screen"
     },
-    "accountSettings": "Account Settings",
-    "@accountSettings": {
-        "description": "Account settings screen title"
+    "projectsCount": "{count, plural, =1{1 project} other{{count} projects}}",
+    "@projectsCount": {
+        "description": "Number of projects",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
     },
-    "language": "Language",
-    "@language": {
-        "description": "Language selection label"
+    "pagesCount": "{count, plural, =1{1 page} other{{count} pages}}",
+    "@pagesCount": {
+        "description": "Number of pages",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
     },
-    "selectLanguage": "Select Language",
-    "@selectLanguage": {
-        "description": "Language selection dialog title"
+    "noProjectsYet": "No projects yet",
+    "@noProjectsYet": {
+        "description": "Subtitle on the home screen when there are no pictologs"
     },
-    "newPictologEntry": "New Pictolog Entry",
-    "@newPictologEntry": {
-        "description": "Title for new pictolog entry screen"
+    "searchPictologs": "Search pictologs",
+    "@searchPictologs": {
+        "description": "Placeholder of the search field"
+    },
+    "noSearchResults": "No pictologs found",
+    "@noSearchResults": {
+        "description": "Shown when the search has no results"
+    },
+    "recentlyEdited": "Recently edited",
+    "@recentlyEdited": {
+        "description": "Section label above the pictolog list"
+    },
+    "newestFirst": "Newest first",
+    "@newestFirst": {
+        "description": "Sort option"
+    },
+    "oldestFirst": "Oldest first",
+    "@oldestFirst": {
+        "description": "Sort option"
+    },
+    "newPictolog": "New Pictolog",
+    "@newPictolog": {
+        "description": "Button and screen title to create a pictolog"
+    },
+    "selectPictologs": "Select pictologs",
+    "@selectPictologs": {
+        "description": "Accessibility label of the select button"
+    },
+    "emptyTitle": "Start your first Pictolog",
+    "@emptyTitle": {
+        "description": "Title of the empty state"
+    },
+    "emptyMessage": "Take photos, describe and arrange pages – Pictolog turns them into a clean PDF.",
+    "@emptyMessage": {
+        "description": "Message of the empty state"
+    },
+    "createPictolog": "Create Pictolog",
+    "@createPictolog": {
+        "description": "Button label to create a pictolog"
+    },
+    "emptyStepCreate": "Create and name a project",
+    "@emptyStepCreate": {
+        "description": "First step in the empty state"
+    },
+    "emptyStepPhotos": "Add photos as pages",
+    "@emptyStepPhotos": {
+        "description": "Second step in the empty state"
+    },
+    "emptyStepPdf": "Create and share the PDF",
+    "@emptyStepPdf": {
+        "description": "Third step in the empty state"
+    },
+    "selectedItems": "{count} selected",
+    "@selectedItems": {
+        "description": "Shows count of selected items",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "selectAll": "All",
+    "@selectAll": {
+        "description": "Button to select all items"
+    },
+    "endSelection": "End selection",
+    "@endSelection": {
+        "description": "Accessibility label of the button that leaves selection mode"
+    },
+    "pagesWillBeDeleted": "{count, plural, =1{1 page will be permanently deleted.} other{{count} pages will be permanently deleted.}}",
+    "@pagesWillBeDeleted": {
+        "description": "Warning above the delete button",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "deletePictologs": "{count, plural, =1{Delete 1 Pictolog} other{Delete {count} Pictologs}}",
+    "@deletePictologs": {
+        "description": "Button to delete the selected pictologs",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "whatsItAbout": "What's it about?",
+    "@whatsItAbout": {
+        "description": "Heading of the new pictolog form"
+    },
+    "newPictologHint": "Title and description appear on the cover page of your PDF.",
+    "@newPictologHint": {
+        "description": "Hint below the heading of the new pictolog form"
     },
     "title": "Title",
     "@title": {
         "description": "Generic title label"
     },
-    "projectName": "Project Name",
+    "projectName": "Name of the project",
     "@projectName": {
-        "description": "Label for project name field"
+        "description": "Placeholder for the project name field"
+    },
+    "titleRequired": "Please enter a title.",
+    "@titleRequired": {
+        "description": "Validation error for an empty title"
     },
     "description": "Description",
     "@description": {
         "description": "Generic description label"
     },
-    "descriptionOptional": "Description (Optional)",
-    "@descriptionOptional": {
-        "description": "Optional description label"
+    "optional": "Optional",
+    "@optional": {
+        "description": "Marks a field as optional"
     },
-    "generalProjectDescription": "General project description...",
+    "generalProjectDescription": "General description of the project …",
     "@generalProjectDescription": {
         "description": "Placeholder for project description field"
     },
-    "saveEntry": "Save Entry",
-    "@saveEntry": {
-        "description": "Button label to save entry"
+    "newPictologTip": "After saving, you add the first photos as pages right away.",
+    "@newPictologTip": {
+        "description": "Tip at the bottom of the new pictolog form"
     },
-    "pages": "Pages",
-    "@pages": {
-        "description": "Label for number of pages"
-    },
-    "pagesCount": "{count} Pages",
-    "@pagesCount": {
-        "description": "Shows the number of pages",
-        "placeholders": {
-            "count": {
-                "type": "String",
-                "example": "5"
-            }
-        }
-    },
-    "takePicture": "Take a Picture",
-    "@takePicture": {
-        "description": "Title for camera screen"
-    },
-    "noCameraFound": "No camera found",
-    "@noCameraFound": {
-        "description": "Error message when no camera is available"
-    },
-    "pictureTaken": "Picture taken: {path}",
-    "@pictureTaken": {
-        "description": "Success message after taking picture",
-        "placeholders": {
-            "path": {
-                "type": "String",
-                "example": "/path/to/image.jpg"
-            }
-        }
-    },
-    "addDescription": "Add Description",
-    "@addDescription": {
-        "description": "Dialog title to add description"
-    },
-    "cancel": "Cancel",
-    "@cancel": {
-        "description": "Cancel button label"
+    "editPictolog": "Edit Pictolog",
+    "@editPictolog": {
+        "description": "Title of the edit pictolog screen"
     },
     "save": "Save",
     "@save": {
         "description": "Save button label"
     },
-    "errorAddingReport": "Error adding report: {error}",
-    "@errorAddingReport": {
-        "description": "Error message when adding report fails",
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel button label"
+    },
+    "delete": "Delete",
+    "@delete": {
+        "description": "Delete button label"
+    },
+    "done": "Done",
+    "@done": {
+        "description": "Done button label"
+    },
+    "close": "Close",
+    "@close": {
+        "description": "Accessibility label of close buttons"
+    },
+    "back": "Back",
+    "@back": {
+        "description": "Accessibility label of back buttons"
+    },
+    "moreActions": "More actions",
+    "@moreActions": {
+        "description": "Accessibility label of the more button"
+    },
+    "createdOn": "Created {date}",
+    "@createdOn": {
+        "description": "Creation date chip",
         "placeholders": {
-            "error": {
-                "type": "String",
-                "example": "Network error"
+            "date": {
+                "type": "String"
             }
         }
     },
-    "newPictologCreated": "New Pictolog Created!",
-    "@newPictologCreated": {
-        "description": "Success message when pictolog is created"
+    "editedOn": "Edited {date}",
+    "@editedOn": {
+        "description": "Last edited date chip",
+        "placeholders": {
+            "date": {
+                "type": "String"
+            }
+        }
+    },
+    "pages": "Pages",
+    "@pages": {
+        "description": "Heading of the page grid"
+    },
+    "sort": "Sort",
+    "@sort": {
+        "description": "Button to change the page order"
+    },
+    "noDescription": "No description",
+    "@noDescription": {
+        "description": "Shown on pages without a description"
+    },
+    "page": "Page",
+    "@page": {
+        "description": "Button to add a page"
+    },
+    "createPdf": "Create PDF",
+    "@createPdf": {
+        "description": "Button label to create PDF"
+    },
+    "noPagesYet": "No pages yet",
+    "@noPagesYet": {
+        "description": "Title when a pictolog has no pages"
+    },
+    "noPagesHint": "Add photos as pages with the \"Page\" button.",
+    "@noPagesHint": {
+        "description": "Hint when a pictolog has no pages"
+    },
+    "deletePictolog": "Delete Pictolog",
+    "@deletePictolog": {
+        "description": "Action to delete a pictolog"
+    },
+    "deletePictologConfirm": "This pictolog and all its pages will be permanently deleted.",
+    "@deletePictologConfirm": {
+        "description": "Confirmation message to delete a pictolog"
+    },
+    "changeOrder": "Change order",
+    "@changeOrder": {
+        "description": "Title of the reorder screen"
+    },
+    "reorderHint": "Drag a page by its handle to the desired position.",
+    "@reorderHint": {
+        "description": "Hint on the reorder screen"
+    },
+    "pageOf": "Page {current} of {total}",
+    "@pageOf": {
+        "description": "Position of a page",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "editPage": "Edit page",
+    "@editPage": {
+        "description": "Title of the edit page sheet"
+    },
+    "replace": "Replace",
+    "@replace": {
+        "description": "Button to replace the image of a page"
+    },
+    "rotateImage": "Rotate image",
+    "@rotateImage": {
+        "description": "Accessibility label of the rotate button"
+    },
+    "deletePage": "Delete page",
+    "@deletePage": {
+        "description": "Action to delete a page"
+    },
+    "deletePageConfirm": "This page will be permanently deleted.",
+    "@deletePageConfirm": {
+        "description": "Confirmation message to delete a page"
+    },
+    "addPage": "Add page",
+    "@addPage": {
+        "description": "Title of the image source sheet"
+    },
+    "whereFromImage": "Where does the image come from?",
+    "@whereFromImage": {
+        "description": "Subtitle of the image source sheet"
+    },
+    "camera": "Camera",
+    "@camera": {
+        "description": "Camera option label"
+    },
+    "takeNewPhoto": "Take a new photo",
+    "@takeNewPhoto": {
+        "description": "Camera option description"
+    },
+    "gallery": "Gallery",
+    "@gallery": {
+        "description": "Gallery option label"
+    },
+    "chooseExistingImage": "Choose an existing image",
+    "@chooseExistingImage": {
+        "description": "Gallery option description"
+    },
+    "pageNumber": "Page {number}",
+    "@pageNumber": {
+        "description": "Number of the page being captured",
+        "placeholders": {
+            "number": {
+                "type": "int"
+            }
+        }
+    },
+    "tapShutter": "Tap the shutter",
+    "@tapShutter": {
+        "description": "Hint on the camera screen"
+    },
+    "takePicture": "Take picture",
+    "@takePicture": {
+        "description": "Accessibility label of the shutter button"
+    },
+    "closeCamera": "Close camera",
+    "@closeCamera": {
+        "description": "Accessibility label of the camera close button"
+    },
+    "noCameraFound": "No camera found",
+    "@noCameraFound": {
+        "description": "Error message when no camera is available"
+    },
+    "errorTakingPicture": "Error taking picture: {error}",
+    "@errorTakingPicture": {
+        "description": "Error message when taking a picture fails",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "errorAddingPage": "Error adding page: {error}",
+    "@errorAddingPage": {
+        "description": "Error message when adding a page fails",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
     },
     "errorSaving": "Error saving: {error}",
     "@errorSaving": {
         "description": "Error message when saving fails",
         "placeholders": {
             "error": {
-                "type": "String",
-                "example": "Database error"
+                "type": "String"
             }
         }
-    },
-    "createPdf": "Create PDF",
-    "@createPdf": {
-        "description": "Button label to create PDF"
-    },
-    "changeOrder": "Change Order",
-    "@changeOrder": {
-        "description": "Button label to change order"
-    },
-    "addReport": "Add Report",
-    "@addReport": {
-        "description": "Button label to add report"
-    },
-    "noReportsYet": "No reports yet",
-    "@noReportsYet": {
-        "description": "Message when there are no reports"
-    },
-    "editReport": "Edit Report",
-    "@editReport": {
-        "description": "Dialog title to edit report"
-    },
-    "editEntry": "Edit Entry",
-    "@editEntry": {
-        "description": "Dialog title to edit entry"
-    },
-    "projectTitle": "Project Title",
-    "@projectTitle": {
-        "description": "Label for project title field"
     },
     "pageNotFound": "Page not found!",
     "@pageNotFound": {
         "description": "Error message for 404 page"
     },
-    "selectedItems": "{count} Selected",
-    "@selectedItems": {
-        "description": "Shows count of selected items",
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "example": "3"
-            }
-        }
-    },
-    "pdfPreview": "PDF Preview",
+    "pdfPreview": "PDF preview",
     "@pdfPreview": {
         "description": "Title for PDF preview screen"
     },
-    "report": "Report",
-    "@report": {
-        "description": "Generic report label"
+    "share": "Share",
+    "@share": {
+        "description": "Button to share the PDF"
     },
-    "titlePage": "Title Page",
-    "@titlePage": {
-        "description": "PDF title page label"
+    "savePdf": "Save PDF",
+    "@savePdf": {
+        "description": "Button to save the PDF"
     },
-    "contentPage": "Content Page",
-    "@contentPage": {
-        "description": "PDF content page label"
-    },
-    "page": "Page",
-    "@page": {
-        "description": "Generic page label"
-    },
-    "button": " Button!",
-    "@button": {
-        "description": "Button text after icon in no pictologs message"
-    },
-    "noEntriesYet": "No entries yet.\n\nAdd a new entry under\n\"Add Report\"",
-    "@noEntriesYet": {
-        "description": "Message when there are no report entries"
+    "photoDocumentation": "Photo documentation",
+    "@photoDocumentation": {
+        "description": "Overline on the PDF cover page"
     },
     "created": "Created",
     "@created": {
@@ -200,19 +385,27 @@
     },
     "edited": "Edited",
     "@edited": {
-        "description": "Edited/Modified date label"
+        "description": "Edited date label"
     },
-    "overview": "Overview",
-    "@overview": {
-        "description": "Overview label"
+    "appearance": "Appearance",
+    "@appearance": {
+        "description": "Settings section label"
+    },
+    "general": "General",
+    "@general": {
+        "description": "Settings section label"
     },
     "theme": "Theme",
     "@theme": {
         "description": "Theme selection label"
     },
-    "selectTheme": "Select Theme",
-    "@selectTheme": {
-        "description": "Theme selection dialog title"
+    "language": "Language",
+    "@language": {
+        "description": "Language selection label"
+    },
+    "selectLanguage": "Select language",
+    "@selectLanguage": {
+        "description": "Title of the language sheet"
     },
     "lightMode": "Light",
     "@lightMode": {
@@ -225,17 +418,5 @@
     "systemMode": "System",
     "@systemMode": {
         "description": "System theme mode label (follows device setting)"
-    },
-    "chooseImageSource": "Choose Image Source",
-    "@chooseImageSource": {
-        "description": "Dialog title for choosing between camera or gallery"
-    },
-    "camera": "Camera",
-    "@camera": {
-        "description": "Camera option label"
-    },
-    "gallery": "Gallery",
-    "@gallery": {
-        "description": "Gallery option label"
     }
 }

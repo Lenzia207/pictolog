@@ -46,10 +46,4 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
       debugPrint('Error saving theme mode: $e');
     }
   }
-
-  /// Toggle between light and dark mode
-  Future<void> toggleTheme() async {
-    final newMode = state == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    await setThemeMode(newMode);
-  }
 }

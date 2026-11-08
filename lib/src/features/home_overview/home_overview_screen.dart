@@ -3,15 +3,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pictolog/src/features/projects/presentation/new_entry_pictolog_screen.dart';
 import 'package:pictolog/src/features/projects/presentation/project_detail_screen.dart';
+import 'package:pictolog/src/features/home_overview/home_select_screen.dart';
 import 'package:pictolog/src/features/home_overview/ui/no_pictologs_message.dart';
 import 'package:pictolog/src/features/home_overview/ui/pictolog_entry_card.dart';
-import 'package:pictolog/src/widgets/app_date_format.dart';
+import 'package:pictolog/src/features/home_overview/ui/search_field.dart';
 
 import '../../../l10n/localization_extension.dart';
 import '../../constants/constants.dart';
-import '../../helper/helper.dart';
 import '../../theme/theme.dart';
+import '../../widgets/circle_icon_button.dart';
 import '../projects/presentation/controllers/project_controller.dart';
 import '../projects/domain/project_model.dart';
 
@@ -26,125 +28,172 @@ class HomeOverviewScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the repository provider to get access to the Hive box
     final repository = ref.watch(projectRepositoryProvider);
+    final searchQuery = useState('');
+    final isNewestFirst = useState(true);
+    final colors = context.colors;
+    final appLanguage = context.appLanguage;
 
-    // Selection state
-    final isSelectionMode = useState(false);
-    final selectedKeys = useState<Set<ProjectModel>>({});
+    void openSelection([int? initialKey]) => context.pushNamed(
+      HomeSelectScreen.name,
+      extra: initialKey,
+    );
 
-    // Deletes all selected pictologs from the repository.
-    Future<void> deleteSelected() async {
-      final logsToDelete = selectedKeys.value.toList();
+    // ValueListenableBuilder automatically rebuilds when the box changes (add/delete/update)
+    return ValueListenableBuilder<Box<ProjectModel>>(
+      valueListenable: repository.box.listenable(),
+      builder: (context, box, _) {
+        final allLogs = box.values.toList();
 
-      for (final log in logsToDelete) {
-        await repository.deletePictolog(log);
-      }
+        if (allLogs.isEmpty) {
+          return const NoPictologsMessage();
+        }
 
-      // Reset state
-      selectedKeys.value = {};
-      isSelectionMode.value = false;
-    }
+        final pageTotal = allLogs.fold<int>(
+          0,
+          (sum, log) => sum + log.reports.length,
+        );
+        final query = searchQuery.value.trim().toLowerCase();
+        final logs =
+            allLogs
+                .where(
+                  (log) =>
+                      query.isEmpty ||
+                      log.name.toLowerCase().contains(query) ||
+                      log.overviewDescription.toLowerCase().contains(query),
+                )
+                .toList()
+              ..sort((a, b) {
+                final compare = a.lastEditedAt.compareTo(b.lastEditedAt);
+                return isNewestFirst.value ? -compare : compare;
+              });
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: context.colors.surface.withAlpha(0),
-        title: Text(
-          isSelectionMode.value
-              ? context.appLanguage.selectedItems(selectedKeys.value.length)
-              : context.appLanguage.myPictologs,
-          // ? '${selectedKeys.value.length} Ausgewählt'
-          // : 'Meine Pictologs',
-          style: AppTextStyle.headlineLarge,
-        ),
-        // Change leading icon in selection mode to allow cancelling
-        leading: isSelectionMode.value
-            ? IconButton(
-                icon: const Icon(
-                  Icons.close,
-                ),
-                onPressed: () {
-                  isSelectionMode.value = false;
-                  selectedKeys.value = {};
-                },
-              )
-            : null,
-        actions: [
-          IconButton(
-            icon: Icon(
-              selectedKeys.value.isNotEmpty
-                  ? Icons.delete
-                  : Icons.delete_outline,
-              color: isSelectionMode.value ? context.colors.accentRed : null,
+        return Scaffold(
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => context.pushNamed(NewEntryPictologScreen.name),
+            backgroundColor: colors.accentGreen,
+            foregroundColor: AppColor.black,
+            elevation: 6,
+            shape: const StadiumBorder(),
+            icon: const Icon(Icons.add),
+            label: Text(
+              appLanguage.newPictolog,
+              style: AppTextStyle.button,
             ),
-            onPressed: () {
-              if (isSelectionMode.value) {
-                if (selectedKeys.value.isNotEmpty) {
-                  deleteSelected();
-                }
-              } else {
-                // Enter selection mode
-                isSelectionMode.value = true;
-              }
-            },
           ),
-        ],
-      ),
-      // ValueListenableBuilder automatically rebuilds when the box changes (add/delete/update)
-      body: ValueListenableBuilder<Box<ProjectModel>>(
-        valueListenable: repository.box.listenable(),
-        builder: (context, box, _) {
-          // values is an Iterable, convert to List for easy indexing
-          final logs = box.values.toList().cast<ProjectModel>();
+          body: SafeArea(
+            bottom: false,
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(p20, p12, p20, 96),
+              children: [
+                // Header
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            appLanguage.pictologs,
+                            style: AppTextStyle.display.copyWith(
+                              color: colors.textPrimary,
+                            ),
+                          ),
+                          Space.h2,
+                          Text(
+                            '${appLanguage.projectsCount(allLogs.length)} · ${appLanguage.pagesCount(pageTotal)}',
+                            style: AppTextStyle.bodySmall.copyWith(
+                              color: colors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    CircleIconButton(
+                      icon: Icons.check_box_outlined,
+                      tooltip: appLanguage.selectPictologs,
+                      backgroundColor: colors.surface,
+                      borderColor: colors.outline,
+                      onPressed: openSelection,
+                    ),
+                  ],
+                ),
+                Space.h16,
+                SearchField(
+                  hintText: appLanguage.searchPictologs,
+                  onChanged: (value) => searchQuery.value = value,
+                ),
+                Space.h16,
 
-          if (logs.isEmpty) {
-            return NoPictologsMessage();
-          }
+                // Section header with sort toggle
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        appLanguage.recentlyEdited.toUpperCase(),
+                        style: AppTextStyle.overline.copyWith(
+                          color: colors.textSecondary,
+                        ),
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () =>
+                          isNewestFirst.value = !isNewestFirst.value,
+                      iconAlignment: IconAlignment.end,
+                      icon: Icon(
+                        isNewestFirst.value
+                            ? Icons.keyboard_arrow_down
+                            : Icons.keyboard_arrow_up,
+                        size: 16,
+                      ),
+                      label: Text(
+                        isNewestFirst.value
+                            ? appLanguage.newestFirst
+                            : appLanguage.oldestFirst,
+                      ),
+                      style: TextButton.styleFrom(
+                        foregroundColor: colors.textPrimary,
+                        textStyle: AppTextStyle.caption.copyWith(
+                          fontWeight: AppFontWeight.bold,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: p8),
+                      ),
+                    ),
+                  ],
+                ),
+                Space.h4,
 
-          return ListView.builder(
-            // Use reverse order to show newest first
-            padding: const EdgeInsets.all(16),
-            itemCount: logs.length,
-            itemBuilder: (context, index) {
-              // Calculate reverse index
-              final log = logs[logs.length - 1 - index];
-              final isSelected = selectedKeys.value.contains(log);
+                if (logs.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: p40),
+                    child: Text(
+                      appLanguage.noSearchResults,
+                      textAlign: TextAlign.center,
+                      style: AppTextStyle.bodySmall.copyWith(
+                        color: colors.textSecondary,
+                      ),
+                    ),
+                  ),
 
-              return PictologEntryCard(
-                isSelectedItem: isSelected,
-                isSelectionMode: isSelectionMode.value,
-                projectName: log.name,
-                projectLength: log.reports.length.toString(),
-                overviewDescription: log.overviewDescription,
-                projectCreatedAt: log.createdAt.toFormatDMY,
-                onTapItem: () {
-                  if (isSelectionMode.value) {
-                    selectedKeys.value = Helper.toggleSelection(
-                      selectedKeys.value,
-                      log,
-                    );
-                  } else {
-                    context.goNamed(
-                      PictologDetailsScreen.name,
-                      pathParameters: {
-                        PictologDetailsScreen.paramId: log.key.toString(),
-                      },
-                    );
-                  }
-                },
-                onLongPressed: () {
-                  if (!isSelectionMode.value) {
-                    isSelectionMode.value = true;
-                  }
-                  selectedKeys.value = Helper.toggleSelection(
-                    selectedKeys.value,
-                    log,
-                  );
-                },
-              );
-            },
-          );
-        },
-      ),
+                for (final log in logs)
+                  Padding(
+                    key: ValueKey(log.key),
+                    padding: const EdgeInsets.only(bottom: p10),
+                    child: PictologEntryCard(
+                      pictolog: log,
+                      onTapItem: () => context.pushNamed(
+                        PictologDetailsScreen.name,
+                        pathParameters: {
+                          PictologDetailsScreen.paramId: log.key.toString(),
+                        },
+                      ),
+                      onLongPressed: () => openSelection(log.key as int),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

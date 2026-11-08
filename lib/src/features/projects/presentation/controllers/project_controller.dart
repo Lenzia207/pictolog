@@ -8,10 +8,7 @@ import '../../domain/project_model.dart';
 import '../../../reports/domain/report_model.dart';
 
 final projectRepositoryProvider = Provider<ProjectController>((ref) {
-  // We assume the box is already opened in main.dart or we handle opening it here.
-  // For simplicity with synchronous access in ValueListenableBuilder, keeping the box open globally is preferred,
-  // but here we can open it lazily if needed.
-  // Note: Hive.box() only works if the box is already opened.
+  // Note: Hive.box() only works if the box is already opened in main.dart.
   return ProjectController(
     Hive.box<ProjectModel>('pictologs'),
   );
@@ -22,14 +19,9 @@ class ProjectController {
 
   final Box<ProjectModel> box;
 
-  /// Get all Pictologs Projects
-  List<ProjectModel> getAllPictologs() {
-    return box.values.toList();
-  }
-
-  /// Add a new Pictolog
-  Future<void> addPictolog(ProjectModel pictolog) async {
-    await box.add(pictolog);
+  /// Add a new Pictolog and return its key
+  Future<int> addPictolog(ProjectModel pictolog) async {
+    return box.add(pictolog);
   }
 
   /// Update an existing Pictolog
@@ -44,79 +36,98 @@ class ProjectController {
     if (overviewDescription != null) {
       pictolog.overviewDescription = overviewDescription;
     }
+    await saveChanges(pictolog);
+  }
+
+  /// Marks the Pictolog as edited and persists it
+  Future<void> saveChanges(ProjectModel pictolog) async {
     pictolog.updatedAt = DateTime.now();
     await pictolog.save();
   }
 
-  /// Delete a Pictolog
+  /// Delete a Pictolog together with the images of its pages
   Future<void> deletePictolog(ProjectModel pictolog) async {
-    // Optional: Delete associated images from disk here to clean up space
-    for (var report in pictolog.reports) {
-      final file = File(report.imagePath);
-
-      if (await file.exists()) {
-        await file.delete();
-      }
+    for (final report in pictolog.reports) {
+      await _deleteImage(report.imagePath);
     }
     await pictolog.delete();
   }
 
-  /// Delete a single report and its image
+  /// Copies the images into app storage and appends them as pages
+  Future<void> addPages(
+    ProjectModel pictolog,
+    List<String> imagePaths,
+  ) async {
+    if (imagePaths.isEmpty) return;
+
+    for (final imagePath in imagePaths) {
+      final permanentPath = await saveImageToAppStorage(File(imagePath));
+      pictolog.reports.add(ReportModel(imagePath: permanentPath));
+    }
+    await saveChanges(pictolog);
+  }
+
+  /// Updates the description and optionally the image of a page
+  Future<void> updatePage(
+    ProjectModel pictolog,
+    ReportModel report, {
+    required String description,
+    String? newImagePath,
+  }) async {
+    if (newImagePath != null) {
+      final permanentPath = await saveImageToAppStorage(File(newImagePath));
+      await _deleteImage(report.imagePath);
+      report.imagePath = permanentPath;
+    }
+    report.description = description;
+    await saveChanges(pictolog);
+  }
+
+  /// Moves a page to a new position
+  Future<void> reorderPages(
+    ProjectModel pictolog,
+    int oldIndex,
+    int newIndex,
+  ) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final item = pictolog.reports.removeAt(oldIndex);
+    pictolog.reports.insert(newIndex, item);
+    await saveChanges(pictolog);
+  }
+
+  /// Delete a single page and its image
   Future<void> deleteReport(
     ProjectModel pictolog,
     ReportModel report,
   ) async {
-    // Delete image file first
-    try {
-      final file = File(report.imagePath);
-      if (await file.exists()) {
-        await file.delete();
-      }
-    } catch (e) {
-      // Log error but continue with database deletion
-      debugPrint('Error deleting image file: $e');
-    }
-
-    await report.delete();
+    await _deleteImage(report.imagePath);
     pictolog.reports.remove(report);
-    await pictolog.save();
-  }
-
-  /// Delete multiple reports and their images (more efficient for bulk deletion)
-  Future<void> deleteReports(
-    ProjectModel pictolog,
-    Set<ReportModel> reports,
-  ) async {
-    // Delete image files
-    for (final report in reports) {
-      try {
-        final file = File(report.imagePath);
-        if (await file.exists()) {
-          await file.delete();
-        }
-      } catch (e) {
-        debugPrint('Error deleting image file: $e');
-      }
-    }
-
-    // Remove from pictolog's reports list
-    pictolog.reports.removeWhere((r) => reports.contains(r));
-
-    // Save pictolog (this updates the relationship)
-    await pictolog.save();
-
-    // Delete report objects from Hive
-
-    await Future.wait(reports.map((report) => report.delete()));
+    await saveChanges(pictolog);
   }
 
   /// Helper to save an image file to the app's document directory
   /// Returns the permanent path to be stored in Hive
   Future<String> saveImageToAppStorage(File imageFile) async {
     final appDir = await getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.path);
+    // Prefix with a timestamp so images with the same name don't overwrite each other.
+    final fileName =
+        '${DateTime.now().microsecondsSinceEpoch}_${path.basename(imageFile.path)}';
     final savedImage = await imageFile.copy('${appDir.path}/$fileName');
 
     return savedImage.path;
+  }
+
+  Future<void> _deleteImage(String imagePath) async {
+    try {
+      final file = File(imagePath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    } catch (e) {
+      // Log error but continue with database changes
+      debugPrint('Error deleting image file: $e');
+    }
   }
 }

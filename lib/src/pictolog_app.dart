@@ -34,28 +34,62 @@ class PictologApp extends HookConsumerWidget {
             .delegate, // Provides default localizations for Cupertino widgets (iOS style)
       ],
       themeMode: themeMode,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: AppThemeColors.light.background,
-        textTheme: createTextTheme(
-          textColor: AppThemeColors.light.textPrimary,
-          secondaryTextColor: AppThemeColors.light.textSecondary,
-        ),
-        extensions: const [
-          AppThemeColors.light,
-        ],
+      theme: _buildTheme(Brightness.light, AppThemeColors.light),
+      darkTheme: _buildTheme(Brightness.dark, AppThemeColors.dark),
+    );
+  }
+
+  ThemeData _buildTheme(Brightness brightness, AppThemeColors colors) {
+    return ThemeData(
+      brightness: brightness,
+      scaffoldBackgroundColor: colors.background,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: colors.primary,
+        brightness: brightness,
+        primary: colors.primary,
+        onPrimary: colors.contrast,
+        surface: colors.surface,
+        onSurface: colors.textPrimary,
+        error: colors.accentRed,
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: AppThemeColors.dark.background,
-        textTheme: createTextTheme(
-          textColor: AppThemeColors.dark.textPrimary,
-          secondaryTextColor: AppThemeColors.dark.textSecondary,
-        ),
-        extensions: const [
-          AppThemeColors.dark,
-        ],
+      textTheme: createTextTheme(
+        textColor: colors.textPrimary,
+        secondaryTextColor: colors.textSecondary,
       ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: colors.primary,
+        selectionHandleColor: colors.primary,
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: colors.primary,
+        contentTextStyle: AppTextStyle.bodySmall.copyWith(
+          color: colors.contrast,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.input),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: colors.surface,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.emptyCard),
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: colors.surface,
+        surfaceTintColor: Colors.transparent,
+        showDragHandle: false,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppRadius.sheet),
+          ),
+        ),
+      ),
+      extensions: [
+        colors,
+      ],
     );
   }
 }

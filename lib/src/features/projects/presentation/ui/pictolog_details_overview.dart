@@ -1,139 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pictolog/src/widgets/app_date_format.dart';
-import 'package:pictolog/src/widgets/shiny_card.dart';
 
 import '../../../../../l10n/localization_extension.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/badge_icon.dart';
-import '../../../../widgets/chips_button.dart';
 import '../../domain/project_model.dart';
 
-class PictologDetailsOverview extends ConsumerWidget {
+/// Title, description and dates of a Pictolog followed by the pages header.
+class PictologDetailsOverview extends StatelessWidget {
   const PictologDetailsOverview({
     super.key,
     required this.pictolog,
-    required this.title,
-    required this.icon,
-    required this.onPressedIcon,
+    required this.onSortPressed,
   });
 
   final ProjectModel pictolog;
-  final String title;
-  final IconData icon;
-  final VoidCallback onPressedIcon;
+
+  /// Null while there is nothing to sort.
+  final VoidCallback? onSortPressed;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final colors = context.colors;
+    final appLanguage = context.appLanguage;
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(p20, p8, p20, p12),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Info Card
-          ShinyCard(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyle.headlineMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    if (pictolog.overviewDescription.isNotEmpty) ...[
-                      Space.h12,
-                      Text(
-                        pictolog.overviewDescription,
-                        style: AppTextStyle.bodyMedium.copyWith(
-                          height: 1.5,
-                          color: colors.textPrimary.withValues(alpha: 0.8),
-                        ),
-                      ),
-                    ],
-                    Space.h20,
-                    Wrap(
-                      spacing: 16,
-                      runSpacing: 8,
-                      children: [
-                        // shows the date when this project was created
-                        DateBadge(
-                          label:
-                              '${context.appLanguage.created}: ${pictolog.createdAt.toFormatDMY}',
-
-                          icon: Icons.calendar_today_outlined,
-                          colors: colors,
-                        ),
-
-                        // Show the edited date only if available
-                        if (pictolog.updatedAt != null)
-                          DateBadge(
-                            label:
-                                '${context.appLanguage.edited}: ${pictolog.updatedAt!.toFormatDMY}',
-                            icon: Icons.edit_calendar_outlined,
-                            colors: colors,
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-              .animate()
-              .fadeIn(duration: 400.ms)
-              .slideY(
-                begin: -0.1,
-                duration: 400.ms,
-                curve: Curves.easeOutQuad,
-              ),
-
-          Space.h20,
-
-          // List Header with Action
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Text(
+            pictolog.name,
+            style: AppTextStyle.title.copyWith(color: colors.textPrimary),
+          ).animate().fadeIn(duration: 300.ms),
+          if (pictolog.overviewDescription.isNotEmpty) ...[
+            Space.h10,
+            Text(
+              pictolog.overviewDescription,
+              style: AppTextStyle.bodyMedium.copyWith(color: colors.textBody),
+            ),
+          ],
+          Space.h14,
+          Wrap(
+            spacing: p8,
+            runSpacing: p8,
             children: [
-              Row(
-                children: [
-                  Text(
-                    context.appLanguage.pages,
-                    style: AppTextStyle.headlineSmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Space.w8,
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colors.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      pictolog.reports.length.toString(),
-                      style: AppTextStyle.bodySmall.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colors.primary,
+              DateBadge(
+                label: appLanguage.createdOn(pictolog.createdAt.toFormatDMY),
+                icon: Icons.calendar_today_outlined,
+              ),
+              if (pictolog.updatedAt != null)
+                DateBadge(
+                  label: appLanguage.editedOn(pictolog.updatedAt!.toFormatDMY),
+                  icon: Icons.edit_outlined,
+                ),
+            ],
+          ),
+          Space.h24,
+
+          // Pages header with sort action
+          Row(
+            children: [
+              Text(
+                appLanguage.pages,
+                style: AppTextStyle.section.copyWith(
+                  color: colors.textPrimary,
+                ),
+              ),
+              Space.w8,
+              Container(
+                constraints: const BoxConstraints(minWidth: 24),
+                height: 22,
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: colors.primary,
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                ),
+                child: Text(
+                  '${pictolog.reports.length}',
+                  style: AppTextStyle.meta.copyWith(color: colors.contrast),
+                ),
+              ),
+              const Spacer(),
+              if (onSortPressed != null)
+                Material(
+                  color: colors.surface,
+                  shape: const StadiumBorder(),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: onSortPressed,
+                    child: Container(
+                      height: 36,
+                      padding: const EdgeInsets.symmetric(horizontal: p12),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.swap_vert,
+                            size: 16,
+                            color: colors.textPrimary,
+                          ),
+                          Space.w6,
+                          Text(
+                            appLanguage.sort,
+                            style: AppTextStyle.caption.copyWith(
+                              fontWeight: AppFontWeight.bold,
+                              color: colors.textPrimary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
-              ChipsButton(
-                onPressed: onPressedIcon,
-                label: context.appLanguage.changeOrder,
-                icon: icon,
-              ),
+                ),
             ],
-          ).animate().fadeIn(delay: 200.ms),
-          Space.h8,
+          ),
         ],
       ),
     );

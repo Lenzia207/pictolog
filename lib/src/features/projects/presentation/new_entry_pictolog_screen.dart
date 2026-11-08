@@ -7,93 +7,99 @@ import 'package:pictolog/src/features/projects/presentation/ui/new_entry_pictolo
 import '../../../../l10n/localization_extension.dart';
 import 'controllers/project_controller.dart';
 import '../domain/project_model.dart';
-import '../../reports/domain/report_model.dart';
+import 'project_detail_screen.dart';
 
+/// Creates a new Pictolog, or edits title and description of an existing
+/// one when [pictologKey] is given.
 class NewEntryPictologScreen extends HookConsumerWidget {
   const NewEntryPictologScreen({
     super.key,
+    this.pictologKey,
   });
 
   static const String path = 'new_entry';
   static const String name = 'NewEntryPictolog';
+  static const String editPath = 'edit';
+  static const String editName = 'EditPictolog';
+
+  final int? pictologKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Repository
     final repository = ref.watch(projectRepositoryProvider);
+    final pictolog = pictologKey == null
+        ? null
+        : repository.box.get(pictologKey);
 
     // Form State
-    final nameController = useTextEditingController();
-    final overviewController = useTextEditingController();
+    final nameController = useTextEditingController(text: pictolog?.name);
+    final overviewController = useTextEditingController(
+      text: pictolog?.overviewDescription,
+    );
     final isLoading = useState(false);
+    final showTitleError = useState(false);
 
     Future<void> savePictolog() async {
-      if (nameController.text.isEmpty) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
-          SnackBar(
-            content: Text(
-              context.appLanguage.projectName,
-            ),
-          ),
-        );
+      final name = nameController.text.trim();
+      if (name.isEmpty) {
+        showTitleError.value = true;
         return;
       }
 
       isLoading.value = true;
 
       try {
-        final List<ReportModel> reports = [];
+        if (pictolog != null) {
+          await repository.updatePictolog(
+            pictolog,
+            name: name,
+            overviewDescription: overviewController.text.trim(),
+          );
+          if (context.mounted) context.pop();
+          return;
+        }
 
-        final newPictolog = ProjectModel(
-          name: nameController.text,
-          overviewDescription: overviewController.text,
-          reports: reports,
-          createdAt: DateTime.now(),
+        final key = await repository.addPictolog(
+          ProjectModel(
+            name: name,
+            overviewDescription: overviewController.text.trim(),
+            reports: [],
+            createdAt: DateTime.now(),
+          ),
         );
 
-        await repository.addPictolog(newPictolog);
-
         if (context.mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(
-            SnackBar(
-              content: Text(context.appLanguage.newPictologCreated),
-            ),
+          context.goNamed(
+            PictologDetailsScreen.name,
+            pathParameters: {
+              PictologDetailsScreen.paramId: key.toString(),
+            },
           );
-          context.pop();
         }
       } catch (e) {
         if (context.mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(context.appLanguage.errorSaving(e.toString())),
             ),
           );
         }
       } finally {
-        isLoading.value = false;
+        if (context.mounted) isLoading.value = false;
       }
     }
 
     return NewEntryPictologUi(
-      icon: isLoading.value
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 2,
-              ),
-            )
-          : const Icon(Icons.check),
+      isEditing: pictolog != null,
+      isLoading: isLoading.value,
       nameController: nameController,
       overviewController: overviewController,
-      savePictolog: isLoading.value ? () {} : savePictolog,
+      titleError: showTitleError.value
+          ? context.appLanguage.titleRequired
+          : null,
+      onNameChanged: (_) => showTitleError.value = false,
+      savePictolog: savePictolog,
     );
   }
 }

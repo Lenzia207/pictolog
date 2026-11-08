@@ -27,4 +27,7 @@ class ProjectModel extends HiveObject {
     required this.createdAt,
     this.updatedAt,
   });
+
+  /// When the Pictolog was last changed, falling back to its creation date.
+  DateTime get lastEditedAt => updatedAt ?? createdAt;
 }

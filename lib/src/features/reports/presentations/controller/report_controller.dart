@@ -2,133 +2,102 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
-import 'package:pictolog/src/features/reports/domain/report_model.dart';
 
 import '../../../../../l10n/localization_extension.dart';
 import '../../../camera/presentation/camera_screen.dart';
-import '../../../camera/presentation/controller/camera_controller.dart';
+import '../../../camera/presentation/utils/image_source_sheet.dart';
 import '../../../projects/domain/project_model.dart';
-import '../edit_report_dialog.dart';
 import '../../../projects/presentation/controllers/project_controller.dart';
+import '../../../projects/presentation/project_detail_screen.dart';
 
 final reportControllerProvider = Provider<ReportController>((ref) {
-  // For simplicity with synchronous access in ValueListenableBuilder, keeping the box open globally is preferred,
-  // but here we can open it lazily if needed.
-  return ReportController(
-    Hive.box<ReportModel>('reports'),
-  );
+  return ReportController(ref.watch(projectRepositoryProvider));
 });
 
 class ReportController {
-  ReportController(this.box);
-  final Box<ReportModel> box;
+  ReportController(this.repository);
+  final ProjectController repository;
 
-  static Future<bool?> saveReportDialog({
+  /// Lets the user choose an image source and adds the new pages.
+  Future<void> addPages({
     required BuildContext context,
-    required VoidCallback onImageChange,
-    required TextEditingController descriptionController,
-    required String imagePath,
-  }) async {
-    return showDialog<bool>(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (context, setState) {
-          return EditReportDialog(
-            onImageChange: onImageChange,
-            descriptionController: descriptionController,
-            imagePath: imagePath,
-
-            onSave: () => Navigator.pop(ctx, true),
-          );
-        },
-      ),
-    );
-  }
-
-  Future<void> addReport({
-    required BuildContext context,
-    required ProjectController repository,
     required ProjectModel pictolog,
-    ReportModel? report,
   }) async {
+    final imageSource = await showImageSourceSheet(context);
+    if (imageSource == null || !context.mounted) return;
+
     try {
-      // Show dialog to choose between camera or gallery
-      final imageSource = await CameraController.showImageSourceDialog(
-        context,
-      );
-      if (imageSource == null) return;
-
-      String? imagePath;
-
       if (imageSource == ImageSource.camera) {
-        // Use camera package directly with 4:3 aspect ratio (auto-cropped)
-        if (!context.mounted) return;
-        imagePath = await context.pushNamed<String>(
+        // The camera screen adds every captured photo as a page itself.
+        await context.pushNamed(
           CameraScreen.name,
           pathParameters: {
-            'id': pictolog.key.toString(),
+            PictologDetailsScreen.paramId: pictolog.key.toString(),
           },
         );
-      } else {
-        // Use image picker for gallery
-        final picker = ImagePicker();
-        final pickedFile = await picker.pickImage(
-          source: ImageSource.gallery,
-          imageQuality: 80,
-        );
-
-        if (pickedFile != null) {
-          imagePath = pickedFile.path;
-        }
+        return;
       }
 
-      if (imagePath == null) return;
-
-      final descriptionController = TextEditingController();
-
-      if (!context.mounted) return;
-
-      // Show dialog to apply description if needed
-      final shouldSave = await saveReportDialog(
-        context: context,
-        imagePath: imagePath,
-        descriptionController: descriptionController,
-        onImageChange: () => addReport(
-          context: context,
-          repository: repository,
-          pictolog: pictolog,
-        ),
+      final pickedFiles = await ImagePicker().pickMultiImage(
+        imageQuality: 80,
       );
-
-      if (shouldSave == true) {
-        final permanentPath = await repository.saveImageToAppStorage(
-          File(imagePath),
-        );
-        final newReport = ReportModel(
-          imagePath: permanentPath,
-          description: descriptionController.text,
-        );
-
-        pictolog.reports.add(newReport);
-        await pictolog.save(); // HiveObject save
-      }
+      await repository.addPages(
+        pictolog,
+        pickedFiles.map((file) => file.path).toList(),
+      );
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              context.appLanguage.errorAddingReport(
-                e.toString(),
-              ),
-            ),
+            content: Text(context.appLanguage.errorAddingPage(e.toString())),
           ),
         );
       }
     }
+  }
+
+  /// Lets the user take or choose a single image.
+  /// Returns its temporary path, or null when cancelled.
+  Future<String?> pickReplacementImage({
+    required BuildContext context,
+    required ProjectModel pictolog,
+  }) async {
+    final imageSource = await showImageSourceSheet(context);
+    if (imageSource == null || !context.mounted) return null;
+
+    if (imageSource == ImageSource.camera) {
+      return context.pushNamed<String>(
+        CameraScreen.name,
+        pathParameters: {
+          PictologDetailsScreen.paramId: pictolog.key.toString(),
+        },
+        extra: true,
+      );
+    }
+
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+    return pickedFile?.path;
+  }
+
+  /// Rotates the image file 90 degrees clockwise in place.
+  Future<void> rotateImage(String imagePath) async {
+    final imageFile = File(imagePath);
+    if (!await imageFile.exists()) return;
+
+    final image = img.decodeImage(await imageFile.readAsBytes());
+    if (image == null) return;
+
+    final rotatedImage = img.copyRotate(image, angle: 90);
+    await imageFile.writeAsBytes(img.encodeJpg(rotatedImage));
+
+    // The file path stays the same, so drop the cached (resized) versions.
+    PaintingBinding.instance.imageCache.clear();
+    PaintingBinding.instance.imageCache.clearLiveImages();
   }
 }

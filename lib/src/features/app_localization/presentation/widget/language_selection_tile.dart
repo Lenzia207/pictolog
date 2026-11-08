@@ -5,6 +5,7 @@ import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
 
+import '../../../account_settings/widget/settings_section.dart';
 import '../../app_localization.dart' as app_localization;
 import '../utils/language_service.dart';
 
@@ -21,31 +22,47 @@ class LanguageSelectionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        Icons.language,
-        color: context.colors.primary,
-      ),
-      title: Text(
-        context.appLanguage.selectLanguage,
-        style: AppTextStyle.bodyLarge,
-      ),
-      subtitle: Text(
-        '${LanguageService.getLanguageFlag(currentLocale)} ${LanguageService.getLanguageName(currentLocale)}',
-        style: AppTextStyle.bodyMedium.copyWith(
-          color: context.colors.primary,
-        ),
-      ),
-      trailing: Icon(
-        Icons.chevron_right,
-        color: context.colors.surface.withAlpha(128),
-      ),
-      onTap: () => LanguageService.showLanguageDialog(
+    final colors = context.colors;
+
+    return InkWell(
+      onTap: () => LanguageService.showLanguageSheet(
         context,
-        context.appLanguage,
         app_localization.supportedLocales,
         currentLocale,
         onLocaleChanged,
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: p16, vertical: p14),
+          child: Row(
+            children: [
+              const SettingsIcon(icon: Icons.language),
+              Space.w12,
+              Expanded(
+                child: Text(
+                  context.appLanguage.language,
+                  style: AppTextStyle.bodyLarge.copyWith(
+                    fontWeight: AppFontWeight.bold,
+                    color: colors.textPrimary,
+                  ),
+                ),
+              ),
+              Text(
+                LanguageService.getLanguageName(currentLocale),
+                style: AppTextStyle.bodyMedium.copyWith(
+                  color: colors.textSecondary,
+                ),
+              ),
+              Space.w4,
+              Icon(
+                Icons.chevron_right,
+                size: 18,
+                color: colors.textSecondary,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

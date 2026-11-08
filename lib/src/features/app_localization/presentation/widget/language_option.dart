@@ -2,45 +2,50 @@ import 'package:flutter/material.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
+import '../../../../widgets/selection_checkbox.dart';
 
-/// Individual language option in the selection dialog
+/// Individual language option in the selection sheet
 class LanguageOption extends StatelessWidget {
   const LanguageOption({
     super.key,
-    required this.locale,
     required this.isSelected,
     required this.languageName,
-    required this.languageFlag,
     required this.onTap,
   });
 
-  final Locale locale;
   final bool isSelected;
   final String languageName;
-  final String languageFlag;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Text(
-        languageFlag,
-        style: const TextStyle(fontSize: 32),
-      ),
-      title: Text(
-        languageName,
-        style: AppTextStyle.bodyLarge.copyWith(
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          color: isSelected ? context.colors.primary : null,
+    return Semantics(
+      selected: isSelected,
+      button: true,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.input),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 56),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  languageName,
+                  style: AppTextStyle.bodyLarge.copyWith(
+                    fontWeight: isSelected
+                        ? AppFontWeight.bold
+                        : AppFontWeight.regular,
+                    color: context.colors.textPrimary,
+                  ),
+                ),
+              ),
+              SelectionCheckbox(isSelectedItem: isSelected),
+              Space.w4,
+            ],
+          ),
         ),
       ),
-      trailing: isSelected
-          ? Icon(
-              Icons.check_circle,
-              color: context.colors.primary,
-            )
-          : null,
-      onTap: onTap,
     );
   }
 }

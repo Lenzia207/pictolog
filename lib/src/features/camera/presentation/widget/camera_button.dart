@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/constants.dart';
+import '../../../../theme/theme.dart';
 
+/// The shutter button.
 class CameraButton extends StatelessWidget {
   const CameraButton({
     super.key,
@@ -14,24 +17,29 @@ class CameraButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 70,
-        height: 70,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.white,
-            width: 4,
-          ),
-        ),
-        child: Padding(
+    return Semantics(
+      button: true,
+      label: context.appLanguage.takePicture,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: 80,
+          height: 80,
           padding: const EdgeInsets.all(p6),
-          child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColor.white,
+              width: 4,
+            ),
+          ),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isTakingPicture ? Colors.grey : Colors.white,
+              color: isTakingPicture
+                  ? AppColor.textSecondaryDark
+                  : AppColor.white,
             ),
           ),
         ),

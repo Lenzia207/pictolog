@@ -1,13 +1,12 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import '../../projects/domain/project_model.dart';
 
 class PdfFooter extends pw.StatelessWidget {
   PdfFooter({
-    required this.pictolog,
+    required this.pageOf,
   });
 
-  final ProjectModel pictolog;
+  final String Function(int current, int total) pageOf;
 
   @override
   pw.Widget build(pw.Context context) {
@@ -17,7 +16,7 @@ class PdfFooter extends pw.StatelessWidget {
         top: 10,
       ),
       child: pw.Text(
-        'Page ${context.pageNumber} of ${context.pagesCount}',
+        pageOf(context.pageNumber, context.pagesCount),
         style: pw.TextStyle(
           fontSize: 10,
           color: PdfColors.grey,

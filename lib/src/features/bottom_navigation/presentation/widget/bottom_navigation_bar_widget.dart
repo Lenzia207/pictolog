@@ -17,35 +17,32 @@ class BottomNavigationBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        height: 70,
-        margin: const EdgeInsets.fromLTRB(p20, 0, p20, p20),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: BorderRadius.circular(p20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        border: Border(
+          top: BorderSide(color: context.colors.outline),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ...NavigationConfig.items(context).map(
-              (item) => TabItem(
-                icon: item.icon,
-                label: item.getLabel(context),
-                index: item.index,
-                currentIndex: controller.currentIndex,
-                onTap: controller.goBranch,
+      ),
+      child: SafeArea(
+        top: false,
+        minimum: const EdgeInsets.only(bottom: p8),
+        child: Padding(
+          padding: const EdgeInsets.only(top: p10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ...NavigationConfig.items(context).map(
+                (item) => TabItem(
+                  icon: item.icon,
+                  label: item.getLabel(context),
+                  index: item.index,
+                  currentIndex: controller.currentIndex,
+                  onTap: controller.goBranch,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

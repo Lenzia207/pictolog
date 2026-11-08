@@ -98,53 +98,161 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
-  /// The application title
+  /// Navigation label for the projects overview
   ///
   /// In en, this message translates to:
-  /// **'Pictolog'**
-  String get appTitle;
+  /// **'Projects'**
+  String get projects;
 
-  /// Navigation label for overview screen
+  /// Title of the home screen
   ///
   /// In en, this message translates to:
-  /// **'My Pictologs'**
-  String get myPictologs;
+  /// **'Pictologs'**
+  String get pictologs;
 
-  /// Message shown when there are no pictologs
-  ///
-  /// In en, this message translates to:
-  /// **'No pictologs yet.\nCreate one with the '**
-  String get noPictologsMessage;
-
-  /// Navigation label for settings screen
+  /// Navigation label and title of the settings screen
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
 
-  /// Account settings screen title
+  /// Number of projects
   ///
   /// In en, this message translates to:
-  /// **'Account Settings'**
-  String get accountSettings;
+  /// **'{count, plural, =1{1 project} other{{count} projects}}'**
+  String projectsCount(int count);
 
-  /// Language selection label
+  /// Number of pages
   ///
   /// In en, this message translates to:
-  /// **'Language'**
-  String get language;
+  /// **'{count, plural, =1{1 page} other{{count} pages}}'**
+  String pagesCount(int count);
 
-  /// Language selection dialog title
+  /// Subtitle on the home screen when there are no pictologs
   ///
   /// In en, this message translates to:
-  /// **'Select Language'**
-  String get selectLanguage;
+  /// **'No projects yet'**
+  String get noProjectsYet;
 
-  /// Title for new pictolog entry screen
+  /// Placeholder of the search field
   ///
   /// In en, this message translates to:
-  /// **'New Pictolog Entry'**
-  String get newPictologEntry;
+  /// **'Search pictologs'**
+  String get searchPictologs;
+
+  /// Shown when the search has no results
+  ///
+  /// In en, this message translates to:
+  /// **'No pictologs found'**
+  String get noSearchResults;
+
+  /// Section label above the pictolog list
+  ///
+  /// In en, this message translates to:
+  /// **'Recently edited'**
+  String get recentlyEdited;
+
+  /// Sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Newest first'**
+  String get newestFirst;
+
+  /// Sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest first'**
+  String get oldestFirst;
+
+  /// Button and screen title to create a pictolog
+  ///
+  /// In en, this message translates to:
+  /// **'New Pictolog'**
+  String get newPictolog;
+
+  /// Accessibility label of the select button
+  ///
+  /// In en, this message translates to:
+  /// **'Select pictologs'**
+  String get selectPictologs;
+
+  /// Title of the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Start your first Pictolog'**
+  String get emptyTitle;
+
+  /// Message of the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Take photos, describe and arrange pages – Pictolog turns them into a clean PDF.'**
+  String get emptyMessage;
+
+  /// Button label to create a pictolog
+  ///
+  /// In en, this message translates to:
+  /// **'Create Pictolog'**
+  String get createPictolog;
+
+  /// First step in the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Create and name a project'**
+  String get emptyStepCreate;
+
+  /// Second step in the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos as pages'**
+  String get emptyStepPhotos;
+
+  /// Third step in the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Create and share the PDF'**
+  String get emptyStepPdf;
+
+  /// Shows count of selected items
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String selectedItems(int count);
+
+  /// Button to select all items
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get selectAll;
+
+  /// Accessibility label of the button that leaves selection mode
+  ///
+  /// In en, this message translates to:
+  /// **'End selection'**
+  String get endSelection;
+
+  /// Warning above the delete button
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 page will be permanently deleted.} other{{count} pages will be permanently deleted.}}'**
+  String pagesWillBeDeleted(int count);
+
+  /// Button to delete the selected pictologs
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Delete 1 Pictolog} other{Delete {count} Pictologs}}'**
+  String deletePictologs(int count);
+
+  /// Heading of the new pictolog form
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s it about?'**
+  String get whatsItAbout;
+
+  /// Hint below the heading of the new pictolog form
+  ///
+  /// In en, this message translates to:
+  /// **'Title and description appear on the cover page of your PDF.'**
+  String get newPictologHint;
 
   /// Generic title label
   ///
@@ -152,11 +260,17 @@ abstract class AppLocalizations {
   /// **'Title'**
   String get title;
 
-  /// Label for project name field
+  /// Placeholder for the project name field
   ///
   /// In en, this message translates to:
-  /// **'Project Name'**
+  /// **'Name of the project'**
   String get projectName;
+
+  /// Validation error for an empty title
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a title.'**
+  String get titleRequired;
 
   /// Generic description label
   ///
@@ -164,65 +278,29 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get description;
 
-  /// Optional description label
+  /// Marks a field as optional
   ///
   /// In en, this message translates to:
-  /// **'Description (Optional)'**
-  String get descriptionOptional;
+  /// **'Optional'**
+  String get optional;
 
   /// Placeholder for project description field
   ///
   /// In en, this message translates to:
-  /// **'General project description...'**
+  /// **'General description of the project …'**
   String get generalProjectDescription;
 
-  /// Button label to save entry
+  /// Tip at the bottom of the new pictolog form
   ///
   /// In en, this message translates to:
-  /// **'Save Entry'**
-  String get saveEntry;
+  /// **'After saving, you add the first photos as pages right away.'**
+  String get newPictologTip;
 
-  /// Label for number of pages
+  /// Title of the edit pictolog screen
   ///
   /// In en, this message translates to:
-  /// **'Pages'**
-  String get pages;
-
-  /// Shows the number of pages
-  ///
-  /// In en, this message translates to:
-  /// **'{count} Pages'**
-  String pagesCount(String count);
-
-  /// Title for camera screen
-  ///
-  /// In en, this message translates to:
-  /// **'Take a Picture'**
-  String get takePicture;
-
-  /// Error message when no camera is available
-  ///
-  /// In en, this message translates to:
-  /// **'No camera found'**
-  String get noCameraFound;
-
-  /// Success message after taking picture
-  ///
-  /// In en, this message translates to:
-  /// **'Picture taken: {path}'**
-  String pictureTaken(String path);
-
-  /// Dialog title to add description
-  ///
-  /// In en, this message translates to:
-  /// **'Add Description'**
-  String get addDescription;
-
-  /// Cancel button label
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancel;
+  /// **'Edit Pictolog'**
+  String get editPictolog;
 
   /// Save button label
   ///
@@ -230,23 +308,77 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
-  /// Error message when adding report fails
+  /// Cancel button label
   ///
   /// In en, this message translates to:
-  /// **'Error adding report: {error}'**
-  String errorAddingReport(String error);
+  /// **'Cancel'**
+  String get cancel;
 
-  /// Success message when pictolog is created
+  /// Delete button label
   ///
   /// In en, this message translates to:
-  /// **'New Pictolog Created!'**
-  String get newPictologCreated;
+  /// **'Delete'**
+  String get delete;
 
-  /// Error message when saving fails
+  /// Done button label
   ///
   /// In en, this message translates to:
-  /// **'Error saving: {error}'**
-  String errorSaving(String error);
+  /// **'Done'**
+  String get done;
+
+  /// Accessibility label of close buttons
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// Accessibility label of back buttons
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// Accessibility label of the more button
+  ///
+  /// In en, this message translates to:
+  /// **'More actions'**
+  String get moreActions;
+
+  /// Creation date chip
+  ///
+  /// In en, this message translates to:
+  /// **'Created {date}'**
+  String createdOn(String date);
+
+  /// Last edited date chip
+  ///
+  /// In en, this message translates to:
+  /// **'Edited {date}'**
+  String editedOn(String date);
+
+  /// Heading of the page grid
+  ///
+  /// In en, this message translates to:
+  /// **'Pages'**
+  String get pages;
+
+  /// Button to change the page order
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sort;
+
+  /// Shown on pages without a description
+  ///
+  /// In en, this message translates to:
+  /// **'No description'**
+  String get noDescription;
+
+  /// Button to add a page
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get page;
 
   /// Button label to create PDF
   ///
@@ -254,41 +386,161 @@ abstract class AppLocalizations {
   /// **'Create PDF'**
   String get createPdf;
 
-  /// Button label to change order
+  /// Title when a pictolog has no pages
   ///
   /// In en, this message translates to:
-  /// **'Change Order'**
+  /// **'No pages yet'**
+  String get noPagesYet;
+
+  /// Hint when a pictolog has no pages
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos as pages with the \"Page\" button.'**
+  String get noPagesHint;
+
+  /// Action to delete a pictolog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Pictolog'**
+  String get deletePictolog;
+
+  /// Confirmation message to delete a pictolog
+  ///
+  /// In en, this message translates to:
+  /// **'This pictolog and all its pages will be permanently deleted.'**
+  String get deletePictologConfirm;
+
+  /// Title of the reorder screen
+  ///
+  /// In en, this message translates to:
+  /// **'Change order'**
   String get changeOrder;
 
-  /// Button label to add report
+  /// Hint on the reorder screen
   ///
   /// In en, this message translates to:
-  /// **'Add Report'**
-  String get addReport;
+  /// **'Drag a page by its handle to the desired position.'**
+  String get reorderHint;
 
-  /// Message when there are no reports
+  /// Position of a page
   ///
   /// In en, this message translates to:
-  /// **'No reports yet'**
-  String get noReportsYet;
+  /// **'Page {current} of {total}'**
+  String pageOf(int current, int total);
 
-  /// Dialog title to edit report
+  /// Title of the edit page sheet
   ///
   /// In en, this message translates to:
-  /// **'Edit Report'**
-  String get editReport;
+  /// **'Edit page'**
+  String get editPage;
 
-  /// Dialog title to edit entry
+  /// Button to replace the image of a page
   ///
   /// In en, this message translates to:
-  /// **'Edit Entry'**
-  String get editEntry;
+  /// **'Replace'**
+  String get replace;
 
-  /// Label for project title field
+  /// Accessibility label of the rotate button
   ///
   /// In en, this message translates to:
-  /// **'Project Title'**
-  String get projectTitle;
+  /// **'Rotate image'**
+  String get rotateImage;
+
+  /// Action to delete a page
+  ///
+  /// In en, this message translates to:
+  /// **'Delete page'**
+  String get deletePage;
+
+  /// Confirmation message to delete a page
+  ///
+  /// In en, this message translates to:
+  /// **'This page will be permanently deleted.'**
+  String get deletePageConfirm;
+
+  /// Title of the image source sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Add page'**
+  String get addPage;
+
+  /// Subtitle of the image source sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Where does the image come from?'**
+  String get whereFromImage;
+
+  /// Camera option label
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// Camera option description
+  ///
+  /// In en, this message translates to:
+  /// **'Take a new photo'**
+  String get takeNewPhoto;
+
+  /// Gallery option label
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// Gallery option description
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an existing image'**
+  String get chooseExistingImage;
+
+  /// Number of the page being captured
+  ///
+  /// In en, this message translates to:
+  /// **'Page {number}'**
+  String pageNumber(int number);
+
+  /// Hint on the camera screen
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the shutter'**
+  String get tapShutter;
+
+  /// Accessibility label of the shutter button
+  ///
+  /// In en, this message translates to:
+  /// **'Take picture'**
+  String get takePicture;
+
+  /// Accessibility label of the camera close button
+  ///
+  /// In en, this message translates to:
+  /// **'Close camera'**
+  String get closeCamera;
+
+  /// Error message when no camera is available
+  ///
+  /// In en, this message translates to:
+  /// **'No camera found'**
+  String get noCameraFound;
+
+  /// Error message when taking a picture fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error taking picture: {error}'**
+  String errorTakingPicture(String error);
+
+  /// Error message when adding a page fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error adding page: {error}'**
+  String errorAddingPage(String error);
+
+  /// Error message when saving fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving: {error}'**
+  String errorSaving(String error);
 
   /// Error message for 404 page
   ///
@@ -296,53 +548,29 @@ abstract class AppLocalizations {
   /// **'Page not found!'**
   String get pageNotFound;
 
-  /// Shows count of selected items
-  ///
-  /// In en, this message translates to:
-  /// **'{count} Selected'**
-  String selectedItems(int count);
-
   /// Title for PDF preview screen
   ///
   /// In en, this message translates to:
-  /// **'PDF Preview'**
+  /// **'PDF preview'**
   String get pdfPreview;
 
-  /// Generic report label
+  /// Button to share the PDF
   ///
   /// In en, this message translates to:
-  /// **'Report'**
-  String get report;
+  /// **'Share'**
+  String get share;
 
-  /// PDF title page label
+  /// Button to save the PDF
   ///
   /// In en, this message translates to:
-  /// **'Title Page'**
-  String get titlePage;
+  /// **'Save PDF'**
+  String get savePdf;
 
-  /// PDF content page label
+  /// Overline on the PDF cover page
   ///
   /// In en, this message translates to:
-  /// **'Content Page'**
-  String get contentPage;
-
-  /// Generic page label
-  ///
-  /// In en, this message translates to:
-  /// **'Page'**
-  String get page;
-
-  /// Button text after icon in no pictologs message
-  ///
-  /// In en, this message translates to:
-  /// **' Button!'**
-  String get button;
-
-  /// Message when there are no report entries
-  ///
-  /// In en, this message translates to:
-  /// **'No entries yet.\n\nAdd a new entry under\n\"Add Report\"'**
-  String get noEntriesYet;
+  /// **'Photo documentation'**
+  String get photoDocumentation;
 
   /// Created date label
   ///
@@ -350,17 +578,23 @@ abstract class AppLocalizations {
   /// **'Created'**
   String get created;
 
-  /// Edited/Modified date label
+  /// Edited date label
   ///
   /// In en, this message translates to:
   /// **'Edited'**
   String get edited;
 
-  /// Overview label
+  /// Settings section label
   ///
   /// In en, this message translates to:
-  /// **'Overview'**
-  String get overview;
+  /// **'Appearance'**
+  String get appearance;
+
+  /// Settings section label
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
 
   /// Theme selection label
   ///
@@ -368,11 +602,17 @@ abstract class AppLocalizations {
   /// **'Theme'**
   String get theme;
 
-  /// Theme selection dialog title
+  /// Language selection label
   ///
   /// In en, this message translates to:
-  /// **'Select Theme'**
-  String get selectTheme;
+  /// **'Language'**
+  String get language;
+
+  /// Title of the language sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select language'**
+  String get selectLanguage;
 
   /// Light theme mode label
   ///
@@ -391,24 +631,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System'**
   String get systemMode;
-
-  /// Dialog title for choosing between camera or gallery
-  ///
-  /// In en, this message translates to:
-  /// **'Choose Image Source'**
-  String get chooseImageSource;
-
-  /// Camera option label
-  ///
-  /// In en, this message translates to:
-  /// **'Camera'**
-  String get camera;
-
-  /// Gallery option label
-  ///
-  /// In en, this message translates to:
-  /// **'Gallery'**
-  String get gallery;
 }
 
 class _AppLocalizationsDelegate

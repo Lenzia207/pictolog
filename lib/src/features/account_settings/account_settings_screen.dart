@@ -8,7 +8,7 @@ import '../app_localization/app_localization.dart';
 import 'widget/settings_section.dart';
 import '../app_theme/widgets/theme_mode_selection_tile.dart';
 
-/// Account Settings Screen with language selection
+/// Settings Screen with theme and language selection
 class AccountSettingsScreen extends HookConsumerWidget {
   const AccountSettingsScreen({super.key});
 
@@ -18,33 +18,37 @@ class AccountSettingsScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLocale = ref.watch(localeProvider);
+    final appLanguage = context.appLanguage;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.appLanguage.accountSettings,
-          style: AppTextStyle.headlineLarge,
-        ),
-        centerTitle: true,
-        backgroundColor: context.colors.surface.withAlpha(0),
-        surfaceTintColor: Colors.transparent,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(p16),
-        children: [
-          SettingsSection(
-            children: [
-              LanguageSelectionTile(
+      body: SafeArea(
+        bottom: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(p20, p12, p20, p24),
+          children: [
+            Text(
+              appLanguage.settings,
+              style: AppTextStyle.display.copyWith(
+                color: context.colors.textPrimary,
+              ),
+            ),
+            Space.h24,
+            SettingsSection(
+              label: appLanguage.appearance,
+              child: const ThemeModeSelectionTile(),
+            ),
+            Space.h24,
+            SettingsSection(
+              label: appLanguage.general,
+              child: LanguageSelectionTile(
                 currentLocale: currentLocale,
                 onLocaleChanged: (locale) {
                   ref.read(localeProvider.notifier).setLocale(locale);
                 },
               ),
-              const Divider(height: 1),
-              const ThemeModeSelectionTile(),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

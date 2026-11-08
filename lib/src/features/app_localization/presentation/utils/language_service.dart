@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../l10n/app_localizations.dart';
+import '../../../../../l10n/localization_extension.dart';
 import '../../../../constants/constants.dart';
 import '../../../../theme/theme.dart';
+import '../../../../widgets/sheet_handle.dart';
 import '../widget/language_option.dart';
 
 class LanguageService {
@@ -17,49 +18,44 @@ class LanguageService {
     }
   }
 
-  static String getLanguageFlag(Locale locale) {
-    switch (locale.languageCode) {
-      case 'en':
-        return '🇬🇧';
-      case 'de':
-        return '🇩🇪';
-      default:
-        return '🌍';
-    }
-  }
-
-  static void showLanguageDialog(
+  static void showLanguageSheet(
     BuildContext context,
-    AppLocalizations appLanguage,
     List<Locale> supportedLocales,
     Locale currentLocale,
     ValueChanged<Locale> onLocaleChanged,
   ) {
-    showDialog(
+    showModalBottomSheet<void>(
       context: context,
+      useSafeArea: true,
       builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: context.colors.surface,
-          title: Text(
-            appLanguage.selectLanguage,
-            style: AppTextStyle.headlineSmall,
-          ),
-          contentPadding: const EdgeInsets.symmetric(vertical: p16),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: supportedLocales.map((locale) {
-              final isSelected = locale == currentLocale;
-              return LanguageOption(
-                locale: locale,
-                isSelected: isSelected,
-                languageName: getLanguageName(locale),
-                languageFlag: getLanguageFlag(locale),
-                onTap: () {
-                  onLocaleChanged(locale);
-                  Navigator.of(context).pop();
-                },
-              );
-            }).toList(),
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(p20, 0, p20, p8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SheetHandle(),
+                Space.h18,
+                Text(
+                  context.appLanguage.selectLanguage,
+                  style: AppTextStyle.sheetTitle.copyWith(
+                    color: context.colors.textPrimary,
+                  ),
+                ),
+                Space.h12,
+                ...supportedLocales.map((locale) {
+                  return LanguageOption(
+                    isSelected: locale == currentLocale,
+                    languageName: getLanguageName(locale),
+                    onTap: () {
+                      onLocaleChanged(locale);
+                      Navigator.of(context).pop();
+                    },
+                  );
+                }),
+              ],
+            ),
           ),
         );
       },

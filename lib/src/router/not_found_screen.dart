@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/localization_extension.dart';
+import '../constants/constants.dart';
 import '../theme/theme_colors_extension.dart';
 
 class NotFoundScreen extends StatelessWidget {
@@ -14,11 +14,13 @@ class NotFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       body: Center(
         child: Text(
-          '$errorMessage - ${context.appLanguage.pageNotFound}',
-          style: TextStyle(
-            fontSize: 24,
+          errorMessage,
+          style: AppTextStyle.section.copyWith(
             color: context.colors.accentRed,
           ),
         ),

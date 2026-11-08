@@ -14,11 +14,27 @@ final pdfGeneratorRepositoryProvider = Provider<PdfService>((ref) {
   return PdfService();
 });
 
+/// Localized texts printed in the PDF.
+class PdfLabels {
+  const PdfLabels({
+    required this.photoDocumentation,
+    required this.created,
+    required this.edited,
+    required this.pages,
+    required this.pageOf,
+  });
+
+  final String photoDocumentation;
+  final String created;
+  final String edited;
+  final String pages;
+  final String Function(int current, int total) pageOf;
+}
+
 class PdfService {
   Future<Uint8List> generatePdf(
-    PdfPageFormat format,
     ProjectModel pictolog,
-    String createdLabel,
+    PdfLabels labels,
   ) async {
     final pdf = pw.Document();
 
@@ -35,7 +51,6 @@ class PdfService {
           return pw.Container(
             margin: const pw.EdgeInsets.only(bottom: 20),
             child: PdfImageDescriptionSection(
-              pictolog: pictolog,
               image: image,
               reportDescription: report.description ?? '',
             ),
@@ -51,8 +66,10 @@ class PdfService {
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(56),
         build: (context) => PdfTitlePage(
           pictolog: pictolog,
+          labels: labels,
         ),
       ),
     );
@@ -66,10 +83,10 @@ class PdfService {
           crossAxisAlignment: pw.CrossAxisAlignment.center,
           header: (pw.Context context) => PdfContentPage(
             pictolog: pictolog,
-            createdLabel: createdLabel,
+            createdLabel: labels.created,
           ),
           footer: (pw.Context context) => PdfFooter(
-            pictolog: pictolog,
+            pageOf: labels.pageOf,
           ),
           build: (pw.Context context) {
             return validReports;
